@@ -30,13 +30,13 @@
     "content_scripts": [ 
     {
       "all_frames": false,
-      "js": ["assets/js/libs/jquery.js",   "assets/js/content.js"],
+      "js": [  "assets/js/content.js"],
       "matches": ["<all_urls>"],
       "run_at": "document_end"
     },
     {
       "all_frames": false,
-      "js": ["assets/js/common.js","assets/js/popup.js"],
+      "js": ["assets/js/libs/jquery.js","assets/js/common.js","assets/js/popup.js"],
       "matches": ["*://*.linkedin.com/*","*://linkedin.com/*"],
       "run_at": "document_end"
     }
@@ -47,8 +47,8 @@
 
   
     "web_accessible_resources":[{
-      "resources": ["assets/css/style.css", "assets/icons/icon48.png"],
-      "matches": ["<all_urls>"]
+      "resources": ["assets/css/style.css", "assets/icons/icon48.png","assets/icons/logo.png"],
+      "matches": ["*://*.linkedin.com/*","*://linkedin.com/*"]
     }],
     "permissions": [
       "storage",

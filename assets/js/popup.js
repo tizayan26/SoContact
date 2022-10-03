@@ -42,48 +42,35 @@ function loadPopup() {
         right: 0;
         z-index: 9999999999!important;
     }
-    hr{
-        margin: 0 0 5px 0;
-        border-top: 1px solid #BEBEBE;
-    }
+
     .container-sc{
-        border: 1px solid #ccc;
-        box-shadow: 0 0 10px rgb(0 0 0 / 25%);
+        border: 1px solid #F4FAFF;
+        box-shadow: 0px 1px 24px #B4C5D346;
         border-radius: 10px;
-        background: #fff;
-        width: 100%;
+        opacity: 1;
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        background: #F4FAFF 0% 0% no-repeat padding-box;
+        width: 400px;
+        padding:40px;
         display:none;
     }
-    ul.result-list{
-        overflow: auto;
-        list-style: none;
-        padding: 0;
+    h2{
+        text-align: left;
+        font: normal normal bold 35px/60px Poppins;
+        letter-spacing: 0.53px;
+        color: #121C31;
+        opacity: 1;
     }
-    ul.result-list > li{
-        margin: 6px 0;
-        padding: 10px;
-        font-size: 14px;
-        color: rgb(54 54 54 / 90%);
-    
+
+    .logo{
+        vertical-align: middle;
+        width: 150px;
+        height: 150px;
+        box-shadow: 0px 1px 24px #b4c5d346;
+        border-radius: 10px;
     }
-    ul.result-list > li.add{
-        background-color: #F3F3F3;
-    }
-    ul.result-list > li.add:hover{
-        background-color: #E3E3E3;
-    }
-    ul.result-list > li.edit{
-        background-color: #D9EDFF;
-    }
-    ul.result-list > li.edit:hover{
-        background-color: #ABD6FD;
-    }
-    ul.result-list:first-child{
-        margin-top:0;
-    }
-    ul.result-list:last-child{
-        margin-bottom:0;
-    }
+  
     /* The Close Button */
     .close {
         color: #aaa;
@@ -101,18 +88,7 @@ function loadPopup() {
         font-size: 20px;
         display: inline;
     }
-    .text-muted{
-        font-size:10px;
-    }
-    .suggestion-links{
-        list-style: none;
-    }
-    #btn_add,#btn_update{
-        margin-top: 10px;
-        font-size: 12px!important;
-        padding: 8px 12px!important;
-        border-radius: 4px!important;
-    }
+   
     .btn-primary{
         background-color: #D9EDFF;
         border: none;
@@ -130,20 +106,8 @@ function loadPopup() {
     h5{
         font-size: 1.05rem;
     }
-    .blue-logo-bar{
-        border: 2px solid #007DED;
-        position: relative;
-        top: 12px;
-        right: 4px;
-    }
-    .top-right-head{
-        position: relative;
-        top: 2px;
-        /*left: 40px;*/
-        left: 18px;
-        font-size: 12px;
-        color: #686868;
-    }
+   
+  
     .search-section{
         border-top: 1px solid #BEBEBE;
         border-bottom: 1px solid #BEBEBE;
@@ -287,253 +251,34 @@ function loadPopup() {
     html.appendChild(head);
     html.appendChild(body);
     let html_content = `
+    <div class="close" id="close">&times;</div>
     <div class="container container-sc" id="popup">
-    <div class="row pt-3 pb-1">
-        <div class="col-sm-1">
-            <img class="logo" src="${chrome.runtime.getURL('assets/icons/sv-16x16.png')}" /> 
+        <div class="row pt-3 pb-1">
+            <div class="col-sm-12 text-center">
+                <img class="logo" src="${chrome.runtime.getURL('assets/icons/logo.png')}" /> 
+            </div>
         </div>
-        <div class="col-sm-7">
-            <div class="blue-logo-bar"></div>
+        <div class="row pt-3 pb-1">
+            <div class="col-sm-12">
+                <h2>Welcome</h2>
+            </div>
         </div>
-        <div class="col-sm-3">
-        <span class="top-right-head">Deal CRM</span><button class="reboot" id="reboot"></button>
+        <div class="row pt-3 pb-1">
+            <div class="col-sm-12">
+                New User? <a href="#">Create an account</a>
+            </div>
         </div>
-    </div>
-   
-    <!-- start home -->
-    <div id="home_content">
-        <div class="row search-section">
-        <div class="search-box">
-        <input type="search" placeholder="Search By Startup Name" id="search"/><button id="submit_search" class="btn-search">Search</button>
+        <div class="row pt-3 pb-1">
+            <div class="col-sm-12">
+                <input type="text" placeholder="Username or email">
+            </div>
         </div>
-        </div>
-        <div class="row">
-            <div class="col-sm">
-                <div class="form-group">
-                    <div class="msg" id="msg"></div>
-                    <ul id="crm_result" class="result-list">
-                    </ul>
-                </div>
-
-
+        <div class="row pt-3 pb-1">
+            <div class="col-sm-12">
+                <input type="password" placeholder="Password">
             </div>
         </div>
     </div>
-    <!-- end home -->
-    <!-- start entry -->
-    <div id="entry_content">
-        <span class="close" id="close_add">&times;</span>
-        <div class="row">
-            <div class="col-sm">
-                <div class="form-group">
-                    <label class="form-text">Startup Name</label>
-                    <input type="text" class="form-control" id="startup_name_new" placeholder="Enter company name">
-                </div>
-                <div class="form-group">
-                    <label class="form-text">Lead</label>
-                    <select class="form-select" id="lead_new">
-                    <option value="Alex" selected>Alex</option>
-                    <option value="Aditya">Aditya</option>
-                    <option value="Julian">Julian</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-text">Vertical</label>
-                    <select class="form-select" id="vertical_new">
-                    <option value="Aerospace">Aerospace</option>
-                    <option value="Agriculture">Agriculture</option>
-                    <option value="Automotive">Automotive</option>
-                    <option value="Construction">Construction</option>
-                    <option value="Ecommerce">Ecommerce</option>
-                    <option value="Energy">Energy</option>
-                    <option value="Enterprise">Enterprise</option>
-                    <option value="Food">Food</option>
-                    <option value="Infrastructure">Infrastructure</option>
-                    <option value="Maritime">Maritime</option>
-                    <option value="Manufacturing">Manufacturing</option>
-                    <option value="Material Science">Material Science</option>
-                    <option value="Mining">Mining</option>
-                    <option value="Other">Other</option>
-                    <option value="Procurement">Procurement</option>
-                    <option value="Real Estate">Real Estate</option>
-                    <option value="Retail">Retail</option>
-                    <option value="Robotics">Robotics</option>
-                    <option value="Supply Chain" selected>Supply Chain</option>
-                    <option value="Transportation">Transportation</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-text">Stage</label>
-                    <select class="form-select" id="stage_new">
-                        <option value="Lead" selected>Lead</option>
-                        <option value="Prospecting">Prospecting</option>
-                        <option value="First Meeting - Pending">First Meeting - Pending</option>
-                        <option value="First Meeting - Complete">First Meeting - Complete</option>
-                        <option value="Second Meeting - Pending">Second Meeting - Pending</option>
-                        <option value="Second Meeting - Complete">Second Meeting - Complete</option>
-                        <option value="Active">Active</option>
-                        <option value="Dilligence">Dilligence</option>
-                        <option value="Send Pass">Send Pass</option>
-                        <option value="Portfolio">Portfolio</option>
-                        <option value="Future Reconnect">Future Reconnect</option>
-                        <option value="No Meeting - Response">No Meeting - Response</option>
-                        <option value="No Meeting - No Response">No Meeting - No Response</option>
-                        <option value="Passed">Passed</option>
-                        <option value=""> </option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-text">URL</label>
-                    <input type="text" class="form-control" id="url_new" placeholder="Enter URL">
-                </div>
-                <div class="form-group">
-                    <label class="form-text">Description</label>
-                    <textarea class="form-control" id="desc_new" rows="3"></textarea>
-                </div>
-                <div class="form-group">
-                    <label class="form-text">CEO Email</label>
-                    <input type="email" class="form-control" id="ceo_email_new" placeholder="Enter CEO Email">
-                </div>
-                <div class="form-group">
-                    <label class="form-text">CEO LinkedIn</label>
-                    <input type="text" class="form-control" id="ceo_linkedin_new" placeholder="Enter CEO LinkedIn">
-                </div>
-                <div class="form-group">
-                    <label class="form-text">Status</label>
-                    <input type="text" class="form-control" id="status_new" placeholder="Enter Status">
-                </div>
-                <div class="form-group">
-                    <label class="form-text">Source</label>
-                    <input type="text" class="form-control" id="source_new" placeholder="Enter Source">
-                </div>
-                <div class="form-group">
-                <label class="form-text">Source By</label>
-                <select class="form-select" id="source_by_new">
-                    <option value='{"id": "usryeWEW8DpNhtoMn","email": "alexey@schematicventures.com","name": "Alex Freed"}'>Alex Freed</option>
-                </select>
-                </div>
-                <div class="form-group">
-                <label class="form-text">Attachment</label><br>
-                <input class="custom-file-input" id="file_add" type="file" />
-                <div><span id="progress_add"></span></div>
-                </div>
-                <button class="btn btn-primary" id="btn_add">Save Record <span class="icon btn-icon"><svg width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M14.4001 10.6578H13.3235V13.9234H1.15846V1.75836H4.424V0.681747H0.0819092V14.9999H14.4L14.4001 10.6578Z" fill="#007DED"/>
-                <path d="M5.14174 7.177L4.06512 11.0167L7.90482 9.94008L15.0818 2.78102L12.3008 3.05176e-05L5.14174 7.177ZM7.34864 8.98916L5.60821 9.47364L6.09269 7.73322L10.4168 3.40908L11.6728 4.66502L7.34864 8.98916ZM12.4264 3.91143L11.1704 2.65549L12.3008 1.52508L13.5568 2.78102L12.4264 3.91143Z" fill="#007DED"/>
-                </svg></span></button>
-                <small class="form-text text-muted" id="add-msg"></small>
-            </div>
-        </div>
-    </div>
-    <!-- end entry -->
-    <!-- start edit -->
-    <div id="edit_content">
-        <span class="close" id="close_edit">&times;</span>
-        <div class=" row">
-            <div class="col-sm">
-                <div class="form-group">
-                    <label class="form-text">Startup Name</label>
-                    <input type="text" class="form-control" id="startup_name" placeholder="Enter company name">
-                </div>
-                <div class="form-group">
-                    <label class="form-text">Lead</label>
-                    <select class="form-select" id="lead">
-                    <option value="Alex" selected>Alex</option>
-                    <option value="Aditya">Aditya</option>
-                    <option value="Julian">Julian</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-text">Vertical</label>
-                    <select class="form-select" " id="vertical">
-                    <option value="Aerospace">Aerospace</option>
-                    <option value="Agriculture">Agriculture</option>
-                    <option value="Automotive">Automotive</option>
-                    <option value="Construction">Construction</option>
-                    <option value="Ecommerce">Ecommerce</option>
-                    <option value="Energy">Energy</option>
-                    <option value="Enterprise">Enterprise</option>
-                    <option value="Food">Food</option>
-                    <option value="Infrastructure">Infrastructure</option>
-                    <option value="Maritime">Maritime</option>
-                    <option value="Manufacturing">Manufacturing</option>
-                    <option value="Material Science">Material Science</option>
-                    <option value="Mining">Mining</option>
-                    <option value="Other">Other</option>
-                    <option value="Procurement">Procurement</option>
-                    <option value="Real Estate">Real Estate</option>
-                    <option value="Retail">Retail</option>
-                    <option value="Robotics">Robotics</option>
-                    <option value="Supply Chain" selected>Supply Chain</option>
-                    <option value="Transportation">Transportation</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-text">Stage</label>
-                    <select class="form-select" id="stage">
-                        <option value="Lead">Lead</option>
-                        <option value="Prospecting">Prospecting</option>
-                        <option value="First Meeting - Pending">First Meeting - Pending</option>
-                        <option value="First Meeting - Complete">First Meeting - Complete</option>
-                        <option value="Second Meeting - Pending">Second Meeting - Pending</option>
-                        <option value="Second Meeting - Complete">Second Meeting - Complete</option>
-                        <option value="Active">Active</option>
-                        <option value="Dilligence">Dilligence</option>
-                        <option value="Send Pass">Send Pass</option>
-                        <option value="Portfolio">Portfolio</option>
-                        <option value="Future Reconnect">Future Reconnect</option>
-                        <option value="No Meeting - Response">No Meeting - Response</option>
-                        <option value="No Meeting - No Response">No Meeting - No Response</option>
-                        <option value="Passed">Passed</option>
-                        <option value=""> </option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-text">URL</label>
-                    <input type="text" class="form-control" id="url" placeholder="Enter URL">
-                </div>
-                <div class="form-group">
-                    <label class="form-text">Description</label>
-                    <textarea class="form-control" id="desc" rows="3"></textarea>
-                </div>
-                <div class="form-group">
-                    <label class="form-text">CEO Email</label>
-                    <input type="email" class="form-control" id="ceo_email" placeholder="Enter CEO Email">
-                </div>
-                <div class="form-group">
-                    <label class="form-text">CEO LinkedIn</label>
-                    <input type="text" class="form-control" id="ceo_linkedin" placeholder="Enter CEO LinkedIn">
-                </div>
-                <div class="form-group">
-                    <label class="form-text">Status</label>
-                    <input type="text" class="form-control" id="status" placeholder="Enter Status">
-                </div>
-                <div class="form-group">
-                    <label class="form-text">Source</label>
-                    <input type="text" class="form-control" id="source" placeholder="Enter Source">
-                </div>
-                <div class="form-group">
-                    <label class="form-text">Source By</label>
-                    <select class="form-select" id="source_by">
-                        <option value='{"id": "usryeWEW8DpNhtoMn","email": "alexey@schematicventures.com","name": "Alex Freed"}'>Alex Freed</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-text">Attachment</label><br>
-                    <input class="custom-file-input" id="file_update" type="file" />
-                    <div><span id="progress_update"></span></div>
-                </div>
-                <button class="btn btn-primary" id="btn_update">Save Record <span class="icon btn-icon"><svg width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M14.4001 10.6578H13.3235V13.9234H1.15846V1.75836H4.424V0.681747H0.0819092V14.9999H14.4L14.4001 10.6578Z" fill="#007DED"/>
-                <path d="M5.14174 7.177L4.06512 11.0167L7.90482 9.94008L15.0818 2.78102L12.3008 3.05176e-05L5.14174 7.177ZM7.34864 8.98916L5.60821 9.47364L6.09269 7.73322L10.4168 3.40908L11.6728 4.66502L7.34864 8.98916ZM12.4264 3.91143L11.1704 2.65549L12.3008 1.52508L13.5568 2.78102L12.4264 3.91143Z" fill="#007DED"/>
-                </svg></span></button>
-                <small class="form-text text-muted" id="update-msg"></small>
-            </div>
-        </div>
-    </div>
-    <!-- end edit -->
-</div>
 `;
     body.innerHTML = html_content;
 
@@ -542,4 +287,7 @@ function loadPopup() {
     script.src = "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js";
     body.appendChild(script);
     shadowRoot.append(html);
+    shadowRoot.getElementById('close').addEventListener('click',() => {
+        $(shadowRoot.getElementById('popup')).fadeOut();
+    }) 
 }
