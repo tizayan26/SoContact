@@ -4,23 +4,22 @@
     "description": "Get Anyone's Mobile Numbers and Emails.",
     "author": "Nasirul Akbar Khan",
     
-    "options_page": "options.html",
 
     "action": {
       "default_icon":{
         "16": "assets/icons/icon16.png",
-        "19": "assets/icons/icon19.png",
         "32": "assets/icons/icon32.png",
         "48": "assets/icons/icon48.png",
+        "64": "assets/icons/icon64.png",
         "128": "assets/icons/icon128.png"
       }
     },
 
     "icons": {
       "16": "assets/icons/icon16.png",
-      "19": "assets/icons/icon19.png",
       "32": "assets/icons/icon32.png",
       "48": "assets/icons/icon48.png",
+      "64": "assets/icons/icon64.png",
       "128": "assets/icons/icon128.png"
     },
 
@@ -31,13 +30,13 @@
     "content_scripts": [ 
     {
       "all_frames": false,
-      "js": ["assets/js/libs/jquery.js", "assets/js/common.js", "assets/js/popup.js", "assets/js/content.js"],
+      "js": ["assets/js/libs/jquery.js",   "assets/js/content.js"],
       "matches": ["<all_urls>"],
       "run_at": "document_end"
     },
     {
       "all_frames": false,
-      "js": ["assets/js/linkedin.js"],
+      "js": ["assets/js/common.js","assets/js/popup.js"],
       "matches": ["*://*.linkedin.com/*","*://linkedin.com/*"],
       "run_at": "document_end"
     }
@@ -48,7 +47,7 @@
 
   
     "web_accessible_resources":[{
-      "resources": ["assets/css/style.css", "assets/icons/icon16.png"],
+      "resources": ["assets/css/style.css", "assets/icons/icon48.png"],
       "matches": ["<all_urls>"]
     }],
     "permissions": [
