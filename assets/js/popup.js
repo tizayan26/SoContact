@@ -31,7 +31,7 @@ function loadPopup() {
     link.href = "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css";
     head.appendChild(link);
     let style = document.createElement('style');
-    style.innerHTML = `@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+    style.innerHTML = `@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&family=Poppins:wght@400;500;600;700&display=swap');
     *{
         font-family: 'Poppins', sans-serif;
     }
@@ -44,13 +44,12 @@ function loadPopup() {
     }
 
     .container-sc{
-        border: 1px solid #F4FAFF;
+        background: #F4FAFF 0% 0% no-repeat padding-box;
         box-shadow: 0px 1px 24px #B4C5D346;
         border-radius: 10px;
         opacity: 1;
         backdrop-filter: blur(25px);
         -webkit-backdrop-filter: blur(25px);
-        background: #F4FAFF 0% 0% no-repeat padding-box;
         width: 400px;
         padding:40px;
         display:none;
@@ -63,11 +62,50 @@ function loadPopup() {
         opacity: 1;
     }
 
+    .form-control{
+        background: #FCFEFF 0% 0% no-repeat padding-box;
+        border-radius: 10px;
+        border: none;
+        text-align: left;
+        font: normal normal normal 26px/39px Poppins;
+        letter-spacing: 0px;
+        color: #121C31;
+        opacity: 1;
+    }
+
+    .form-control:focus,.form-control:hover,.form-select:hover,.form-select:focus{
+        background-color: #E6E9F4;
+        border: none;
+        outline: 0;
+        box-shadow: none;
+    }
+
+    .form-check-input:checked {
+        background: #FF7400 0% 0% no-repeat padding-box;
+        
+    }
+    .form-check-input[type=checkbox] {
+        border-radius: 4px;
+        opacity: 1;
+        width: 26px;
+        height: 26px;
+        outline: none
+    }
+
+    .form-check-label{
+        padding: 0 0 0 10px;
+        text-align: left;
+        font: normal normal normal 14px/32px Poppins;
+        letter-spacing: 0px;
+        color: #121C31;
+        opacity: 1;
+    }
+
     .logo{
         vertical-align: middle;
         width: 150px;
         height: 150px;
-        box-shadow: 0px 1px 24px #b4c5d346;
+        box-shadow: 0px 1px 10px #b4c5d346;
         border-radius: 10px;
     }
   
@@ -90,14 +128,35 @@ function loadPopup() {
     }
    
     .btn-primary{
-        background-color: #D9EDFF;
+        background: #FF7400 0% 0% no-repeat padding-box;
+        border-radius: 7px;
+        opacity: 1;
+        text-align: center;
+        font: normal normal 600 18px/41px Noto Sans;
+        letter-spacing: 0px;
+        color: #FFFFFF;
+        opacity: 1;
+        outline: none;
         border: none;
-        color: #007DED!important;
-        width:100%;
-        text-align: initial;
+        width: 100%
     }
     .btn-primary:hover{
-        background-color: rgba(171,214,253,90%)
+        background-color: #F99600;
+    }
+
+    a{
+        font: normal normal 600 14px/32px Poppins;
+        letter-spacing: 0px;
+        color: #0058FF;
+        opacity: 1;
+        text-decoration:none;
+    }
+    .lbl-new-user{
+        text-align: left;
+        font: normal normal normal 14px/32px Poppins;
+        letter-spacing: -0.17px;
+        color: #121C31;
+        opacity: 1;
     }
     .btn-icon{
         float: right;
@@ -120,69 +179,10 @@ function loadPopup() {
         outline: none;
         padding: 8px 12px
     }
-    .msg{
-        background-color: #FFEAEA;
-        padding: 10px;
-        color: rgb(54 54 54 / 90%);
-        font-size: 14px;
-        margin: 15px 0;
-    }
-    .result-list > li > .icon{
-        float: right;
-    }
-    .line{
-        padding-top:10px;
-        border-top: 1px solid #BEBEBE;
-    }
-    #entry_content,#edit_content{
-        padding-bottom: 10px;
-    }
-    .form-control,.form-select{
-        background-color:#F6F6F6;
-        color:rgb(58,58,58,90%);
-        border: none;
-    }
-    .form-control:focus,.form-control:hover,.form-select:hover,.form-select:focus{
-        color: #212529;
-        background-color: #b7b7b7;
-        border: none;
-        outline: 0;
-        box-shadow: none;
-    }
-    .custom-file-input::-webkit-file-upload-button {
-        visibility: hidden;
-    }
-    .custom-file-input::before {
-        content: 'Add New Attachment';
-        display: inline-block;
-        background-color: #F6F6F6;
-        color: rgb(58,58,58,90%);
-        border: none;
-        width: 100%;
-        padding: 0.375rem 0.75rem;
-        font-size: 12px;
-        font-weight: 400;
-        line-height: 1.5;
-        outline: none;
-        -webkit-user-select: none;
-        cursor: pointer;
-        border-radius: 0.25rem;
-        background-image: url("data:image/svg+xml,%3Csvg width='13' height='13' viewBox='0 0 13 13' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6.5 0C6.01055 0 5.61361 0.396919 5.61361 0.886387V5.61361H0.886387C0.396935 5.61361 0 6.01053 0 6.5C0 6.98947 0.396919 7.38639 0.886387 7.38639H5.61361V12.1136C5.61361 12.6031 6.01053 13 6.5 13C6.98947 13 7.38639 12.6033 7.38639 12.1136V7.38639H12.1136C12.6031 7.38639 13 6.98947 13 6.5C13 6.01053 12.6031 5.61361 12.1136 5.61361H7.38639V0.886387C7.38639 0.396935 6.98967 0 6.5 0Z' fill='%23767676'/%3E%3C/svg%3E");
-        background-repeat: no-repeat;
-        background-position: right;
-        background-position-x: 205px;
-        background-size: 10px;
-    }
-    .custom-file-input:hover::before {
-        color: #212529;
-        background-color: #b7b7b7;
-        border: none;
-        outline: 0;
-        box-shadow: none;
-    }
-    .custom-file-input:active::before {
-        background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
-    }
+   
+
+    
+    
     textarea::-webkit-scrollbar {
         height: 6px;
         width: 6px;
@@ -230,20 +230,6 @@ function loadPopup() {
         opacity: 1;
     }
 
-    button.reboot{
-        position: absolute;
-        top: 8px;
-        right: 10px;
-        height: 18px;
-        width: 15px;
-        background-repeat: no-repeat;
-        background-position: center;
-        border: none;
-        background: transparent url("data:image/svg+xml,%3Csvg width='15' height='18' viewBox='0 0 15 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7.50241 0V2.2836C4.00686 2.2836 0.963827 4.8247 0.187253 8.39561C-0.589037 11.9668 1.10275 15.64 4.25365 17.2262C7.40444 18.8122 11.1964 17.9012 13.3722 15.0345C15.548 12.168 15.542 8.089 13.3576 5.22977L11.8931 6.45726C13.5374 8.60948 13.5429 11.6546 11.9057 13.812C10.268 15.9697 7.43583 16.6503 5.06434 15.4564C2.69277 14.2625 1.43139 11.5209 2.01591 8.83304C2.60015 6.14508 4.87157 4.24773 7.50264 4.24773V6.60308L11.2516 3.30152L7.50241 0Z' fill='%23686868'/%3E%3C/svg%3E");
-    }
-    button.reboot:hover {
-        opacity: 1;
-    }
     `;
     head.appendChild(style);
     let body = document.createElement('body');
@@ -264,18 +250,36 @@ function loadPopup() {
             </div>
         </div>
         <div class="row pt-3 pb-1">
-            <div class="col-sm-12">
-                New User? <a href="#">Create an account</a>
+            <div class="col-sm-6">
+                <label class="lbl-new-user">New User?</label>
+            </div>
+            <div class="col-sm-6">
+                <a href="#">Create an account</a>
             </div>
         </div>
         <div class="row pt-3 pb-1">
             <div class="col-sm-12">
-                <input type="text" placeholder="Username or email">
+                <input class="form-control form-input" type="text" placeholder="Username or email">
             </div>
         </div>
         <div class="row pt-3 pb-1">
             <div class="col-sm-12">
-                <input type="password" placeholder="Password">
+                <input class="form-control form-password" type="password" placeholder="Password">
+            </div>
+        </div>
+        <div class="row pt-3 pb-1">
+            <div class="col-sm-12">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="keepme">
+                    <label class="form-check-label">
+                    Keep me signed in
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-3 pb-1">
+            <div class="col-sm-12">
+               <button class="btn-primary">Sign In</button>
             </div>
         </div>
     </div>

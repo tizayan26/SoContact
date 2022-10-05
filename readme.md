@@ -1,1 +1,2 @@
-echo "# SoContact"git 
+# SoContact
+SoContact Chrome extension.
