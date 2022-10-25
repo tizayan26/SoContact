@@ -1,3 +1,5 @@
+let profile_image;
+let profile_name;
 let shadowWrapper = document.createElement('div');
 shadowWrapper.id = "shadow-wrapper";
 document.body.appendChild(shadowWrapper);

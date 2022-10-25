@@ -4,7 +4,245 @@ window.onload = () => {
 
 init();
 dragElement(shadowRoot.getElementById("icon"));
+
+let login_html = `
+<div class="p-4 pt-5 pb-0">
+    <div class="row pt-3 pb-2">
+        <div class="col-sm-12 text-center">
+            <img class="logo" src="${chrome.runtime.getURL('assets/icons/logo.png')}" /> 
+        </div>
+    </div>
+    <div class="row pt-3 pb-2">
+        <div class="col-sm-12">
+            <h2>Welcome</h2>
+        </div>
+    </div>
+    <div class="row pt-3 pb-2">
+        <div class="col-sm-12">
+            <label class="lbl-new-user">New User?</label>
+            &nbsp;
+            <a href="#">Create an account</a>
+        </div>
+    </div>
+    <div class="row pt-3 pb-2">
+        <div class="col-sm-12">
+            <input class="form-control form-input" type="text" placeholder="Username or email" id="email">
+        </div>
+    </div>
+    <div class="row pt-3 pb-2">
+        <div class="col-sm-12">
+            <input class="form-control form-password" type="password" placeholder="Password" id="password">
+        </div>
+    </div>
+    <div class="row pt-3 pb-2">
+        <div class="col-sm-12">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="keepme">
+                <label class="form-check-label">
+                Keep me signed in
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-3 pb-2">
+        <div class="col-sm-12">
+        <button class="btn btn-primary" id="signin">Sign In</button>
+        </div>
+        <div id="loginMsg" class="col-sm-12 text-ceter"></div>
+    </div>
+    <div class="row pt-3 pb-2">
+    <div class="col-sm-4"><hr></div>
+    <div class="col-sm-4 pt-2 lbl-oauth">Or Sign In With</div>
+    <div class="col-sm-4"><hr></div>
+    </div>
+    <div class="row pt-3 pb-2">
+    <div class="col-sm-3"><img src="${chrome.runtime.getURL('assets/icons/google.png')}" /> </div>
+    <div class="col-sm-3"><img src="${chrome.runtime.getURL('assets/icons/fb.png')}" /> </div>
+    <div class="col-sm-3"><img src="${chrome.runtime.getURL('assets/icons/linkedin.png')}" /> </div>
+    <div class="col-sm-3"><img src="${chrome.runtime.getURL('assets/icons/twitter.png')}" /> </div>
+    </div>
+</div>`;
+let account_html = `
+<div class="row pt-3 pb-2">
+    <div class="col-sm-5">
+        <img class="logo-small" src="${chrome.runtime.getURL('assets/icons/logo.png')}" /> 
+    </div>
+    <div class="col-sm-5">
+        <div class="coin-container">
+            <img src="${chrome.runtime.getURL('assets/icons/coin.png')}" /> 100 credits
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <img class="avatar" id="account_dropdown" src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80" />
+    </div>
+</div>
+<div id="drop_down" class="drop-down">
+    <div class="row pt-3 pb-2">
+        <div class="col-sm-3"><img class="avatar big" src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80" /></div>
+        <div class="col-sm-6 account">
+            <label>Account</label><h6>John Doe</h6>
+            <label>Email</label><p>mail@mail.com</p>
+        </div>
+        <div class="col-sm-3">
+            <div class="row account-icons">
+                <div class="col-sm-4">
+                    <svg id="ic-bell" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                    <path id="Tracé_401" data-name="Tracé 401" d="M0,0H24V24H0Z" fill="none"/>
+                    <path id="Tracé_402" data-name="Tracé 402" d="M10,5a2,2,0,1,1,4,0,7,7,0,0,1,4,6v3a4,4,0,0,0,2,3H4a4,4,0,0,0,2-3V11a7,7,0,0,1,4-6" fill="none" stroke="#7e84a3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                    <path id="Tracé_403" data-name="Tracé 403" d="M9,17v1a3,3,0,0,0,6,0V17" fill="none" stroke="#7e84a3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                    </svg>
+                </div>
+                <div class="col-sm-4">
+                    <svg id="ic_setting" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+                    <path id="Tracé_386" data-name="Tracé 386" d="M0,0H24V24H0Z" fill="none"/>
+                    <path id="Tracé_387" data-name="Tracé 387" d="M10.325,4.317a1.724,1.724,0,0,1,3.35,0,1.724,1.724,0,0,0,2.573,1.066,1.725,1.725,0,0,1,2.37,2.37,1.724,1.724,0,0,0,1.065,2.572,1.724,1.724,0,0,1,0,3.35,1.724,1.724,0,0,0-1.066,2.573,1.725,1.725,0,0,1-2.37,2.37,1.724,1.724,0,0,0-2.572,1.065,1.724,1.724,0,0,1-3.35,0,1.724,1.724,0,0,0-2.573-1.066,1.725,1.725,0,0,1-2.37-2.37,1.724,1.724,0,0,0-1.065-2.572,1.724,1.724,0,0,1,0-3.35A1.724,1.724,0,0,0,5.383,7.752a1.725,1.725,0,0,1,2.37-2.37,1.723,1.723,0,0,0,2.572-1.065Z" fill="none" stroke="#B4C5D3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                    <circle id="Ellipse_2" data-name="Ellipse 2" cx="3" cy="3" r="3" transform="translate(9 9)" fill="none" stroke="#B4C5D3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                    </svg>
+                </div>
+                <div class="col-sm-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="150.003 246.71 12.927 12.296"><g data-name="Icon feather-edit-3"><path d="M156.467 259.007h6.463" stroke-linejoin="round" stroke-linecap="round" stroke="#b4c5d3" fill="transparent" data-name="Tracé 25"/><path d="M159.698 247.157a1.524 1.524 0 0 1 2.155 2.154l-8.977 8.978-2.873.718.718-2.873 8.977-8.977Z" stroke-linejoin="round" stroke-linecap="round" stroke="#b4c5d3" fill="transparent" data-name="Tracé 26"/></g></svg>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-3 pb-2">
+        <div class="col-sm-12">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="keepme">
+                <label class="form-check-label">
+                Auto save widget ? <br>
+                When socontact finds contact informations
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-3 pb-2 pt-2">
+    <hr class="divider">
+    </div>
+    <div class="row pt-3 pb-2">
+        <div class="col-sm-12">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="keepme">
+                <label class="form-check-label">
+                Auto save lead ? <br>
+                When socontact finds a new lead
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="row pb-2">
+        <div class="col-sm-12">
+            <ul class="options">
+                <li> 
+                    <svg id="ic_users" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+                    <path id="Tracé_393" data-name="Tracé 393" d="M0,0H24V24H0Z" fill="none"/>
+                    <circle id="Ellipse_3" data-name="Ellipse 3" cx="4" cy="4" r="4" transform="translate(5 3)" fill="none" stroke="#ff7400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                    <path id="Tracé_394" data-name="Tracé 394" d="M3,21V19a4,4,0,0,1,4-4h4a4,4,0,0,1,4,4v2" fill="none" stroke="#ff7400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                    <path id="Tracé_395" data-name="Tracé 395" d="M16,3.13a4,4,0,0,1,0,7.75" fill="none" stroke="#ff7400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                    <path id="Tracé_396" data-name="Tracé 396" d="M21,21V19a4,4,0,0,0-3-3.85" fill="none" stroke="#ff7400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                    </svg> <label>Add teams member</label>
+                </li>
+                <li> 
+                    <svg id="ic_inbox" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+                    <path id="Tracé_376" data-name="Tracé 376" d="M0,0H24V24H0Z" fill="none"/>
+                    <rect id="Rectangle_603" data-name="Rectangle 603" width="18" height="14" rx="2" transform="translate(3 5)" fill="none" stroke="#ff7400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                    <path id="Tracé_377" data-name="Tracé 377" d="M3,7l9,6,9-6" fill="none" stroke="#ff7400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                    </svg> <label>Add new leads</label>
+                </li>
+                <li class="grad">              
+                    <svg id="ic_setting" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+                    <path id="Tracé_386" data-name="Tracé 386" d="M0,0H24V24H0Z" fill="none"/>
+                    <path id="Tracé_387" data-name="Tracé 387" d="M10.325,4.317a1.724,1.724,0,0,1,3.35,0,1.724,1.724,0,0,0,2.573,1.066,1.725,1.725,0,0,1,2.37,2.37,1.724,1.724,0,0,0,1.065,2.572,1.724,1.724,0,0,1,0,3.35,1.724,1.724,0,0,0-1.066,2.573,1.725,1.725,0,0,1-2.37,2.37,1.724,1.724,0,0,0-2.572,1.065,1.724,1.724,0,0,1-3.35,0,1.724,1.724,0,0,0-2.573-1.066,1.725,1.725,0,0,1-2.37-2.37,1.724,1.724,0,0,0-1.065-2.572,1.724,1.724,0,0,1,0-3.35A1.724,1.724,0,0,0,5.383,7.752a1.725,1.725,0,0,1,2.37-2.37,1.723,1.723,0,0,0,2.572-1.065Z" fill="none" stroke="#ff7400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                    <circle id="Ellipse_2" data-name="Ellipse 2" cx="3" cy="3" r="3" transform="translate(9 9)" fill="none" stroke="#ff7400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                    </svg> <label>Integrations</label>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row pt-3 pb-2">
+        <div class="col-sm-6 account-bottom-text">
+            Invit and earn Credit
+            Help center
+            <p class="highlight">Free credits</p>
+        </div>
+    </div>
+    <div class="row pt-3 pb-2 text-center">
+        <div class="col-sm-12"><button class="btn-logout" id="logout">Log out</div>
+    </div>
+</div>
+<div id="app_container" class="row">
+    <div class="col-sm-12 pt-5 pb-2 text-center">
+    <img class="logoQ" src="${chrome.runtime.getURL('assets/icons/logoQ.png')}" />
+    </div>
+    <div class="col-sm-12 pt-3 pb-2 text-center">
+        <h4 class="title-contact-search">Contact Search</h4>
+    </div>
+    <div class="col-sm-12 p-4" id="contact_found_detail">
+       
+      
+
+    </div>
+    
+</div>
+`;
+let contact_detail_api = ` <div class="row white-container p-1">
+    <div class="col-sm-12 pt-4">
+        <div class="row dotted-box pt-2 pb-2">
+            <div class="col-sm-4"><img class="avatar big" id="linkedInProfileImg" src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80" /></div>
+            <div class="col-sm-8 account">
+                <label>Contact Found</label><h6 id="linkedInProfileName">John Doe</h6>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="row dotted-box pt-2 pb-2">
+            <div class="col-sm-12"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"/></svg><label> PHONE NUMBERS</label></div>
+            <div class="col-sm-12">
+                <ul>
+                    <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M288.1 0l86.5 164 182.7 31.6L428 328.5 454.4 512 288.1 430.2 121.7 512l26.4-183.5L18.9 195.6 201.5 164 288.1 0z"/></svg> +33 00 ** ** ** ** </li>
+                    <li class="not-verified"> +33 00 ** ** ** ** </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="row dotted-box pt-2 pb-2">
+            <div class="col-sm-12"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg><label> PROFESSIONAL MAILS</label></div>
+            <div class="col-sm-12">
+                <ul>
+                    <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M288.1 0l86.5 164 182.7 31.6L428 328.5 454.4 512 288.1 430.2 121.7 512l26.4-183.5L18.9 195.6 201.5 164 288.1 0z"/></svg> *******@********.com</li>
+                    <li class="not-verified"> *******@********.com </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+`;
+let contact_detail_linkedIn = `<div class="row white-container p-4">
+<div class="col-sm-4"><img class="avatar big" id="linkedInProfileImg" src="${chrome.runtime.getURL('assets/icons/spinner.gif')}" /></div><!--https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80-->
+<div class="col-sm-8 account">
+    <label>Contact Found</label><h6 id="linkedInProfileName"><div class="load-2">
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+  </div></h6><!--John Doe-->
+</div>
+<div class="col-sm-12 text-center pt-4 pb-2"><h4 class="msg">It appears that we don’t have enough informations about this contact…yet ;)</h4></div>
+<div class="col-sm-12 text-center"><p class="sub-msg">No worries, you can add it to your waiting list,<br> We’ll send you a notification when the contact is updated</p></div>
+<div class="col-sm-12 pt-4 text-center">
+    <button class="btn btn-secondary add-to-waiting-list" id="signin">Add to waiting list</button>
+</div>
+</div>`;
+let leadUnlocked = `<div class="col-sm-12 pt-2 pb-2 p-4 text-center">
+<div class="row white-container p-2">
+    <div class="col-sm-4"><img class="avatar big" id="linkedInProfileImg" src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80" /></div><!--https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80-->
+    <div class="col-sm-8 account">
+    <h6 id="linkedInProfileName">John Doe</h6><label>Job Title</label>
+    </div>
+</div>
+</div>`;
 loadPopup();
+
 
 function init() {
 
@@ -22,19 +260,27 @@ function init() {
     shadowRoot.append(icon_head);
 }
 
+
 function loadPopup() {
     const html = document.createElement('html');
     let head = document.createElement('head');
+
+    let meta = document.createElement('meta');
+    meta.name = "viewport";
+    meta.content = "width=device-width, initial-scale=1";
+    head.appendChild(meta);
 
     let link = document.createElement('link');
     link.rel = "stylesheet";
     link.href = "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css";
     head.appendChild(link);
+
     let style = document.createElement('style');
-    style.innerHTML = `@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&family=Poppins:wght@400;500;600;700&display=swap');
+    style.innerHTML = `@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&family=Poppins:wght@400;500;600;700&display=swap');/* @import url("https://use.typekit.net/nbf5bjj.css"); */
     *{
-        font-family: 'Poppins', sans-serif;
+        font-family: 'poppins', sans-serif!important;
     }
+    
     body{
         font-size: 12px;
         position: fixed;
@@ -50,13 +296,14 @@ function loadPopup() {
         opacity: 1;
         backdrop-filter: blur(25px);
         -webkit-backdrop-filter: blur(25px);
-        width: 400px;
-        padding:40px;
+        width: 285px;
+        height: 616.6108px;
+        padding:10px;
         display:none;
     }
     h2{
         text-align: left;
-        font: normal normal bold 35px/60px Poppins;
+        font: normal normal bold 25.08px/30.78px Poppins;
         letter-spacing: 0.53px;
         color: #121C31;
         opacity: 1;
@@ -64,13 +311,17 @@ function loadPopup() {
 
     .form-control{
         background: #FCFEFF 0% 0% no-repeat padding-box;
-        border-radius: 10px;
+        border-radius: 4px;
         border: none;
         text-align: left;
-        font: normal normal normal 26px/39px Poppins;
+        font: normal normal normal 10px/14.82px Poppins;
         letter-spacing: 0px;
-        color: #121C31;
+        color: #121C31!important;
         opacity: 1;
+        height:34.2px;
+    }
+    .form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: #121C31!important;
     }
 
     .form-control:focus,.form-control:hover,.form-select:hover,.form-select:focus{
@@ -87,15 +338,16 @@ function loadPopup() {
     .form-check-input[type=checkbox] {
         border-radius: 4px;
         opacity: 1;
-        width: 26px;
-        height: 26px;
-        outline: none
+        width: 21px;
+        height: 20px;
+        outline: none;
+        border: 1px solid #B4C5D3;
     }
 
     .form-check-label{
         padding: 0 0 0 10px;
         text-align: left;
-        font: normal normal normal 14px/32px Poppins;
+        font: normal normal normal 11.4px/24.48px Poppins;
         letter-spacing: 0px;
         color: #121C31;
         opacity: 1;
@@ -103,11 +355,49 @@ function loadPopup() {
 
     .logo{
         vertical-align: middle;
-        width: 150px;
-        height: 150px;
+        width: 105.1536px;
+        height: 105.1536px;
         box-shadow: 0px 1px 10px #b4c5d346;
-        border-radius: 10px;
+        border-radius: 12px;
     }
+    .logo-small{
+        vertical-align: middle;
+        width: 35.8112px;
+        height: 35.8112px;
+        box-shadow: 0px 1px 10px #b4c5d346;
+        border-radius: 4px;
+    }
+
+    .coin-container{
+        padding: 5px;
+        background: #FF7400 0% 0% no-repeat padding-box;
+        border-radius: 4px;
+        opacity: 1;
+        text-align: left;
+        font: normal normal bold 11.78px/15.54px Muli;
+        letter-spacing: 0px;
+        color: #FFFFFF;
+        width: 88px;
+        margin-left: 18px;
+    }
+    .coin-container img{
+        width: 11.02px;
+        height: auto;
+    }
+
+    .avatar{
+        width: auto;
+        height: 24.32px;
+        border-radius: 50%;
+        cursor:pointer;
+    }
+
+    .avatar.big{
+        width: 60px;
+        height: 60px;
+        cursor:none;
+    }
+
   
     /* The Close Button */
     .close {
@@ -132,20 +422,50 @@ function loadPopup() {
         border-radius: 7px;
         opacity: 1;
         text-align: center;
-        font: normal normal 600 18px/41px Noto Sans;
+        font: normal normal 600 11.4px/15.58px Noto Sans;
         letter-spacing: 0px;
         color: #FFFFFF;
         opacity: 1;
         outline: none;
         border: none;
-        width: 100%
+        width: 100%;
+        height:34.2px;
     }
     .btn-primary:hover{
         background-color: #F99600;
     }
 
+    .btn-primary:focus{
+        box-shadow:none;
+        background: #FF7400 0% 0% no-repeat padding-box;
+        border:none;
+    }
+
+    .btn-secondary{
+        background: #0058FF 0% 0% no-repeat padding-box;
+        box-shadow: 0px 3px 11px #0058FF4A;
+        border-radius: 4px;
+        width: 80%;
+        outline: none;
+        border: none;
+        font: normal normal 600 10px/11px Muli;
+        letter-spacing: 0px;
+        color: #FFFFFF;
+    }
+    .btn-secondary:hover{
+        background-color: #7E84A3;
+    }
+
+    .lbl-oauth{
+        text-align: center;
+        font: normal normal normal 9.12px/12px Poppins;
+        letter-spacing: 0.72px;
+        color: #121C31;
+        padding:0;
+    }
+
     a{
-        font: normal normal 600 14px/32px Poppins;
+        font: normal normal 600 11.4px/17.48px Poppins;
         letter-spacing: 0px;
         color: #0058FF;
         opacity: 1;
@@ -153,34 +473,16 @@ function loadPopup() {
     }
     .lbl-new-user{
         text-align: left;
-        font: normal normal normal 14px/32px Poppins;
+        font: normal normal normal 12.54px/18.24px Poppins;
         letter-spacing: -0.17px;
         color: #121C31;
         opacity: 1;
     }
-    .btn-icon{
-        float: right;
-    }
-    .form-control,.form-select { font-size: 14px;}
-    h5{
-        font-size: 1.05rem;
-    }
-   
-  
-    .search-section{
-        border-top: 1px solid #BEBEBE;
-        border-bottom: 1px solid #BEBEBE;
-        padding: 15px 10px;
-    }
-    .search-section > input[type=text]{
-        border: 1px solid #BEBEBE;
-        color:#3A3A3A;
-        font-size: 14px;
-        outline: none;
-        padding: 8px 12px
-    }
-   
 
+    .divider{
+        color: #b4c5d36e;
+    }
+   
     
     
     textarea::-webkit-scrollbar {
@@ -195,95 +497,216 @@ function loadPopup() {
         border-radius: 2px;
         background-color: #505050;
     }
-    .search-box {
-        display: flex;
-        /*margin: 0 0 30px;*/
-        border: 1px solid #BEBEBE;
-        outline: none;
-        padding: 8px 12px
+  
+
+    .account label{
+        text-align: left;
+        font: normal normal normal 8px/18.76px Poppins;
+        letter-spacing: 0px;
+        color: #7E84A3;
     }
-      
-    input[type="search"] {
-        border: none;
-        margin: 0;
-        /*padding: 7px 8px;*/
-        font-size: 14px;
-        color:#3A3A3A;
-        border: 1px solid transparent;
-        outline:none;
-        width:90%;
-    }
-    button.btn-search {
-        text-indent: -999px;
-        overflow: hidden;
-        width: 40px;
-        padding: 0;
-        margin: 0;
-        border: 1px solid transparent;
-        border-radius: inherit;
-        background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' class='bi bi-search' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'%3E%3C/path%3E%3C/svg%3E") no-repeat center;
-        cursor: pointer;
-        opacity: 0.7;
-    }
-      
-    button.btn-search:hover {
+    .account h6{
+        text-align: left;
+        font: normal normal 800 11px/8.02px Gilroy;
+        letter-spacing: 0.72px;
+        color: #121C31;
         opacity: 1;
     }
+    .account h7{
+    
+        text-align: left;
+        font: normal normal bold 18px/25px Muli;
+        letter-spacing: 0px;
+        color: #121C31;
+    }
+    .account p{
+        text-align: left;
+        font: normal normal normal 9.46px/6.88px Poppins;
+        letter-spacing: 0.12px;
+        color: #131523;
+    }
+    ul.options{
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    ul.options>li{
+        background: #F4FAFF 0% 0% no-repeat padding-box;
+        box-shadow: 0px 1px 4px #15223214;
+        border-radius: 6px;
+        text-align: left;
+        letter-spacing: 0.2px;
+        color: #121C31;
+        padding:16px 12px;
+        margin:6px 0;
+        height: 52.44px;
+    }
+    ul.options>li>label{
+        margin-left:15px;
+    }
+    .grad{
+        background: transparent linear-gradient(90deg, #00BDF50F 0%, #F4FAFF 100%) 0% 0% no-repeat padding-box!important;
+    }
+    .account-bottom-text{
+        font: normal normal medium 14px/35px Poppins;
+        text-align: left;
+        letter-spacing: 0.17px;
+        color: #171725;
+    }
+    .account-bottom-text .highlight{
+        font: normal normal normal 11px/15px Poppins;
+        color: #FF7400;
+    }
+    .btn-logout{
+        border: 1px solid #D7DBEC;
+        border-radius: 4px;
+        text-align: left;
+        font: normal normal 600 9.6px/4.56px Noto Sans;
+        letter-spacing: 0px;
+        color: #7E84A3;
+        padding: 12px 40px;
+        background: transparent;
+    }
+    .account-icons{
+        display: flex;
+        align-items: center;
+        position: relative;
+        top: 48px;
+    }
+    .drop-down{
+        display:none;
+    }
+    .title-contact-search{
+        text-align: center;
+        font: normal normal bold 10.64px/15.96px Poppins;
+        letter-spacing: 0.2px;
+        color: #FF7400
+    }
+    
+    .white-container{
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        border-radius: 5px;
+    }
+    
+    .white-container .msg{
+        text-align: center;
+        font: normal normal bold 11.4px/17.48px Poppins;
+        letter-spacing: 0.21px;
+        color: #121C31;
+    }
+    .white-container .sub-msg{
+        text-align: center;
+        font: normal normal normal 6.84px/10.26px Poppins;
+        letter-spacing: 0.13px;
+        color: #121C31;
+    }
+    .add-to-waiting-list{
+        width:134.9px;
+        height:26.22px;
+    }
+    .dotted-box{
+        border: 1px dashed #B4C5D3;
+        border-radius: 2px;
+        margin: 4px 0;
+    }
+    .dotted-box label{
+        font: normal normal bold 7.22px/12.16px Poppins;
+        letter-spacing: 0px;
+        color: #7E84A3;
+        margin-left: 4px;
+    }
+    .dotted-box svg{
+        width: 7px;
+        height: 7px;
+        fill: #7E84A3;
+    }
+    .dotted-box ul{
+        list-style:none;
+        padding:0;
+    }
+    .dotted-box ul li{
+        text-align: left;
+        font: normal normal bold 8.36px/12.54px Poppins;
+        letter-spacing: 0.16px;
+        color: #0058FF;
+    }
+    .dotted-box ul li.not-verified{
+        color: #7E84A3;
+        padding-left:10px
+    }
+    .dotted-box ul li svg{
+        width: 7px;
+        height: 7px;
+        fill: #0058FF;
+    }
+    /* line loading */
+    .load-wrapp {
+        float: left;
+        width: 100px;
+        height: 100px;
+        margin: 0 10px 10px 0;
+        padding: 20px 20px 20px;
+        border-radius: 5px;
+        text-align: center;
+        background-color: #d8d8d8;
+      }
+      
+      .load-wrapp p {
+        padding: 0 0 20px;
+      }
+      .load-wrapp:last-child {
+        margin-right: 0;
+      }
+    .line {
+        display: inline-block;
+        width: 15px;
+        height: 15px;
+        border-radius: 15px;
+        background-color: #4b9cdb;
+      }
 
+      .load-2 .line:nth-last-child(1) {
+        animation: loadingB 1.5s 1s infinite;
+      }
+      .load-2 .line:nth-last-child(2) {
+        animation: loadingB 1.5s 0.5s infinite;
+      }
+      .load-2 .line:nth-last-child(3) {
+        animation: loadingB 1.5s 0s infinite;
+      }
+      
+      @keyframes loadingB {
+        0 {
+          width: 15px;
+        }
+        50% {
+          width: 35px;
+        }
+        100% {
+          width: 15px;
+        }
+      }
+      .logoQ{
+        width:51.1632px;
+        height:51.1632px;
+      }
+    /* line loading */
     `;
     head.appendChild(style);
     let body = document.createElement('body');
 
     html.appendChild(head);
     html.appendChild(body);
+
+ 
     let html_content = `
     <div class="close" id="close">&times;</div>
     <div class="container container-sc" id="popup">
-        <div class="row pt-3 pb-1">
-            <div class="col-sm-12 text-center">
-                <img class="logo" src="${chrome.runtime.getURL('assets/icons/logo.png')}" /> 
-            </div>
-        </div>
-        <div class="row pt-3 pb-1">
-            <div class="col-sm-12">
-                <h2>Welcome</h2>
-            </div>
-        </div>
-        <div class="row pt-3 pb-1">
-            <div class="col-sm-6">
-                <label class="lbl-new-user">New User?</label>
-            </div>
-            <div class="col-sm-6">
-                <a href="#">Create an account</a>
-            </div>
-        </div>
-        <div class="row pt-3 pb-1">
-            <div class="col-sm-12">
-                <input class="form-control form-input" type="text" placeholder="Username or email">
-            </div>
-        </div>
-        <div class="row pt-3 pb-1">
-            <div class="col-sm-12">
-                <input class="form-control form-password" type="password" placeholder="Password">
-            </div>
-        </div>
-        <div class="row pt-3 pb-1">
-            <div class="col-sm-12">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="keepme">
-                    <label class="form-check-label">
-                    Keep me signed in
-                    </label>
-                </div>
-            </div>
-        </div>
-        <div class="row pt-3 pb-1">
-            <div class="col-sm-12">
-               <button class="btn-primary">Sign In</button>
-            </div>
-        </div>
+       ${login_html}
     </div>
 `;
+
+
     body.innerHTML = html_content;
 
     let script = document.createElement('script');
@@ -294,4 +717,10 @@ function loadPopup() {
     shadowRoot.getElementById('close').addEventListener('click',() => {
         $(shadowRoot.getElementById('popup')).fadeOut();
     }) 
+    
+    shadowRoot.getElementById('signin').addEventListener('click',()=>{signedIn()})
+
+   
+    
+    
 }
