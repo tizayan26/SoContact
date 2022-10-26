@@ -46,3 +46,8 @@ function dragElement(elmnt) {
     }
 }
 //  Draggable element
+
+
+function strMask(str){
+    return Array.from(str, c => Math.random() < 0.2 ? '*' : c).join('');
+}

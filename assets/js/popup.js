@@ -62,6 +62,86 @@ let login_html = `
     <div class="col-sm-3"><img src="${chrome.runtime.getURL('assets/icons/twitter.png')}" /> </div>
     </div>
 </div>`;
+
+let contact_detail_api = ` 
+<div class="row white-container p-1">
+    <div class="col-sm-12 pt-4">
+        <div class="row dotted-box pt-2 pb-2">
+            <div class="col-sm-4"><img class="avatar big" id="linkedInProfileImg" src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80" /></div>
+            <div class="col-sm-8 account">
+                <label>Contact Found</label><h6 id="linkedInProfileName">John Doe</h6>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="row dotted-box pt-2 pb-2">
+            <div class="col-sm-12"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"/></svg><label> PHONE NUMBERS</label></div>
+            <div class="col-sm-12">
+                <ul id="phoneNumbers">
+                    <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M288.1 0l86.5 164 182.7 31.6L428 328.5 454.4 512 288.1 430.2 121.7 512l26.4-183.5L18.9 195.6 201.5 164 288.1 0z"/></svg> +33 00 ** ** ** ** </li>
+                    <li class="not-verified"> +33 00 ** ** ** ** </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="row dotted-box pt-2 pb-2">
+            <div class="col-sm-12"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg><label> PROFESSIONAL MAILS</label></div>
+            <div class="col-sm-12">
+                <ul id="proEmails">
+                    <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M288.1 0l86.5 164 182.7 31.6L428 328.5 454.4 512 288.1 430.2 121.7 512l26.4-183.5L18.9 195.6 201.5 164 288.1 0z"/></svg> *******@********.com</li>
+                    <li class="not-verified"> *******@********.com </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="row dotted-box pt-2 pb-2">
+            <div class="col-sm-12"><svg width="48pt" height="48pt" version="1.0" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0 48) scale(.1 -.1)"><path d="m12 408c-17-17-17-319 0-336s439-17 456 0 17 319 0 336-439 17-456 0zm188-68c11-11 20-29 20-40 0-26-34-60-60-60s-60 34-60 60 34 60 60 60c11 0 29-9 40-20zm240-40v-60h-80-80v60 60h80 80v-60zm-200-118c22-10 36-26 38-39 3-23 2-23-118-23s-121 0-118 23c4 29 61 57 118 57 25 0 61-8 80-18z"/><path d="m300 331c0-5 14-19 30-31l30-21 30 21c17 12 30 26 30 31 0 6-13 1-30-11l-30-21-30 21c-16 12-30 17-30 11z"/></g></svg><label> PERSONAL MAIL</label></div>
+            <div class="col-sm-12">
+                <ul id="perEmails">
+                    <li><svg width="48pt" height="48pt" version="1.0" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0 48) scale(.1 -.1)"><path d="m12 408c-17-17-17-319 0-336s439-17 456 0 17 319 0 336-439 17-456 0zm188-68c11-11 20-29 20-40 0-26-34-60-60-60s-60 34-60 60 34 60 60 60c11 0 29-9 40-20zm240-40v-60h-80-80v60 60h80 80v-60zm-200-118c22-10 36-26 38-39 3-23 2-23-118-23s-121 0-118 23c4 29 61 57 118 57 25 0 61-8 80-18z"/><path d="m300 331c0-5 14-19 30-31l30-21 30 21c17 12 30 26 30 31 0 6-13 1-30-11l-30-21-30 21c-16 12-30 17-30 11z"/></g></svg> *******@********.com</li>
+                    <li class="not-verified"> *******@********.com </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="row pt-4 pb-4">
+            <div class="col-sm-2"><div class="company-logo-circle"></div></div>
+            <div class="col-sm-5"><div class="company-title" id="companyName">Company name</div></div>
+            <div class="col-sm-5"><a class="go-to-website" id="companyWebsite" target="_blank">Go to website</a></div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <label class="other-social-media">Other social media</label>
+    </div>
+    <div class="col-sm-12 pb-4">
+        <div class="row social-media-icon">
+            <div class="col-sm-1"><svg xmlns="http://www.w3.org/2000/svg" width="30.033" height="30.033" viewBox="0 0 30.033 30.033">
+            <path id="Icon_awesome-facebook-square" data-name="Icon awesome-facebook-square" d="M26.816,2.25H3.218A3.218,3.218,0,0,0,0,5.468v23.6a3.218,3.218,0,0,0,3.218,3.218h9.2V22.073H8.2V17.267h4.223V13.6c0-4.166,2.48-6.468,6.28-6.468a25.587,25.587,0,0,1,3.722.324V11.55h-2.1a2.4,2.4,0,0,0-2.71,2.6v3.121h4.611l-.737,4.806H17.614V32.283h9.2a3.218,3.218,0,0,0,3.218-3.218V5.468A3.218,3.218,0,0,0,26.816,2.25Z" transform="translate(0 -2.25)" fill="#7e84a3"/>
+          </svg></div>
+            <div class="col-sm-11"><div id="fbURL"></div></div>
+        </div>
+    </div>
+</div>
+`;
+let contact_detail_linkedIn = `<div class="row white-container p-4">
+<div class="col-sm-4"><img class="avatar big" id="linkedInProfileImg" src="${chrome.runtime.getURL('assets/icons/spinner.gif')}" /></div><!--https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80-->
+<div class="col-sm-8 account">
+    <label>Contact Found</label><h6 id="linkedInProfileName"><div class="load-2">
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+  </div></h6><!--John Doe-->
+</div>
+<div class="col-sm-12 text-center pt-4 pb-2"><h4 class="msg">It appears that we don’t have enough informations about this contact…yet ;)</h4></div>
+<div class="col-sm-12 text-center"><p class="sub-msg">No worries, you can add it to your waiting list,<br> We’ll send you a notification when the contact is updated</p></div>
+<div class="col-sm-12 pt-4 text-center">
+    <button class="btn btn-secondary add-to-waiting-list" id="signin">Add to waiting list</button>
+</div>
+</div>`;
+
 let account_html = `
 <div class="row pt-3 pb-2">
     <div class="col-sm-5">
@@ -178,61 +258,12 @@ let account_html = `
         <h4 class="title-contact-search">Contact Search</h4>
     </div>
     <div class="col-sm-12 p-4" id="contact_found_detail">
-       
-      
-
+        ${contact_detail_linkedIn}
     </div>
     
 </div>
 `;
-let contact_detail_api = ` <div class="row white-container p-1">
-    <div class="col-sm-12 pt-4">
-        <div class="row dotted-box pt-2 pb-2">
-            <div class="col-sm-4"><img class="avatar big" id="linkedInProfileImg" src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80" /></div>
-            <div class="col-sm-8 account">
-                <label>Contact Found</label><h6 id="linkedInProfileName">John Doe</h6>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-12">
-        <div class="row dotted-box pt-2 pb-2">
-            <div class="col-sm-12"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"/></svg><label> PHONE NUMBERS</label></div>
-            <div class="col-sm-12">
-                <ul>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M288.1 0l86.5 164 182.7 31.6L428 328.5 454.4 512 288.1 430.2 121.7 512l26.4-183.5L18.9 195.6 201.5 164 288.1 0z"/></svg> +33 00 ** ** ** ** </li>
-                    <li class="not-verified"> +33 00 ** ** ** ** </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-12">
-        <div class="row dotted-box pt-2 pb-2">
-            <div class="col-sm-12"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg><label> PROFESSIONAL MAILS</label></div>
-            <div class="col-sm-12">
-                <ul>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M288.1 0l86.5 164 182.7 31.6L428 328.5 454.4 512 288.1 430.2 121.7 512l26.4-183.5L18.9 195.6 201.5 164 288.1 0z"/></svg> *******@********.com</li>
-                    <li class="not-verified"> *******@********.com </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
-`;
-let contact_detail_linkedIn = `<div class="row white-container p-4">
-<div class="col-sm-4"><img class="avatar big" id="linkedInProfileImg" src="${chrome.runtime.getURL('assets/icons/spinner.gif')}" /></div><!--https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80-->
-<div class="col-sm-8 account">
-    <label>Contact Found</label><h6 id="linkedInProfileName"><div class="load-2">
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-  </div></h6><!--John Doe-->
-</div>
-<div class="col-sm-12 text-center pt-4 pb-2"><h4 class="msg">It appears that we don’t have enough informations about this contact…yet ;)</h4></div>
-<div class="col-sm-12 text-center"><p class="sub-msg">No worries, you can add it to your waiting list,<br> We’ll send you a notification when the contact is updated</p></div>
-<div class="col-sm-12 pt-4 text-center">
-    <button class="btn btn-secondary add-to-waiting-list" id="signin">Add to waiting list</button>
-</div>
-</div>`;
+
 let leadUnlocked = `<div class="col-sm-12 pt-2 pb-2 p-4 text-center">
 <div class="row white-container p-2">
     <div class="col-sm-4"><img class="avatar big" id="linkedInProfileImg" src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80" /></div><!--https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80-->
@@ -297,7 +328,7 @@ function loadPopup() {
         backdrop-filter: blur(25px);
         -webkit-backdrop-filter: blur(25px);
         width: 285px;
-        height: 616.6108px;
+        /*height: 616.6108px;*/
         padding:10px;
         display:none;
     }
@@ -377,7 +408,7 @@ function loadPopup() {
         font: normal normal bold 11.78px/15.54px Muli;
         letter-spacing: 0px;
         color: #FFFFFF;
-        width: 88px;
+        width: 90px;
         margin-left: 18px;
     }
     .coin-container img{
@@ -499,7 +530,7 @@ function loadPopup() {
     }
   
 
-    .account label{
+    .account > label{
         text-align: left;
         font: normal normal normal 8px/18.76px Poppins;
         letter-spacing: 0px;
@@ -609,7 +640,7 @@ function loadPopup() {
         border-radius: 2px;
         margin: 4px 0;
     }
-    .dotted-box label{
+    .dotted-box label:not(.account>label){
         font: normal normal bold 7.22px/12.16px Poppins;
         letter-spacing: 0px;
         color: #7E84A3;
@@ -639,6 +670,47 @@ function loadPopup() {
         height: 7px;
         fill: #0058FF;
     }
+    .logoQ{
+        width:51.1632px;
+        height:51.1632px;
+    }
+    .company-logo-circle{
+        background: #0058FF 0% 0% no-repeat padding-box;
+        border: 1px solid #0058FF19;
+        border-radius:50%;
+        width:25.08px;
+        height:25.08px;
+    }
+    .company-title{
+        text-align: left;
+        font: normal normal 600 8.36px/25.54px Poppins;
+        letter-spacing: 0.16px;
+        color: #131523;
+    }
+    .go-to-website{
+        text-align: right;
+        font: normal normal 600 7.22px/25.02px Poppins;
+        letter-spacing: 0.14px;
+        color: #00BDF5;
+         margin-left: 35px;
+    }
+    .other-social-media{
+        text-align: left;
+        font: normal normal normal 7.22px/12.16px Poppins;
+        letter-spacing: 0px;
+        color: #7E84A3;
+    }
+    .social-media-icon{
+        text-align: left;
+        font: normal normal 500 8.36px/12.54px Poppins;
+        letter-spacing: 0.16px;
+        color: #131523;
+    }
+    .social-media-icon svg{
+        width:11.4114px;
+        height:11.4114px;
+    }
+
     /* line loading */
     .load-wrapp {
         float: left;
@@ -686,10 +758,6 @@ function loadPopup() {
           width: 15px;
         }
       }
-      .logoQ{
-        width:51.1632px;
-        height:51.1632px;
-      }
     /* line loading */
     `;
     head.appendChild(style);
@@ -719,8 +787,4 @@ function loadPopup() {
     }) 
     
     shadowRoot.getElementById('signin').addEventListener('click',()=>{signedIn()})
-
-   
-    
-    
 }
