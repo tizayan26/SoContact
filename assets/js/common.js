@@ -49,5 +49,5 @@ function dragElement(elmnt) {
 
 
 function strMask(str){
-    return Array.from(str, c => Math.random() < 0.2 ? '*' : c).join('');
+    return Array.from(str, c => Math.random() < 0.5 ? '*' : c).join('');
 }
