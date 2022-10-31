@@ -48,14 +48,14 @@ let login_html = `
         <div class="col-sm-12">
         <button class="btn btn-primary" id="signin">Sign In</button>
         </div>
-        <div id="loginMsg" class="col-sm-12 text-ceter"></div>
+        <div id="loginMsg" class="col-sm-12 text-ceter login-msg"></div>
     </div>
     <div class="row pt-3 pb-2">
-    <div class="col-sm-4"><hr></div>
+    <div class="col-sm-4"><hr class="login-divider"></div>
     <div class="col-sm-4 pt-2 lbl-oauth">Or Sign In With</div>
-    <div class="col-sm-4"><hr></div>
+    <div class="col-sm-4"><hr class="login-divider"></div>
     </div>
-    <div class="row pt-3 pb-2">
+    <div class="row footer-icons p-4 pt-3 pb-2">
     <div class="col-sm-3"><img src="${chrome.runtime.getURL('assets/icons/google.png')}" /> </div>
     <div class="col-sm-3"><img src="${chrome.runtime.getURL('assets/icons/fb.png')}" /> </div>
     <div class="col-sm-3"><img src="${chrome.runtime.getURL('assets/icons/linkedin.png')}" /> </div>
@@ -67,9 +67,13 @@ let contact_detail_api = `
 <div class="row white-container p-1">
     <div class="col-sm-12 pt-4">
         <div class="row dotted-box pt-2 pb-2">
-            <div class="col-sm-4"><img class="avatar big" id="linkedInProfileImg" src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80" /></div>
+            <div class="col-sm-4"><img class="avatar big" id="linkedInProfileImg" src="${chrome.runtime.getURL('assets/icons/spinner.gif')}" /></div> <!--https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80-->
             <div class="col-sm-8 account">
-                <label>Contact Found</label><h6 id="linkedInProfileName">John Doe</h6>
+                <label>Contact Found</label><h6 id="linkedInProfileName"> <div class="load-2">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+              </div></h6> <!-- John Doe-->
             </div>
         </div>
     </div>
@@ -78,8 +82,13 @@ let contact_detail_api = `
             <div class="col-sm-12"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"/></svg><label> PHONE NUMBERS</label></div>
             <div class="col-sm-12">
                 <ul id="phoneNumbers">
-                    <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M288.1 0l86.5 164 182.7 31.6L428 328.5 454.4 512 288.1 430.2 121.7 512l26.4-183.5L18.9 195.6 201.5 164 288.1 0z"/></svg> +33 00 ** ** ** ** </li>
-                    <li class="not-verified"> +33 00 ** ** ** ** </li>
+                    <!--li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M288.1 0l86.5 164 182.7 31.6L428 328.5 454.4 512 288.1 430.2 121.7 512l26.4-183.5L18.9 195.6 201.5 164 288.1 0z"/></svg> +33 00 ** ** ** ** </li-->
+                    <li><!--class="not-verified"-->
+                    <div class="load-2"> 
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                  </div></li><!--+33 00 ** ** ** **-->
                 </ul>
             </div>
         </div>
@@ -89,8 +98,13 @@ let contact_detail_api = `
             <div class="col-sm-12"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg><label> PROFESSIONAL MAILS</label></div>
             <div class="col-sm-12">
                 <ul id="proEmails">
-                    <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M288.1 0l86.5 164 182.7 31.6L428 328.5 454.4 512 288.1 430.2 121.7 512l26.4-183.5L18.9 195.6 201.5 164 288.1 0z"/></svg> *******@********.com</li>
-                    <li class="not-verified"> *******@********.com </li>
+                    <!--li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M288.1 0l86.5 164 182.7 31.6L428 328.5 454.4 512 288.1 430.2 121.7 512l26.4-183.5L18.9 195.6 201.5 164 288.1 0z"/></svg> *******@********.com</li-->
+                    <li><!--class="not-verified"-->
+                    <div class="load-2"> 
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                  </div></li><!--*******@********.com-->
                 </ul>
             </div>
         </div>
@@ -100,8 +114,13 @@ let contact_detail_api = `
             <div class="col-sm-12"><svg width="48pt" height="48pt" version="1.0" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0 48) scale(.1 -.1)"><path d="m12 408c-17-17-17-319 0-336s439-17 456 0 17 319 0 336-439 17-456 0zm188-68c11-11 20-29 20-40 0-26-34-60-60-60s-60 34-60 60 34 60 60 60c11 0 29-9 40-20zm240-40v-60h-80-80v60 60h80 80v-60zm-200-118c22-10 36-26 38-39 3-23 2-23-118-23s-121 0-118 23c4 29 61 57 118 57 25 0 61-8 80-18z"/><path d="m300 331c0-5 14-19 30-31l30-21 30 21c17 12 30 26 30 31 0 6-13 1-30-11l-30-21-30 21c-16 12-30 17-30 11z"/></g></svg><label> PERSONAL MAIL</label></div>
             <div class="col-sm-12">
                 <ul id="perEmails">
-                    <li><svg width="48pt" height="48pt" version="1.0" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0 48) scale(.1 -.1)"><path d="m12 408c-17-17-17-319 0-336s439-17 456 0 17 319 0 336-439 17-456 0zm188-68c11-11 20-29 20-40 0-26-34-60-60-60s-60 34-60 60 34 60 60 60c11 0 29-9 40-20zm240-40v-60h-80-80v60 60h80 80v-60zm-200-118c22-10 36-26 38-39 3-23 2-23-118-23s-121 0-118 23c4 29 61 57 118 57 25 0 61-8 80-18z"/><path d="m300 331c0-5 14-19 30-31l30-21 30 21c17 12 30 26 30 31 0 6-13 1-30-11l-30-21-30 21c-16 12-30 17-30 11z"/></g></svg> *******@********.com</li>
-                    <li class="not-verified"> *******@********.com </li>
+                    <!--li><svg width="48pt" height="48pt" version="1.0" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0 48) scale(.1 -.1)"><path d="m12 408c-17-17-17-319 0-336s439-17 456 0 17 319 0 336-439 17-456 0zm188-68c11-11 20-29 20-40 0-26-34-60-60-60s-60 34-60 60 34 60 60 60c11 0 29-9 40-20zm240-40v-60h-80-80v60 60h80 80v-60zm-200-118c22-10 36-26 38-39 3-23 2-23-118-23s-121 0-118 23c4 29 61 57 118 57 25 0 61-8 80-18z"/><path d="m300 331c0-5 14-19 30-31l30-21 30 21c17 12 30 26 30 31 0 6-13 1-30-11l-30-21-30 21c-16 12-30 17-30 11z"/></g></svg> *******@********.com</li-->
+                    <li><!--class="not-verified"-->
+                    <div class="load-2"> 
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                  </div></li> <!--*******@********.com -->
                 </ul>
             </div>
         </div>
@@ -121,7 +140,15 @@ let contact_detail_api = `
             <div class="col-sm-1"><svg xmlns="http://www.w3.org/2000/svg" width="30.033" height="30.033" viewBox="0 0 30.033 30.033">
             <path id="Icon_awesome-facebook-square" data-name="Icon awesome-facebook-square" d="M26.816,2.25H3.218A3.218,3.218,0,0,0,0,5.468v23.6a3.218,3.218,0,0,0,3.218,3.218h9.2V22.073H8.2V17.267h4.223V13.6c0-4.166,2.48-6.468,6.28-6.468a25.587,25.587,0,0,1,3.722.324V11.55h-2.1a2.4,2.4,0,0,0-2.71,2.6v3.121h4.611l-.737,4.806H17.614V32.283h9.2a3.218,3.218,0,0,0,3.218-3.218V5.468A3.218,3.218,0,0,0,26.816,2.25Z" transform="translate(0 -2.25)" fill="#7e84a3"/>
           </svg></div>
-            <div class="col-sm-11"><div id="fbURL"></div></div>
+            <div class="col-sm-11">
+                <div id="fbURL">
+                    <div class="load-2"> 
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -141,6 +168,41 @@ let contact_detail_linkedIn = `<div class="row white-container p-4">
     <button class="btn btn-secondary add-to-waiting-list" id="signin">Add to waiting list</button>
 </div>
 </div>`;
+let noProfileHTML = `
+    <div class="col-sm-12 pt-4 pb-2 text-center">
+    <div class="intro-container">
+        <h2>Hello [username]</h2>
+        Welcome back, we’re happy to see you again ;)
+    </div>
+    </div>
+    <div class="col-sm-12 pt-2 pb-2 text-center">
+    <div class="intro-container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h3>Navigate to a profile page</h3>
+                No worries, you can add it to your waiting list, Visit any LinkedIn profile and click on the so contact plugin to get contact information.
+                
+            </div>
+            <div class="col-sm-12 pt-3">
+                <img src="${chrome.runtime.getURL('assets/img/intro_img1.png')}" width="120px">
+            </div>
+        </div>
+    </div>
+</div>
+`;
+
+let contactSearchHTML = `
+<div class="col-sm-12 pt-5 pb-2 text-center">
+<img class="logoQ" src="${chrome.runtime.getURL('assets/icons/logoQ.png')}" />
+</div>
+<div class="col-sm-12 pt-3 pb-2 text-center">
+    <h4 class="title-contact-search">Contact Search</h4>
+</div>
+<div class="col-sm-12" id="unlockbuttoncontainer">
+</div>
+<div class="col-sm-12 p-4" id="contact_found_detail">
+    ${contact_detail_linkedIn}
+</div>`
 
 let account_html = `
 <div class="row pt-3 pb-2">
@@ -190,8 +252,8 @@ let account_html = `
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="" id="keepme">
                 <label class="form-check-label">
-                Auto save widget ? <br>
-                When socontact finds contact informations
+                Auto save widget ?
+                <p class="sub">When socontact finds contact informations</p>
                 </label>
             </div>
         </div>
@@ -204,8 +266,8 @@ let account_html = `
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="" id="keepme">
                 <label class="form-check-label">
-                Auto save lead ? <br>
-                When socontact finds a new lead
+                Auto save lead ?
+                <p class="sub">When socontact finds a new lead</p>
                 </label>
             </div>
         </div>
@@ -241,7 +303,7 @@ let account_html = `
     </div>
     <div class="row pt-3 pb-2">
         <div class="col-sm-6 account-bottom-text">
-            Invit and earn Credit
+            Invit and earn Credit<br>
             Help center
             <p class="highlight">Free credits</p>
         </div>
@@ -251,27 +313,127 @@ let account_html = `
     </div>
 </div>
 <div id="app_container" class="row">
-    <div class="col-sm-12 pt-5 pb-2 text-center">
-    <img class="logoQ" src="${chrome.runtime.getURL('assets/icons/logoQ.png')}" />
-    </div>
-    <div class="col-sm-12 pt-3 pb-2 text-center">
-        <h4 class="title-contact-search">Contact Search</h4>
-    </div>
-    <div class="col-sm-12 p-4" id="contact_found_detail">
-        ${contact_detail_linkedIn}
-    </div>
-    
+   ${noProfileHTML}
 </div>
 `;
 
-let leadUnlocked = `<div class="col-sm-12 pt-2 pb-2 p-4 text-center">
-<div class="row white-container p-2">
-    <div class="col-sm-4"><img class="avatar big" id="linkedInProfileImg" src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80" /></div><!--https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80-->
-    <div class="col-sm-8 account">
-    <h6 id="linkedInProfileName">John Doe</h6><label>Job Title</label>
+
+
+let leadUnlocked = `
+<div class="col-sm-12 pt-2 pb-2 p-4">
+    <div class="row white-container p-2">
+        <div class="col-sm-12 btn-back" id="btnBack">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25.243" viewBox="0 0 24 25.243">
+            <g id="Icon_feather-arrow-left" data-name="Icon feather-arrow-left" transform="translate(-6 -5.379)">
+            <path id="Tracé_509" data-name="Tracé 509" d="M28.5,18H7.5" fill="none" stroke="#b4c5d3" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+            <path id="Tracé_510" data-name="Tracé 510" d="M18,28.5,7.5,18,18,7.5" fill="none" stroke="#b4c5d3" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+            </g>
+            </svg>
+        </div>
+        <div class="col-sm-4">
+            <img class="avatar big" id="linkedInProfileImg" src="${chrome.runtime.getURL('assets/icons/spinner.gif')}" />
+        </div>
+        <div class="col-sm-8 account">
+            <h6 id="linkedInProfileName">
+            <div class="load-2"> 
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+            </h6><label>Job Title</label>
+        </div>
+        
+        <div class="col-sm-12 pt-2">
+            <div class="row dotted-box pt-2 pb-2">
+                <div class="col-sm-12"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"/></svg><label> PHONE NUMBERS</label></div>
+                <div class="col-sm-12">
+                    <ul id="phoneNumbers">
+                        <!--li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M288.1 0l86.5 164 182.7 31.6L428 328.5 454.4 512 288.1 430.2 121.7 512l26.4-183.5L18.9 195.6 201.5 164 288.1 0z"/></svg> +33 00 ** ** ** ** </li-->
+                        <li>
+                        <div class="load-2"> 
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                        </div></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-sm-12">
+            <div class="row dotted-box pt-2 pb-2">
+                <div class="col-sm-12"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg><label> PROFESSIONAL MAILS</label></div>
+                <div class="col-sm-12">
+                    <ul id="proEmails">
+                        <!--li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M288.1 0l86.5 164 182.7 31.6L428 328.5 454.4 512 288.1 430.2 121.7 512l26.4-183.5L18.9 195.6 201.5 164 288.1 0z"/></svg> *******@********.com</li-->
+                        <li><!--class="not-verified"-->
+                        <div class="load-2"> 
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                    </div></li><!--*******@********.com-->
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="row dotted-box pt-2 pb-2">
+                <div class="col-sm-12"><svg width="48pt" height="48pt" version="1.0" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0 48) scale(.1 -.1)"><path d="m12 408c-17-17-17-319 0-336s439-17 456 0 17 319 0 336-439 17-456 0zm188-68c11-11 20-29 20-40 0-26-34-60-60-60s-60 34-60 60 34 60 60 60c11 0 29-9 40-20zm240-40v-60h-80-80v60 60h80 80v-60zm-200-118c22-10 36-26 38-39 3-23 2-23-118-23s-121 0-118 23c4 29 61 57 118 57 25 0 61-8 80-18z"/><path d="m300 331c0-5 14-19 30-31l30-21 30 21c17 12 30 26 30 31 0 6-13 1-30-11l-30-21-30 21c-16 12-30 17-30 11z"/></g></svg><label> PERSONAL MAIL</label></div>
+                <div class="col-sm-12">
+                    <ul id="perEmails">
+                        <!--li><svg width="48pt" height="48pt" version="1.0" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0 48) scale(.1 -.1)"><path d="m12 408c-17-17-17-319 0-336s439-17 456 0 17 319 0 336-439 17-456 0zm188-68c11-11 20-29 20-40 0-26-34-60-60-60s-60 34-60 60 34 60 60 60c11 0 29-9 40-20zm240-40v-60h-80-80v60 60h80 80v-60zm-200-118c22-10 36-26 38-39 3-23 2-23-118-23s-121 0-118 23c4 29 61 57 118 57 25 0 61-8 80-18z"/><path d="m300 331c0-5 14-19 30-31l30-21 30 21c17 12 30 26 30 31 0 6-13 1-30-11l-30-21-30 21c-16 12-30 17-30 11z"/></g></svg> *******@********.com</li-->
+                        <li><!--class="not-verified"-->
+                        <div class="load-2"> 
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                    </div></li> <!--*******@********.com -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="row pt-4 pb-4">
+                <div class="col-sm-2"><div class="company-logo-circle"></div></div>
+                <div class="col-sm-5"><div class="company-title" id="companyName">Company name</div></div>
+                <div class="col-sm-5"><a class="go-to-website" id="companyWebsite" target="_blank">Go to website</a></div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <label class="other-social-media">Other social media</label>
+        </div>
+        <div class="col-sm-12 pb-4">
+            <div class="row social-media-icon">
+                <div class="col-sm-1"><svg xmlns="http://www.w3.org/2000/svg" width="30.033" height="30.033" viewBox="0 0 30.033 30.033">
+                <path id="Icon_awesome-facebook-square" data-name="Icon awesome-facebook-square" d="M26.816,2.25H3.218A3.218,3.218,0,0,0,0,5.468v23.6a3.218,3.218,0,0,0,3.218,3.218h9.2V22.073H8.2V17.267h4.223V13.6c0-4.166,2.48-6.468,6.28-6.468a25.587,25.587,0,0,1,3.722.324V11.55h-2.1a2.4,2.4,0,0,0-2.71,2.6v3.121h4.611l-.737,4.806H17.614V32.283h9.2a3.218,3.218,0,0,0,3.218-3.218V5.468A3.218,3.218,0,0,0,26.816,2.25Z" transform="translate(0 -2.25)" fill="#7e84a3"/>
+                </svg></div>
+                <div class="col-sm-11">
+                    <div id="fbURL">
+                        <div class="load-2"> 
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
 </div>`;
+
+let html_back_content = `<div class="col-sm-12 pt-5 pb-2 text-center">
+<img class="logoQ" src="${chrome.runtime.getURL('assets/icons/logoQ.png')}" />
+</div>
+<div class="col-sm-12 pt-3 pb-2 text-center">
+    <h4 class="title-contact-search">Contact Search</h4>
+</div>
+<div class="col-sm-12" id="unlockbuttoncontainer">
+</div>
+<div class="col-sm-12 p-4" id="contact_found_detail">
+    ${contact_detail_api}
+</div>`;
+
+
 loadPopup();
 
 
@@ -323,12 +485,12 @@ function loadPopup() {
     .container-sc{
         background: #F4FAFF 0% 0% no-repeat padding-box;
         box-shadow: 0px 1px 24px #B4C5D346;
-        border-radius: 10px;
+        border-radius: 4px;
         opacity: 1;
         backdrop-filter: blur(25px);
         -webkit-backdrop-filter: blur(25px);
         width: 285px;
-        /*height: 616.6108px;*/
+        min-height: 616.6108px;
         padding:10px;
         display:none;
     }
@@ -487,6 +649,30 @@ function loadPopup() {
         background-color: #7E84A3;
     }
 
+    .btn-unlock{
+        width: 125.4px;
+        height: 26.22px;
+        border: 1px solid #0058FF;
+        border-radius: 2px;
+        font: normal normal 600 9.5px/11.26px Muli;
+        letter-spacing: 0px;
+        color: #0058FF;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath fill='%230058FF' d='M144 144v48H304V144c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192V144C80 64.5 144.5 0 224 0s144 64.5 144 144v48h16c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V256c0-35.3 28.7-64 64-64H80z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position-x: 20px;
+        background-size: 8px;
+        background-position-y: 7px;
+        background-clip: padding-box;
+        background-color: #F4FAFF;
+        text-align: center;
+        padding-left: 12px;
+    }
+
+    .btn-back svg{
+        width: 8px;
+        cursor: pointer;
+    }
+
     .lbl-oauth{
         text-align: center;
         font: normal normal normal 9.12px/12px Poppins;
@@ -512,6 +698,10 @@ function loadPopup() {
 
     .divider{
         color: #b4c5d36e;
+    }
+
+    .login-divider{
+        color: #7E84A3;
     }
    
     
@@ -574,18 +764,19 @@ function loadPopup() {
     }
     ul.options>li>label{
         margin-left:15px;
+        font: normal normal 500 10.64px/10.64px Poppins;
     }
     .grad{
         background: transparent linear-gradient(90deg, #00BDF50F 0%, #F4FAFF 100%) 0% 0% no-repeat padding-box!important;
     }
     .account-bottom-text{
-        font: normal normal medium 14px/35px Poppins;
+        font: normal normal 500 9.12px/13.3px Poppins;
         text-align: left;
         letter-spacing: 0.17px;
         color: #171725;
     }
     .account-bottom-text .highlight{
-        font: normal normal normal 11px/15px Poppins;
+        font: normal normal normal 9.12px/13.3px Poppins;
         color: #FF7400;
     }
     .btn-logout{
@@ -606,6 +797,18 @@ function loadPopup() {
     }
     .drop-down{
         display:none;
+    }
+    .drop-down input[type=checkbox]{
+        width:16.34px;
+        height:16.34px;
+    }
+    .drop-down .form-check-label{
+        font: normal normal bold 9.5px/9.5px Muli;
+        letter-spacing: 0px;
+        color: #121C31;
+    }
+    .drop-down .form-check-label>.sub{
+        font: normal normal 600 9.5px/9.5px Muli;
     }
     .title-contact-search{
         text-align: center;
@@ -711,6 +914,45 @@ function loadPopup() {
         height:11.4114px;
     }
 
+    .login-msg{
+        color:#7E84A3;
+    }
+    .intro-container{
+        background: #F4FAFF 0% 0% no-repeat padding-box;
+        box-shadow: 0px 1px 4px #15223214;
+        border-radius: 3px;
+        opacity: 1;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+
+        text-align: center;
+        font: normal normal normal 6.84px/10.26px Poppins;
+        letter-spacing: 0.13px;
+        color: #121C31;
+        padding: 17.4px 0;
+    }
+    .intro-container h2{
+        text-align: center;
+        font: normal normal bold 13.68px/20.9px Poppins;
+        letter-spacing: 0.26px;
+        color: #0058FF;
+    }
+    .intro-container h3{
+        text-align: center;
+        font: normal normal bold 11.4px/17.48px Poppins;
+        letter-spacing: 0.21px;
+        color: #121C31;
+    }
+
+    .intro-container .row{
+        padding: 0 45px;
+    }
+
+    .footer-icons img{
+        width:34.3824px;
+        height:34.3824px;
+    }
+
     /* line loading */
     .load-wrapp {
         float: left;
@@ -786,5 +1028,5 @@ function loadPopup() {
         $(shadowRoot.getElementById('popup')).fadeOut();
     }) 
     
-    shadowRoot.getElementById('signin').addEventListener('click',()=>{signedIn()})
+    shadowRoot.getElementById('signin').addEventListener('click',()=>{signedIn()});
 }

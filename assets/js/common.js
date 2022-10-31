@@ -49,5 +49,12 @@ function dragElement(elmnt) {
 
 
 function strMask(str){
-    return Array.from(str, c => Math.random() < 0.5 ? '*' : c).join('');
+    return Array.from(str, () => '*').join('');
+}
+
+function maskEmail(email){
+    array = email.split('@');
+    tmp = Array.from(array[0], () => '*').join('');
+    return tmp+'@'+array[1];
+
 }

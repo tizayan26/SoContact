@@ -9,10 +9,15 @@ if (url !== lastUrl) {
 
 function onUrlChange() {
     console.log('URL changed!', location.href);
-    getProfileDetailsFromAPI();
+    if(location.href != 'https://www.linkedin.com/feed/')
+        getProfileDetailsFromAPI();
+    else{
+        shadowRoot.getElementById('app_container').innerHTML = noProfileHTML;
+    }
 }
 
 const getProfileDetailsFromAPI = () => {
+    shadowRoot.getElementById('app_container').innerHTML = contactSearchHTML;
     let linkedin_url = location.href.replace(/(^\w+:|^)\/\//, '').replace('www.','')
     url_array = linkedin_url.split("/in/");
     if(url_array!==undefined){
@@ -22,66 +27,73 @@ const getProfileDetailsFromAPI = () => {
     linkedin_url = "linkedin.com/in/"+tmp_url[0];
     chrome.runtime.sendMessage({call: "getProfile", link: linkedin_url}, function(response) {
         console.log(response);
-        let res = JSON.parse(response);
+        var  res = JSON.parse(response);
         if(res.dynamowebs_status=="success"){
+            shadowRoot.getElementById('contact_found_detail').innerHTML = contact_detail_api;
             if(document.querySelectorAll('img[class="pv-top-card-profile-picture__image pv-top-card-profile-picture__image--show ember-view"]').length > 0){
                 var pic = document.querySelectorAll('img[class="pv-top-card-profile-picture__image pv-top-card-profile-picture__image--show ember-view"]');
             }else if(document.querySelectorAll('img[class="ember-view profile-photo-edit__preview"]').length > 0){
                 var pic = document.querySelectorAll('img[class="ember-view profile-photo-edit__preview"]');
             }   
-            shadowRoot.getElementById('contact_found_detail').innerHTML = contact_detail_api;
-            shadowRoot.getElementById('linkedInProfileName').innerText = res.name;
-            shadowRoot.getElementById('linkedInProfileImg').src = pic[0].src//res.image;
-            let ul_phones = shadowRoot.getElementById('phoneNumbers');
-            ul_phones.innerHTML = null;
-            res.phoneNumbers.forEach(el => {
-               
-                var li = document.createElement('li');
-                if(el.verified == true)
-                    li.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M288.1 0l86.5 164 182.7 31.6L428 328.5 454.4 512 288.1 430.2 121.7 512l26.4-183.5L18.9 195.6 201.5 164 288.1 0z"/></svg> '+ el.countryCode + el.number;
-                else{
-                    li.innerHTML = ' '+ el.countryCode + strMask(el.number);
-                    li.className = 'not-verified';
-                }
-                ul_phones.appendChild(li);
-            });
-            let ul_proEmails = shadowRoot.getElementById('proEmails');
-            ul_proEmails.innerHTML = null;
-            res.professionalEmail.forEach(el =>{
-                var li = document.createElement('li');
-                if(el.verified == true)
-                    li.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M288.1 0l86.5 164 182.7 31.6L428 328.5 454.4 512 288.1 430.2 121.7 512l26.4-183.5L18.9 195.6 201.5 164 288.1 0z"/></svg> '+ strMask(el.email);
-                else{
-                    li.innerHTML = ' '+ strMask(el.email) ;
-                    li.className = 'not-verified';
-                }
-                ul_proEmails.appendChild(li);
-            });
-            let ul_perEmails = shadowRoot.getElementById('perEmails');
-            ul_perEmails.innerHTML = null;
-            res.personalEmail.forEach(el =>{
-                var li = document.createElement('li');
-                if(el.verified == true)
-                    li.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M288.1 0l86.5 164 182.7 31.6L428 328.5 454.4 512 288.1 430.2 121.7 512l26.4-183.5L18.9 195.6 201.5 164 288.1 0z"/></svg> '+ strMask(el.email);
-                else{
-                    li.innerHTML = ' '+ strMask(el.email) ;
-                    li.className = 'not-verified';
-                }
-                ul_perEmails.appendChild(li);
-            })
-            shadowRoot.getElementById('companyName').innerText = res.companyInformation[0].name;
-            shadowRoot.getElementById('companyWebsite').href = res.companyInformation[0].website;
-            console.log(res.otherSocialMedia.facebook);
-            shadowRoot.getElementById('fbURL').innerText = strMask(res.otherSocialMedia.facebook);
+            setTimeout(function(){
+                shadowRoot.getElementById('linkedInProfileName').innerText = res.name;
+                shadowRoot.getElementById('linkedInProfileImg').src = pic[0].src//res.image;
+                let ul_phones = shadowRoot.getElementById('phoneNumbers');
+                ul_phones.innerHTML = null;
+                res.phoneNumbers.forEach(el => {
+                   
+                    var li = document.createElement('li');
+                    if(el.verified == true)
+                        li.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M288.1 0l86.5 164 182.7 31.6L428 328.5 454.4 512 288.1 430.2 121.7 512l26.4-183.5L18.9 195.6 201.5 164 288.1 0z"/></svg> '+ el.countryCode + strMask(el.number);
+                    else{
+                        li.innerHTML = ' '+ el.countryCode + strMask(el.number);
+                        li.className = 'not-verified';
+                    }
+                    ul_phones.appendChild(li);
+                });
+                let ul_proEmails = shadowRoot.getElementById('proEmails');
+                ul_proEmails.innerHTML = null;
+                res.professionalEmail.forEach(el =>{
+                    var li = document.createElement('li');
+                    if(el.verified == true)
+                        li.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M288.1 0l86.5 164 182.7 31.6L428 328.5 454.4 512 288.1 430.2 121.7 512l26.4-183.5L18.9 195.6 201.5 164 288.1 0z"/></svg> '+ maskEmail(el.email);
+                    else{
+                        li.innerHTML = ' '+ maskEmail(el.email);
+                        li.className = 'not-verified';
+                    }
+                    ul_proEmails.appendChild(li);
+                });
+                let ul_perEmails = shadowRoot.getElementById('perEmails');
+                ul_perEmails.innerHTML = null;
+                res.personalEmail.forEach(el =>{
+                    var li = document.createElement('li');
+                    if(el.verified == true)
+                        li.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M288.1 0l86.5 164 182.7 31.6L428 328.5 454.4 512 288.1 430.2 121.7 512l26.4-183.5L18.9 195.6 201.5 164 288.1 0z"/></svg> '+ maskEmail(el.email);
+                    else{
+                        li.innerHTML = ' '+ maskEmail(el.email);
+                        li.className = 'not-verified';
+                    }
+                    ul_perEmails.appendChild(li);
+                })
+                shadowRoot.getElementById('companyName').innerText = res.companyInformation[0].name;
+                shadowRoot.getElementById('companyWebsite').href = res.companyInformation[0].website;
+                console.log(res.otherSocialMedia.facebook);
+                shadowRoot.getElementById('fbURL').innerText = strMask(res.otherSocialMedia.facebook);
+            },1000)
+            
 
-        }else{
-            // if(res.message == "Token is invalid renew your token. error-code :: 293403924"){
-            if(res.message.includes("Token is invalid renew your token.")){
+            shadowRoot.getElementById('unlockbuttoncontainer').innerHTML = '<button class="btn-unlock" id="btnUnlock">Unlock details</button>';
+            shadowRoot.getElementById('btnUnlock').addEventListener('click', ()=> {unlockLead(res)});
+        }
+        else if(res.dynamowebs_msg=="token_expired"){
+            console.log(res.token);
+                // console.log(res.message.includes("Token has been expired."));
+            if(res.token!==undefined && res.token == "expired"){
                 chrome.storage.local.get(['session'], function(result) {
                     var session = JSON.parse(result.session);
 
                     chrome.runtime.sendMessage({call: "validateUser", email: session.email, password: session.pass}, function(response) {
-                        let res = JSON.parse(response);
+                        var res = JSON.parse(response);
                         console.log(res);
                         if(res.dynamowebs_status == "success"){
                             var session_obj = {
@@ -111,6 +123,9 @@ const getProfileDetailsFromAPI = () => {
 
                 });
             }
+            
+        }else{
+            shadowRoot.getElementById('unlockbuttoncontainer').innerHTML = null;
             shadowRoot.getElementById('contact_found_detail').innerHTML = contact_detail_linkedIn;
         }
         shadowRoot.getElementById('linkedInProfileImg').src = chrome.runtime.getURL('assets/icons/spinner.gif');
@@ -174,6 +189,7 @@ function signedIn(){
                 chrome.storage.local.set({loggedin: true,session:JSON.stringify(session_obj)}, function() {
                     console.log('Session is set to ' + JSON.stringify(session_obj));
                 });
+
                 shadowRoot.getElementById('popup').innerHTML = account_html;
                 shadowRoot.getElementById('account_dropdown').addEventListener('click', () => {
                     $(shadowRoot.getElementById('drop_down')).slideToggle(800);
@@ -196,6 +212,10 @@ function signedIn(){
 chrome.storage.local.get(['loggedin'], function(result) {
     console.log(result);
     if(result.loggedin){
+        chrome.runtime.sendMessage({call: "getUser",}, function(response) {
+            console.log(response);
+        })
+
         shadowRoot.getElementById('popup').innerHTML = account_html;
         shadowRoot.getElementById('account_dropdown').addEventListener('click', () => {
             $(shadowRoot.getElementById('drop_down')).slideToggle(800);
@@ -209,4 +229,71 @@ chrome.storage.local.get(['loggedin'], function(result) {
     }
 })
 
-getProfileDetailsFromAPI();
+function unlockLead(res){
+    shadowRoot.getElementById('app_container').innerHTML = leadUnlocked;
+    let ul_phones = shadowRoot.getElementById('phoneNumbers');
+    ul_phones.innerHTML = null;
+    res.phoneNumbers.forEach(el => {   
+        var li = document.createElement('li');
+        if(el.verified == true)
+            li.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M288.1 0l86.5 164 182.7 31.6L428 328.5 454.4 512 288.1 430.2 121.7 512l26.4-183.5L18.9 195.6 201.5 164 288.1 0z"/></svg> '+ el.countryCode + el.number;
+        else{
+            li.innerHTML = ' '+ el.countryCode + el.number;
+            li.className = 'not-verified';
+        }
+        ul_phones.appendChild(li);
+    });
+    let ul_proEmails = shadowRoot.getElementById('proEmails');
+    ul_proEmails.innerHTML = null;
+    res.professionalEmail.forEach(el =>{
+        var li = document.createElement('li');
+        if(el.verified == true)
+            li.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M288.1 0l86.5 164 182.7 31.6L428 328.5 454.4 512 288.1 430.2 121.7 512l26.4-183.5L18.9 195.6 201.5 164 288.1 0z"/></svg> '+ el.email;
+        else{
+            li.innerHTML = ' '+ el.email;
+            li.className = 'not-verified';
+        }
+        ul_proEmails.appendChild(li);
+    });
+    let ul_perEmails = shadowRoot.getElementById('perEmails');
+    ul_perEmails.innerHTML = null;
+    res.personalEmail.forEach(el =>{
+        var li = document.createElement('li');
+        if(el.verified == true)
+            li.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M288.1 0l86.5 164 182.7 31.6L428 328.5 454.4 512 288.1 430.2 121.7 512l26.4-183.5L18.9 195.6 201.5 164 288.1 0z"/></svg> '+ el.email;
+        else{
+            li.innerHTML = ' '+ el.email;
+            li.className = 'not-verified';
+        }
+        ul_perEmails.appendChild(li);
+    })
+    shadowRoot.getElementById('companyName').innerText = res.companyInformation[0].name;
+    shadowRoot.getElementById('companyWebsite').href = res.companyInformation[0].website;
+    console.log(res.otherSocialMedia.facebook);
+    shadowRoot.getElementById('fbURL').innerText = res.otherSocialMedia.facebook;
+    shadowRoot.getElementById('btnBack').addEventListener('click', () => {
+        shadowRoot.getElementById('app_container').innerHTML = html_back_content;
+        getProfileDetailsFromAPI();
+        // var myInterval = setInterval(function () {
+        //     if(getLinkedInProfile()){
+        //         console.log("Got DOM")
+        //         clearInterval(myInterval);
+        //     }else{
+        //         console.log("Not found!")
+        //     }
+        // }, 5000);
+    })
+}
+// window.onload = function(){
+    // if(location.href != 'https://www.linkedin.com/feed/')
+    
+// }
+// window.addEventListener("load", function load(event){
+//     window.removeEventListener("load", load, false); //remove listener, no longer needed
+    
+// },false);
+
+if(location.href.includes("https://www.linkedin.com/in/")){
+        getProfileDetailsFromAPI();
+        console.log("Valid URL"); 
+}

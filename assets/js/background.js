@@ -33,5 +33,19 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                     .catch(error => console.log(error))
             }), !0;
 
+        case "getUser":
+            return chrome.storage.local.get(['session'], function(result) {
+                var session = JSON.parse(result.session); 
+                fetch("https://app.socontact.com/api/getUser",
+                {
+                    method: "POST",
+                    headers: {
+                        'Authorization': 'Bearer ' + session.token,
+                        },
+                }
+                ).then(response => response.text())
+                    .then(text =>sendResponse(text))
+                    .catch(error => console.log(error))
+            }), !0;
     }
 })
