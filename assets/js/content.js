@@ -285,6 +285,9 @@ function unlockLead(res){
     })
     shadowRoot.getElementById('companyName').innerText = res.companyInformation[0].name;
     shadowRoot.getElementById('companyWebsite').href = res.companyInformation[0].website;
+    shadowRoot.getElementById('industry').innerText = res.companyInformation[0].mainIndustry;
+    shadowRoot.getElementById('employeeCount').innerText = res.companyInformation[0].employees;
+    shadowRoot.getElementById('hq').innerText = res.companyInformation[0].headQuarters;
     console.log(res.otherSocialMedia.facebook);
     // shadowRoot.getElementById('fbURL').innerText = res.otherSocialMedia.facebook;
     let ul_socialMedia = shadowRoot.getElementById('social_media');
@@ -321,6 +324,15 @@ function unlockLead(res){
         //         console.log("Not found!")
         //     }
         // }, 5000);
+    })
+
+    shadowRoot.getElementById('companyDetailsToggle').addEventListener('click', () => {
+        $(shadowRoot.getElementById('companyDetails')).slideToggle(800);
+        if (shadowRoot.getElementById('companyDetailsToggle').innerText === "Show company details") {
+            shadowRoot.getElementById('companyDetailsToggle').innerText = "Hide company details";
+          } else {
+            shadowRoot.getElementById('companyDetailsToggle').innerText = "Show company details";
+          }
     })
 }
 

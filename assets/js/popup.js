@@ -433,10 +433,45 @@ let leadUnlocked = `
                 <div class="col-sm-5"><a class="go-to-website" id="companyWebsite" target="_blank">Go to website</a></div>
             </div>
         </div>
-        <div class="col-sm-12" id="companyDetails">
+        <div class="col-sm-12 company-details" id="companyDetails">
+            <div class="row pt-2 pb-2">
+                <div class="col-sm-12">
+                    <label class="other-social-media">History</label>
+                </div>
+                <div class="col-sm-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="9.1846" height="9.1846" viewBox="0 0 24.167 24.167"><path data-name="Icon material-access-time" d="M12.071 0a12.083 12.083 0 1 0 12.095 12.083A12.077 12.077 0 0 0 12.071 0Zm.012 21.75a9.667 9.667 0 1 1 9.667-9.667 9.664 9.664 0 0 1-9.667 9.667Zm.6-15.708h-1.808v7.25l6.344 3.806.906-1.486-5.442-3.229Z" fill="#7e84a3"/></svg>
+                </div>
+                <div class="col-sm-11" id="foundedIn">
+                    <label class="social-media-icon">Founded in : 2004</label>
+                </div>
+                <div class="col-sm-12">
+                    <label class="other-social-media">Industry</label>
+                </div>
+                <div class="col-sm-12">
+                    <label class="social-media-icon" id="industry">Software</label>
+                </div>
+                <div class="col-sm-12">
+                    <label class="other-social-media">Employees</label>
+                </div>
+                <div class="col-sm-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10.8414" height="7.5886" viewBox="0 0 28.529 19.97"><path data-name="Icon awesome-users" d="M4.279 8.558a2.853 2.853 0 1 0-2.853-2.853 2.856 2.856 0 0 0 2.853 2.853Zm19.971 0a2.853 2.853 0 1 0-2.85-2.853 2.856 2.856 0 0 0 2.85 2.853Zm1.426 1.429h-2.853a2.845 2.845 0 0 0-2.01.829 6.52 6.52 0 0 1 3.348 4.871H27.1a1.425 1.425 0 0 0 1.426-1.426v-1.423a2.856 2.856 0 0 0-2.85-2.851Zm-11.412 0a4.993 4.993 0 1 0-4.992-4.995 4.99 4.99 0 0 0 4.993 4.995Zm3.424 1.426h-.37a6.893 6.893 0 0 1-6.107 0h-.37a5.137 5.137 0 0 0-5.135 5.135v1.284a2.14 2.14 0 0 0 2.14 2.14h12.838a2.14 2.14 0 0 0 2.14-2.14v-1.286a5.137 5.137 0 0 0-5.136-5.135Zm-9.972-.6a2.845 2.845 0 0 0-2.01-.829H2.853A2.856 2.856 0 0 0 0 12.838v1.426a1.425 1.425 0 0 0 1.426 1.423h2.938a6.537 6.537 0 0 1 3.352-4.873Z" fill="#7e84a3"/></svg>
+                </div>
+                <div class="col-sm-11">
+                    <label class="social-media-icon" id="employeeCount">224</label>
+                </div>
+                <div class="col-sm-12">
+                    <label class="other-social-media">Headquarter</label>
+                </div>
+                <div class="col-sm-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="6.42846" height="9.18346" viewBox="0 0 16.917 24.167"><path id="Icon_material-location-on" data-name="Icon material-location-on" d="M14.5,2.417a8.452,8.452,0,0,0-8.458,8.458c0,6.344,8.458,15.708,8.458,15.708s8.458-9.365,8.458-15.708A8.452,8.452,0,0,0,14.5,2.417Zm0,11.479a3.021,3.021,0,1,1,3.021-3.021A3.022,3.022,0,0,1,14.5,13.9Z" transform="translate(-6.042 -2.417)" fill="#7e84a3"/></svg>
+                </div>
+                <div class="col-sm-11">
+                    <label class="social-media-icon" id="hq"></label>
+                </div>
+            </div>
         </div>
         <div class="col-sm-12 text-center">
-            <button class="btn btn-show-company-detail">Show company details</button>
+            <button class="btn btn-show-company-detail" id="companyDetailsToggle">Show company details</button>
         </div>
     </div>
 </div>`;
@@ -1002,7 +1037,9 @@ function loadPopup() {
         width:34.3824px;
         height:34.3824px;
     }
-
+    .company-details{
+        display:none;
+    }
     /* line loading */
     .load-wrapp {
         float: left;
