@@ -1,9 +1,6 @@
-window.onload = () => {
-
-}
-
 init();
 dragElement(shadowRoot.getElementById("icon"));
+
 
 let login_html = `
 <div class="p-4 pt-5 pb-0">
@@ -153,6 +150,7 @@ let contact_detail_api = `
     </div>
 </div>
 `;
+
 let contact_detail_linkedIn = `<div class="row white-container p-4">
 <div class="col-sm-4"><img class="avatar big" id="linkedInProfileImg" src="${chrome.runtime.getURL('assets/icons/spinner.gif')}" /></div><!--https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80-->
 <div class="col-sm-8 account">
@@ -168,6 +166,20 @@ let contact_detail_linkedIn = `<div class="row white-container p-4">
     <button class="btn btn-secondary add-to-waiting-list" id="signin">Add to waiting list</button>
 </div>
 </div>`;
+
+let contactSearchHTML = `
+<div class="col-sm-12 pt-5 pb-2 text-center">
+<img class="logoQ" src="${chrome.runtime.getURL('assets/icons/logoQ.png')}" />
+</div>
+<div class="col-sm-12 pt-3 pb-2 text-center">
+    <h4 class="title-contact-search">Contact Search</h4>
+</div>
+<div class="col-sm-12" id="unlockbuttoncontainer">
+</div>
+<div class="col-sm-12 p-4" id="contact_found_detail">
+    ${contact_detail_linkedIn}
+</div>`
+
 let noProfileHTML = `
     <div class="col-sm-12 pt-4 pb-2 text-center">
     <div class="intro-container">
@@ -191,18 +203,7 @@ let noProfileHTML = `
 </div>
 `;
 
-let contactSearchHTML = `
-<div class="col-sm-12 pt-5 pb-2 text-center">
-<img class="logoQ" src="${chrome.runtime.getURL('assets/icons/logoQ.png')}" />
-</div>
-<div class="col-sm-12 pt-3 pb-2 text-center">
-    <h4 class="title-contact-search">Contact Search</h4>
-</div>
-<div class="col-sm-12" id="unlockbuttoncontainer">
-</div>
-<div class="col-sm-12 p-4" id="contact_found_detail">
-    ${contact_detail_linkedIn}
-</div>`
+
 
 let account_html = `
 <div class="row pt-3 pb-2">
@@ -340,10 +341,12 @@ let leadUnlocked = `
                 <div class="line"></div>
                 <div class="line"></div>
             </div>
-            </h6><label>Job Title</label>
+            </h6><label id="jobTitle">Job Title</label>
         </div>
-        
-        <div class="col-sm-12 pt-2">
+        <div class="col-sm-12 pt-4 text-center">
+            <button class="btn btn-secondary add-lead">Add lead</button>
+        </div>
+        <div class="col-sm-12 pt-4">
             <div class="row dotted-box pt-2 pb-2">
                 <div class="col-sm-12"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"/></svg><label> PHONE NUMBERS</label></div>
                 <div class="col-sm-12">
@@ -393,17 +396,10 @@ let leadUnlocked = `
             </div>
         </div>
         <div class="col-sm-12">
-            <div class="row pt-4 pb-4">
-                <div class="col-sm-2"><div class="company-logo-circle"></div></div>
-                <div class="col-sm-5"><div class="company-title" id="companyName">Company name</div></div>
-                <div class="col-sm-5"><a class="go-to-website" id="companyWebsite" target="_blank">Go to website</a></div>
-            </div>
-        </div>
-        <div class="col-sm-12">
-            <label class="other-social-media">Other social media</label>
+            <label class="other-social-media">Social medias</label>
         </div>
         <div class="col-sm-12 pb-4">
-            <div class="row social-media-icon">
+            <!--div class="row social-media-icon">
                 <div class="col-sm-1"><svg xmlns="http://www.w3.org/2000/svg" width="30.033" height="30.033" viewBox="0 0 30.033 30.033">
                 <path id="Icon_awesome-facebook-square" data-name="Icon awesome-facebook-square" d="M26.816,2.25H3.218A3.218,3.218,0,0,0,0,5.468v23.6a3.218,3.218,0,0,0,3.218,3.218h9.2V22.073H8.2V17.267h4.223V13.6c0-4.166,2.48-6.468,6.28-6.468a25.587,25.587,0,0,1,3.722.324V11.55h-2.1a2.4,2.4,0,0,0-2.71,2.6v3.121h4.611l-.737,4.806H17.614V32.283h9.2a3.218,3.218,0,0,0,3.218-3.218V5.468A3.218,3.218,0,0,0,26.816,2.25Z" transform="translate(0 -2.25)" fill="#7e84a3"/>
                 </svg></div>
@@ -416,7 +412,31 @@ let leadUnlocked = `
                         </div>
                     </div>
                 </div>
+            </div-->
+            <ul id="social_media" class="social-media-icon">
+                <li>
+                    <div class="load-2"> 
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-12">
+            <label class="other-social-media">Compagny</label>
+        </div>
+        <div class="col-sm-12">
+            <div class="row pt-2 pb-4">
+                <div class="col-sm-2"><div class="company-logo-circle"></div></div>
+                <div class="col-sm-5"><div class="company-title" id="companyName">Company name</div></div>
+                <div class="col-sm-5"><a class="go-to-website" id="companyWebsite" target="_blank">Go to website</a></div>
             </div>
+        </div>
+        <div class="col-sm-12" id="companyDetails">
+        </div>
+        <div class="col-sm-12 text-center">
+            <button class="btn btn-show-company-detail">Show company details</button>
         </div>
     </div>
 </div>`;
@@ -649,6 +669,13 @@ function loadPopup() {
         background-color: #7E84A3;
     }
 
+    .add-lead{
+        height: 26.22px;
+        width: 93.48px;
+        font: normal normal 600 9.5px/10.26px Muli;
+        letter-spacing: 0px;
+    }
+
     .btn-unlock{
         width: 125.4px;
         height: 26.22px;
@@ -666,6 +693,17 @@ function loadPopup() {
         background-color: #F4FAFF;
         text-align: center;
         padding-left: 12px;
+    }
+
+    .btn-show-company-detail{
+        background: #F4FAFF 0% 0% no-repeat padding-box;
+        border: 1px solid #0058FF;
+        border-radius: 4px;
+        font: normal normal 600 9.5px/10.26px Muli;
+        letter-spacing: 0px;
+        color: #0058FF;
+        width: 100%;
+        height: 26.22px;
     }
 
     .btn-back svg{
@@ -797,6 +835,10 @@ function loadPopup() {
     }
     .drop-down{
         display:none;
+        position: fixed;
+        width: 265px;
+        background: #F4FAFF 0% 0% no-repeat padding-box;
+        z-index:9999;
     }
     .drop-down input[type=checkbox]{
         width:16.34px;
@@ -912,6 +954,14 @@ function loadPopup() {
     .social-media-icon svg{
         width:11.4114px;
         height:11.4114px;
+    }
+
+    ul.social-media-icon{
+        list-style:none;
+        padding:0;
+    }
+    ul.social-media-icon>li{
+        padding: 4px 0;
     }
 
     .login-msg{
