@@ -183,7 +183,7 @@ let contactSearchHTML = `
 let noProfileHTML = `
     <div class="col-sm-12 pt-4 pb-2 text-center">
     <div class="intro-container">
-        <h2>Hello [username]</h2>
+        <h2>Hello <span id="userName">[user name]<span></h2>
         Welcome back, we’re happy to see you again ;)
     </div>
     </div>
@@ -221,10 +221,10 @@ let account_html = `
 </div>
 <div id="drop_down" class="drop-down">
     <div class="row pt-3 pb-2">
-        <div class="col-sm-3"><img class="avatar big" src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80" /></div>
+        <div class="col-sm-3"><img class="avatar big" id="accountImg" src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80" /></div>
         <div class="col-sm-6 account">
-            <label>Account</label><h6>John Doe</h6>
-            <label>Email</label><p>mail@mail.com</p>
+            <label>Account</label><h6 id="accountName">John Doe</h6>
+            <label>Email</label><p id="accountEmail">mail@mail.com</p>
         </div>
         <div class="col-sm-3">
             <div class="row account-icons">
@@ -251,7 +251,7 @@ let account_html = `
     <div class="row pt-3 pb-2">
         <div class="col-sm-12">
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="keepme">
+                <input class="form-check-input" type="checkbox" value="" id="autoSaveWidget">
                 <label class="form-check-label">
                 Auto save widget ?
                 <p class="sub">When socontact finds contact informations</p>
@@ -265,7 +265,7 @@ let account_html = `
     <div class="row pt-3 pb-2">
         <div class="col-sm-12">
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="keepme">
+                <input class="form-check-input" type="checkbox" value="" id="autoSaveLead">
                 <label class="form-check-label">
                 Auto save lead ?
                 <p class="sub">When socontact finds a new lead</p>

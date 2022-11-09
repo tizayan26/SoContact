@@ -7,7 +7,40 @@ if (url !== lastUrl) {
 }
 }).observe(document, {subtree: true, childList: true});
 
+function scrapeLinkedInProfile(){
+    var experiences = document.getElementById('experience').nextElementSibling.nextElementSibling.children[0].children;
+    var linkedInObj = {
+        linkedinURL: location.href,
+        profile_photo:document.querySelectorAll('img[class="pv-top-card-profile-picture__image pv-top-card-profile-picture__image--show ember-view"]')[0].src,
+        name: document.querySelectorAll('h1[class*="text-heading-xlarge"]')[0].innerText,
+        profile_description: document.querySelectorAll('div[class*="text-body-medium break-words"]')[0].innerText,
+        experience : []
+    }
+    // document.getElementById('experience').nextElementSibling.nextElementSibling.children[0].children[0].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText;
+    // console.log(experiences);
+    //document.getElementById('experience').nextElementSibling.nextElementSibling.children[0].children[0]
+    for(var i=0; i<experiences.length;i++){
+        // console.log(experiences[i].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText);
+        var obj = { 
+            job_title : experiences[i].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText,
+            organization_name: experiences[i].children[0].children[1].children[0].children[0].children[1].children[0].innerText,
+            time_length: experiences[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText 
+        }
+        if(experiences[i].children[0].children[1].children[0].children[0].children[3]!==undefined)
+        obj['job_location'] = experiences[i].children[0].children[1].children[0].children[0].children[3].children[0].innerText
+        linkedInObj.experience .push(obj);
+    }
+    // experiences.forEach((experience)=>{
+    //     obj = { 
+    //         job_title : experience.children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText
+    //     }
+    //     linkedInObj.experience.push(obj);
+    // })
+    console.log(JSON.stringify(linkedInObj));
+}
+
 function onUrlChange() {
+    getUserInfoFromAPI();
     console.log('URL changed!', location.href);
     var pattern = /linkedin.com\/in/;
     console.log(location.href.match(pattern));
@@ -15,6 +48,7 @@ function onUrlChange() {
     if(location.href.match(pattern)!= null){
         getProfileDetailsFromAPI();
         console.log('valid URL');
+       
     }else{
         shadowRoot.getElementById('app_container').innerHTML = noProfileHTML;
     }
@@ -41,10 +75,12 @@ const getProfileDetailsFromAPI = () => {
                     var pic = document.querySelectorAll('img[class="ember-view profile-photo-edit__preview"]');
                 } 
                 var name = document.querySelectorAll('h1[class*="text-heading-xlarge"]');  
-                var jobTitle = document.querySelectorAll('div[class*="text-body-medium break-words"]')[0].innerText
+                var linkedinDescription = document.querySelectorAll('div[class*="text-body-medium break-words"]')[0].innerText
+                // document.querySelectorAll('ul[class*="pvs-list"]')[1].querySelectorAll('li')[0].querySelectorAll('div')[7].innerText
+                var jobTitle = document.getElementById('experience').nextElementSibling.nextElementSibling.children[0].children[0].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText;
                 res['name'] = name[0].innerText;
                 res['image'] = pic[0].src;
-                res['jobtitle'] = jobTitle
+                res['jobtitle'] = jobTitle;
                 // shadowRoot.getElementById('linkedInProfileName').innerText = res.name;
                 shadowRoot.getElementById('linkedInProfileName').innerText = res.name;
                 shadowRoot.getElementById('linkedInProfileImg').src = res.image//res.image
@@ -162,6 +198,7 @@ const getLinkedInProfile = () => {
     // var document = parser.parseFromString(text, 'text/html');
     // console.log(document.querySelectorAll('img[class="pv-top-card-profile-picture__image pv-top-card-profile-picture__image--show ember-view"]'));
     try{
+        scrapeLinkedInProfile();
         if(document.querySelectorAll('img[class="pv-top-card-profile-picture__image pv-top-card-profile-picture__image--show ember-view"]').length > 0){
             var pic = document.querySelectorAll('img[class="pv-top-card-profile-picture__image pv-top-card-profile-picture__image--show ember-view"]');
         }else if(document.querySelectorAll('img[class="ember-view profile-photo-edit__preview"]').length > 0){
@@ -208,6 +245,7 @@ function signedIn(){
                     
                 // })
                 accountDropdown();
+                getUserInfoFromAPI();
                 shadowRoot.getElementById('logout').addEventListener('click',() => {
                     chrome.storage.local.remove('loggedin');
                     chrome.storage.local.remove('session');
@@ -221,12 +259,64 @@ function signedIn(){
    
 }
 
+function getUserInfoFromAPI(){
+    chrome.runtime.sendMessage({call: "getUser",}, function(response) {
+        console.log(response);
+        userObj = JSON.parse(response);
+        
+    
+        if(userObj.dynamowebs_msg=="token_expired"){
+            console.log(userObj.token);
+                // console.log(res.message.includes("Token has been expired."));
+            if(userObj.token!==undefined && userObj.token == "expired"){
+                chrome.storage.local.get(['session'], function(result) {
+                    var session = JSON.parse(result.session);
+
+                    chrome.runtime.sendMessage({call: "validateUser", email: session.email, password: session.pass}, function(response) {
+                        var res = JSON.parse(response);
+                        console.log(res);
+                        if(res.dynamowebs_status == "success"){
+                            var session_obj = {
+                                token: res.token,
+                                id: res.id,
+                                email: session.email,
+                                pass:  session.pass
+                            }
+                            chrome.storage.local.set({loggedin: true,session:JSON.stringify(session_obj)}, function() {
+                                console.log('Session is set to ' + JSON.stringify(session_obj));
+                            });
+                            shadowRoot.getElementById('popup').innerHTML = account_html;
+                            accountDropdown();
+                            getUserInfoFromAPI();
+                            shadowRoot.getElementById('logout').addEventListener('click',() => {
+                                chrome.storage.local.remove('loggedin');
+                                chrome.storage.local.remove('session');
+                                shadowRoot.getElementById('popup').innerHTML = login_html;
+                                shadowRoot.getElementById('signin').addEventListener('click',()=>{signedIn()})
+                            })
+                        }
+                    });
+
+                });
+            }
+            
+        }else{
+            shadowRoot.getElementById('account_dropdown').src = userObj.image;
+            shadowRoot.getElementById('accountImg').src = userObj.image;
+            shadowRoot.getElementById('accountName').innerHTML = userObj.firstName + '&nbsp;' + userObj.lastName;
+            shadowRoot.getElementById('userName').innerHTML = userObj.firstName + '&nbsp;' + userObj.lastName;
+
+            shadowRoot.getElementById('accountEmail').innerText = userObj.email;
+            shadowRoot.getElementById('autoSaveWidget').checked = userObj.autoSaveLead;
+            shadowRoot.getElementById('autoSaveLead').checked = userObj.autoOpen;
+        }
+    })
+}
+
 chrome.storage.local.get(['loggedin'], function(result) {
     console.log(result);
     if(result.loggedin){
-        chrome.runtime.sendMessage({call: "getUser",}, function(response) {
-            console.log(response);
-        })
+        getUserInfoFromAPI();
 
         shadowRoot.getElementById('popup').innerHTML = account_html;
         // shadowRoot.getElementById('account_dropdown').addEventListener('click', () => {
