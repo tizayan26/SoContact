@@ -64,6 +64,7 @@ function onUrlChange() {
     }else{
         shadowRoot.getElementById('app_container').innerHTML = noProfileHTML;
     }
+    getCredits();
 }
 
 const getProfileDetailsFromAPI = () => {
@@ -445,6 +446,14 @@ function accountDropdown(){
         
     })
 }
+
+function getCredits(){
+    chrome.runtime.sendMessage({call: "getCredits"}, function(response) {
+        console.log(response);
+        var  res = JSON.parse(response);
+        shadowRoot.getElementById('cAmount').innerText = res.organizationCredits.amount;
+    })
+}
 // window.onload = function(){
     // if(location.href != 'https://www.linkedin.com/feed/')
     
@@ -462,4 +471,5 @@ $(document).ready(function(){
     }else{
         shadowRoot.getElementById('app_container').innerHTML = noProfileHTML;
     }
+    getCredits();
 });

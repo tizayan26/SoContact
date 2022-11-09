@@ -212,7 +212,7 @@ let account_html = `
     </div>
     <div class="col-sm-5">
         <div class="coin-container">
-            <img src="${chrome.runtime.getURL('assets/icons/coin.png')}" /> 100 credits
+            <img src="${chrome.runtime.getURL('assets/icons/coin.png')}" /> <span id="cAmount">100</span> credits
         </div>
     </div>
     <div class="col-sm-2">
