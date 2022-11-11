@@ -1,53 +1,74 @@
+
 let lastUrl = location.href; 
 new MutationObserver(() => {
 const url = location.href;
-if (url !== lastUrl) {
-    lastUrl = url;
-    onUrlChange();
-}
+    if (url !== lastUrl) {
+        lastUrl = url;
+        chrome.storage.local.get(['loggedin'], function(result) {
+            if(result.loggedin){
+                console.log(result);
+                onUrlChange();
+            }
+        })
+    }
 }).observe(document, {subtree: true, childList: true});
 
+
 function scrapeLinkedInProfile(){
-    var experiences = document.getElementById('experience').nextElementSibling.nextElementSibling.children[0].children;
     var linkedInObj = {
         linkedinURL: location.href,
         // profile_image:document.querySelectorAll('img[class="pv-top-card-profile-picture__image pv-top-card-profile-picture__image--show ember-view"]').length > 0 ? document.querySelectorAll('img[class="pv-top-card-profile-picture__image pv-top-card-profile-picture__image--show ember-view"]')[0].src : document.querySelectorAll('img[class="ember-view profile-photo-edit__preview"]')[0].src,
         profile_image: getBase64Image(shadowRoot.getElementById('linkedInProfileImg')),
         name: document.querySelectorAll('h1[class*="text-heading-xlarge"]')[0].innerText,
         profile_heading: document.querySelectorAll('div[class*="text-body-medium break-words"]')[0].innerText,
-        experience : []
+        experience : [],
+        education: []
     }
     if(document.getElementById('about')!==null){
         linkedInObj['about'] = document.getElementById('about').nextElementSibling.nextElementSibling.children[0].children[0].children[0].children[0].innerText;
     }
-    // document.getElementById('experience').nextElementSibling.nextElementSibling.children[0].children[0].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText;
-    // console.log(experiences);
-    //document.getElementById('experience').nextElementSibling.nextElementSibling.children[0].children[0]
-    for(var i=0; i<experiences.length;i++){
-        // console.log(experiences[i].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText);
-        var time_length = experiences[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText;
-        var dates = time_length.split('·');
-        var dates_array = dates[0].trim().split('-');
-        var start_date = new Date(dates_array[0].trim());
-        var end_date = dates_array[1].trim() == "Present" ? new Date() : new Date(dates_array[1].trim());
-        var obj = { 
-            job_title : experiences[i].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText,
-            organization_name: experiences[i].children[0].children[1].children[0].children[0].children[1].children[0].innerText,
-            time_length: experiences[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText,
-            start_time: moment(start_date).format('YYYY-MM-DD'),
-            end_time: moment(end_date).format('YYYY-MM-DD')
+    if(document.getElementById('experience') !== null){
+        var experiences = document.getElementById('experience').nextElementSibling.nextElementSibling.children[0].children;
+        // document.getElementById('experience').nextElementSibling.nextElementSibling.children[0].children[0].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText;
+        // console.log(experiences);
+        //document.getElementById('experience').nextElementSibling.nextElementSibling.children[0].children[0]
+        for(var i=0; i<experiences.length;i++){
+            // console.log(experiences[i].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText);
+            if(experiences[i].children[0].children[1].children[0].children[0].children[2]!==undefined){
+                var time_length = experiences[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText;
+                var dates = time_length.split('·');
+                var dates_array = dates[0].trim().split('-');
+                var start_date = new Date(dates_array[0].trim());
+                var end_date = dates_array[1].trim() == "Present" ? new Date() : new Date(dates_array[1].trim());
+            }else{
+                var start_date = new Date();
+                var end_date = new Date() ;
+            }
+            var obj = { 
+                job_title : experiences[i].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText,
+                organization_name: experiences[i].children[0].children[1].children[0].children[0].children[1].children[0].innerText,
+                time_length: experiences[i].children[0].children[1].children[0].children[0].children[2]===undefined ? null : experiences[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText,
+                start_time: moment(start_date).format('YYYY-MM-DD'),
+                end_time: moment(end_date).format('YYYY-MM-DD')
+            }
+            if(experiences[i].children[0].children[1].children[0].children[0].children[3]!==undefined)
+            obj['job_location'] = experiences[i].children[0].children[1].children[0].children[0].children[3].children[0].innerText
+            linkedInObj.experience .push(obj);
         }
-        if(experiences[i].children[0].children[1].children[0].children[0].children[3]!==undefined)
-        obj['job_location'] = experiences[i].children[0].children[1].children[0].children[0].children[3].children[0].innerText
-        linkedInObj.experience .push(obj);
     }
-
-    // experiences.forEach((experience)=>{
-    //     obj = { 
-    //         job_title : experience.children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText
-    //     }
-    //     linkedInObj.experience.push(obj);
-    // })
+    if(document.getElementById('education') !== null){
+        var educations = document.getElementById('education').nextElementSibling.nextElementSibling.children[0].children;
+        //document.getElementById('education').nextElementSibling.nextElementSibling.children[0].children[0].children[0].children[1].children[0].children[0].children
+        for(var i=0; i<educations.length;i++){
+            //var dates_array
+            var obj = {
+                institution_name: educations[i].children[0].children[1].children[0].children[0].children[0].innerText,
+                field_of_study: educations[i].children[0].children[1].children[0].children[0].children[1].innerText,
+                length_of_study: educations[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText
+            }
+            linkedInObj.education.push(obj);
+        }
+    }
     console.log(linkedInObj);
 }
 
@@ -195,6 +216,7 @@ const getProfileDetailsFromAPI = () => {
           <div class="line"></div>
           <div class="line"></div>
         </div>`;
+        scrapeLinkedInProfile();
         var myInterval = setInterval(function () {
             if(getLinkedInProfile()){
                 console.log("Got DOM")
@@ -211,12 +233,11 @@ const getLinkedInProfile = () => {
     // var document = parser.parseFromString(text, 'text/html');
     // console.log(document.querySelectorAll('img[class="pv-top-card-profile-picture__image pv-top-card-profile-picture__image--show ember-view"]'));
     try{
-        scrapeLinkedInProfile();
         if(document.querySelectorAll('img[class="pv-top-card-profile-picture__image pv-top-card-profile-picture__image--show ember-view"]').length > 0){
             var pic = document.querySelectorAll('img[class="pv-top-card-profile-picture__image pv-top-card-profile-picture__image--show ember-view"]');
         }else if(document.querySelectorAll('img[class="ember-view profile-photo-edit__preview"]').length > 0){
             var pic = document.querySelectorAll('img[class="ember-view profile-photo-edit__preview"]');
-        }   
+        } 
         console.log(pic[0].src);
         var name = document.querySelectorAll('h1[class*="text-heading-xlarge"]');
         shadowRoot.getElementById('linkedInProfileName').innerText = name[0].innerText;
@@ -317,6 +338,7 @@ function getUserInfoFromAPI(){
             shadowRoot.getElementById('account_dropdown').src = userObj.image;
             shadowRoot.getElementById('accountImg').src = userObj.image;
             shadowRoot.getElementById('accountName').innerHTML = userObj.firstName + '&nbsp;' + userObj.lastName;
+            if(shadowRoot.getElementById('userName')!==null)
             shadowRoot.getElementById('userName').innerHTML = userObj.firstName + '&nbsp;' + userObj.lastName;
 
             shadowRoot.getElementById('accountEmail').innerText = userObj.email;
@@ -463,13 +485,18 @@ function getCredits(){
     
 // },false);
 $(document).ready(function(){
-    var pattern = /linkedin.com\/in/;
-    // if(location.href != 'https://www.linkedin.com/feed/' || location.href != 'https://www.linkedin.com/mynetwork/' || location.href != 'https://www.linkedin.com/jobs/' || location.href != 'https://www.linkedin.com/notifications/?filter=all'){
-    if(location.href.match(pattern)!= null){
-        getProfileDetailsFromAPI();
-        console.log("Valid URL"); 
-    }else{
-        shadowRoot.getElementById('app_container').innerHTML = noProfileHTML;
-    }
-    getCredits();
+    chrome.storage.local.get(['loggedin'], function(result) {
+        console.log(result);
+        if(result.loggedin){
+            var pattern = /linkedin.com\/in/;
+            // if(location.href != 'https://www.linkedin.com/feed/' || location.href != 'https://www.linkedin.com/mynetwork/' || location.href != 'https://www.linkedin.com/jobs/' || location.href != 'https://www.linkedin.com/notifications/?filter=all'){
+            if(location.href.match(pattern)!= null){
+                getProfileDetailsFromAPI();
+                console.log("Valid URL"); 
+            }else{
+                shadowRoot.getElementById('app_container').innerHTML = noProfileHTML;
+            }
+            getCredits();
+        }
+    });
 });
