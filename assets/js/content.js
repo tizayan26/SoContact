@@ -21,8 +21,13 @@ function scrapeLinkedInProfile(){
         profile_image: getBase64Image(shadowRoot.getElementById('linkedInProfileImg')),
         name: document.querySelectorAll('h1[class*="text-heading-xlarge"]')[0].innerText,
         profile_heading: document.querySelectorAll('div[class*="text-body-medium break-words"]')[0].innerText,
-        experience : [],
+        address_details: [],
+        experience: [],
         education: []
+    }
+    if(document.getElementById('main').children[0].children[1].children[1].children[2]!== undefined){
+        linkedInObj['location'] = document.getElementById('main').children[0].children[1].children[1].children[2].children[0].innerText;
+        linkedInObj.address_details.push(ParseAddressEsri(document.getElementById('main').children[0].children[1].children[1].children[2].children[0].innerText));
     }
     if(document.getElementById('about')!==null){
         linkedInObj['about'] = document.getElementById('about').nextElementSibling.nextElementSibling.children[0].children[0].children[0].children[0].innerText;
@@ -60,11 +65,14 @@ function scrapeLinkedInProfile(){
         var educations = document.getElementById('education').nextElementSibling.nextElementSibling.children[0].children;
         //document.getElementById('education').nextElementSibling.nextElementSibling.children[0].children[0].children[0].children[1].children[0].children[0].children
         for(var i=0; i<educations.length;i++){
+            var year = educations[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText.trim().split(' - ');
             //var dates_array
             var obj = {
                 institution_name: educations[i].children[0].children[1].children[0].children[0].children[0].innerText,
                 field_of_study: educations[i].children[0].children[1].children[0].children[0].children[1].innerText,
-                length_of_study: educations[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText
+                length_of_study: educations[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText,
+                start_time: year[0].trim(),
+                end_time: year[1].trim()
             }
             linkedInObj.education.push(obj);
         }

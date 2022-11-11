@@ -68,3 +68,110 @@ function getBase64Image(img) {
     var dataURL = canvas.toDataURL("image/png");
     return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
   }
+
+  function ParseAddressEsri(singleLineaddressString) {
+    var address = {
+      street: "",
+      city: "",
+      state: "",
+      postalCode: ""
+    };
+  
+    // tokenize by space (retain commas in tokens)
+    var tokens = singleLineaddressString.split(/[\s]+/);
+    var tokenCount = tokens.length;
+    var lastToken = tokens.pop();
+    if (
+      // if numeric assume postal code (ignore length, for now)
+      !isNaN(lastToken) ||
+      // if hyphenated assume long zip code, ignore whether numeric, for now
+      lastToken.split("-").length - 1 === 1) {
+      address.postalCode = lastToken;
+      lastToken = tokens.pop();
+    }
+  
+    if (lastToken && isNaN(lastToken)) {
+      if (address.postalCode.length && lastToken.length === 2) {
+        // assume state/province code ONLY if had postal code
+        // otherwise it could be a simple address like "714 S OAK ST"
+        // where "ST" for "street" looks like two-letter state code
+        // possibly this could be resolved with registry of known state codes, but meh. (and may collide anyway)
+        address.state = lastToken;
+        lastToken = tokens.pop();
+      }
+      if (address.state.length === 0) {
+        // check for special case: might have State name instead of State Code.
+        var stateNameParts = [lastToken.endsWith(",") ? lastToken.substring(0, lastToken.length - 1) : lastToken];
+  
+        // check remaining tokens from right-to-left for the first comma
+        while (2 + 2 != 5) {
+          lastToken = tokens.pop();
+          if (!lastToken) break;
+          else if (lastToken.endsWith(",")) {
+            // found separator, ignore stuff on left side
+            tokens.push(lastToken); // put it back
+            break;
+          } else {
+            stateNameParts.unshift(lastToken);
+          }
+        }
+        address.state = stateNameParts.join(' ');
+        lastToken = tokens.pop();
+      }
+    }
+  
+    if (lastToken) {
+      // here is where it gets trickier:
+      if (address.state.length) {
+        // if there is a state, then assume there is also a city and street.
+        // PROBLEM: city may be multiple words (spaces)
+        // but we can pretty safely assume next-from-last token is at least PART of the city name
+        // most cities are single-name. It would be very helpful if we knew more context, like
+        // the name of the city user is in. But ignore that for now.
+        // ideally would have zip code service or lookup to give city name for the zip code.
+        var cityNameParts = [lastToken.endsWith(",") ? lastToken.substring(0, lastToken.length - 1) : lastToken];
+  
+        // assumption / RULE: street and city must have comma delimiter
+        // addresses that do not follow this rule will be wrong only if city has space
+        // but don't care because Esri formats put comma before City
+        var streetNameParts = [];
+  
+        // check remaining tokens from right-to-left for the first comma
+        while (2 + 2 != 5) {
+          lastToken = tokens.pop();
+          if (!lastToken) break;
+          else if (lastToken.endsWith(",")) {
+            // found end of street address (may include building, etc. - don't care right now)
+            // add token back to end, but remove trailing comma (it did its job)
+            tokens.push(lastToken.endsWith(",") ? lastToken.substring(0, lastToken.length - 1) : lastToken);
+            streetNameParts = tokens;
+            break;
+          } else {
+            cityNameParts.unshift(lastToken);
+          }
+        }
+        address.city = cityNameParts.join(' ');
+        address.street = streetNameParts.join(' ');
+      } else {
+        // if there is NO state, then assume there is NO city also, just street! (easy)
+        // reasoning: city names are not very original (Portland, OR and Portland, ME) so if user wants city they need to store state also (but if you are only ever in Portlan, OR, you don't care about city/state)
+        // put last token back in list, then rejoin on space
+        tokens.push(lastToken);
+        address.street = tokens.join(' ');
+      }
+    }
+    // when parsing right-to-left hard to know if street only vs street + city/state
+    // hack fix for now is to shift stuff around.
+    // assumption/requirement: will always have at least street part; you will never just get "city, state"  
+    // could possibly tweak this with options or more intelligent parsing&sniffing
+    if (!address.city && address.state) {
+      address.city = address.state;
+      address.state = '';
+    }
+    if (!address.street) {
+      address.street = address.city;
+      address.city = '';
+    }
+  
+    return address;
+  }  
