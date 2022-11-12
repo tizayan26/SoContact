@@ -385,9 +385,9 @@ function unlockLead(res){
     res.phoneNumbers.forEach(el => {   
         var li = document.createElement('li');
         if(el.verified == true)
-            li.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M288.1 0l86.5 164 182.7 31.6L428 328.5 454.4 512 288.1 430.2 121.7 512l26.4-183.5L18.9 195.6 201.5 164 288.1 0z"/></svg> '+ el.countryCode + el.number;
+            li.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M288.1 0l86.5 164 182.7 31.6L428 328.5 454.4 512 288.1 430.2 121.7 512l26.4-183.5L18.9 195.6 201.5 164 288.1 0z"/></svg> ' + el.countryCode + el.number + '<button class="btn-small btn-thumbs-up"></button> <button class="btn-small btn-thumbs-down"></button>';
         else{
-            li.innerHTML = ' '+ el.countryCode + el.number;
+            li.innerHTML = ' '+ el.countryCode + el.number +'<button class="btn-small btn-thumbs-up"></button> <button class="btn-small btn-thumbs-down"></button>';
             li.className = 'not-verified';
         }
         ul_phones.appendChild(li);
@@ -397,9 +397,9 @@ function unlockLead(res){
     res.professionalEmail.forEach(el =>{
         var li = document.createElement('li');
         if(el.verified == true)
-            li.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M288.1 0l86.5 164 182.7 31.6L428 328.5 454.4 512 288.1 430.2 121.7 512l26.4-183.5L18.9 195.6 201.5 164 288.1 0z"/></svg> '+ el.email;
+            li.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M288.1 0l86.5 164 182.7 31.6L428 328.5 454.4 512 288.1 430.2 121.7 512l26.4-183.5L18.9 195.6 201.5 164 288.1 0z"/></svg> ' + el.email + '<button class="btn-small btn-thumbs-up"></button> <button class="btn-small btn-thumbs-down"></button>';
         else{
-            li.innerHTML = ' '+ el.email;
+            li.innerHTML = ' '+ el.email + '<button class="btn-small btn-thumbs-up"></button> <button class="btn-small btn-thumbs-down"></button>';
             li.className = 'not-verified';
         }
         ul_proEmails.appendChild(li);
@@ -409,9 +409,9 @@ function unlockLead(res){
     res.personalEmail.forEach(el =>{
         var li = document.createElement('li');
         if(el.verified == true)
-            li.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M288.1 0l86.5 164 182.7 31.6L428 328.5 454.4 512 288.1 430.2 121.7 512l26.4-183.5L18.9 195.6 201.5 164 288.1 0z"/></svg> '+ el.email;
+            li.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M288.1 0l86.5 164 182.7 31.6L428 328.5 454.4 512 288.1 430.2 121.7 512l26.4-183.5L18.9 195.6 201.5 164 288.1 0z"/></svg> ' + el.email + '<button class="btn-small btn-thumbs-up"></button> <button class="btn-small btn-thumbs-down"></button>';
         else{
-            li.innerHTML = ' '+ el.email;
+            li.innerHTML = ' '+ el.email + '<button class="btn-small btn-thumbs-up"></button> <button class="btn-small btn-thumbs-down"></button>';
             li.className = 'not-verified';
         }
         ul_perEmails.appendChild(li);
