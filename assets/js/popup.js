@@ -74,7 +74,7 @@ let contact_detail_api = `
             </div>
         </div>
     </div>
-    <div class="col-sm-12">
+    <div id="phoneNumbersBlock" class="col-sm-12">
         <div class="row dotted-box pt-2 pb-2">
             <div class="col-sm-12"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"/></svg><label> PHONE NUMBERS</label></div>
             <div class="col-sm-12">
@@ -90,7 +90,7 @@ let contact_detail_api = `
             </div>
         </div>
     </div>
-    <div class="col-sm-12">
+    <div id="proEmailsBlock" class="col-sm-12">
         <div class="row dotted-box pt-2 pb-2">
             <div class="col-sm-12"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg><label> PROFESSIONAL MAILS</label></div>
             <div class="col-sm-12">
@@ -106,7 +106,7 @@ let contact_detail_api = `
             </div>
         </div>
     </div>
-    <div class="col-sm-12">
+    <div id="perEmailsBlock" class="col-sm-12">
         <div class="row dotted-box pt-2 pb-2">
             <div class="col-sm-12"><svg width="48pt" height="48pt" version="1.0" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0 48) scale(.1 -.1)"><path d="m12 408c-17-17-17-319 0-336s439-17 456 0 17 319 0 336-439 17-456 0zm188-68c11-11 20-29 20-40 0-26-34-60-60-60s-60 34-60 60 34 60 60 60c11 0 29-9 40-20zm240-40v-60h-80-80v60 60h80 80v-60zm-200-118c22-10 36-26 38-39 3-23 2-23-118-23s-121 0-118 23c4 29 61 57 118 57 25 0 61-8 80-18z"/><path d="m300 331c0-5 14-19 30-31l30-21 30 21c17 12 30 26 30 31 0 6-13 1-30-11l-30-21-30 21c-16 12-30 17-30 11z"/></g></svg><label> PERSONAL MAIL</label></div>
             <div class="col-sm-12">
@@ -122,27 +122,29 @@ let contact_detail_api = `
             </div>
         </div>
     </div>
-    <div class="col-sm-12">
+    <div id="companyBlock" class="col-sm-12">
         <div class="row pt-4 pb-4">
             <div class="col-sm-2"><div class="company-logo-circle"></div></div>
             <div class="col-sm-5"><div class="company-title" id="companyName">Company name</div></div>
             <div class="col-sm-5"><a class="go-to-website" id="companyWebsite" target="_blank">Go to website</a></div>
         </div>
     </div>
-    <div class="col-sm-12">
-        <label class="other-social-media">Other social media</label>
-    </div>
-    <div class="col-sm-12 pb-4">
-        <div class="row social-media-icon">
-            <div class="col-sm-1"><svg xmlns="http://www.w3.org/2000/svg" width="30.033" height="30.033" viewBox="0 0 30.033 30.033">
-            <path id="Icon_awesome-facebook-square" data-name="Icon awesome-facebook-square" d="M26.816,2.25H3.218A3.218,3.218,0,0,0,0,5.468v23.6a3.218,3.218,0,0,0,3.218,3.218h9.2V22.073H8.2V17.267h4.223V13.6c0-4.166,2.48-6.468,6.28-6.468a25.587,25.587,0,0,1,3.722.324V11.55h-2.1a2.4,2.4,0,0,0-2.71,2.6v3.121h4.611l-.737,4.806H17.614V32.283h9.2a3.218,3.218,0,0,0,3.218-3.218V5.468A3.218,3.218,0,0,0,26.816,2.25Z" transform="translate(0 -2.25)" fill="#7e84a3"/>
-          </svg></div>
-            <div class="col-sm-11">
-                <div id="fbURL">
-                    <div class="load-2"> 
-                        <div class="line"></div>
-                        <div class="line"></div>
-                        <div class="line"></div>
+    <div id="socialMediaBlock">
+        <div class="col-sm-12">
+            <label class="other-social-media">Other social media</label>
+        </div>
+        <div class="col-sm-12 pb-4">
+            <div class="row social-media-icon">
+                <div class="col-sm-1"><svg xmlns="http://www.w3.org/2000/svg" width="30.033" height="30.033" viewBox="0 0 30.033 30.033">
+                <path id="Icon_awesome-facebook-square" data-name="Icon awesome-facebook-square" d="M26.816,2.25H3.218A3.218,3.218,0,0,0,0,5.468v23.6a3.218,3.218,0,0,0,3.218,3.218h9.2V22.073H8.2V17.267h4.223V13.6c0-4.166,2.48-6.468,6.28-6.468a25.587,25.587,0,0,1,3.722.324V11.55h-2.1a2.4,2.4,0,0,0-2.71,2.6v3.121h4.611l-.737,4.806H17.614V32.283h9.2a3.218,3.218,0,0,0,3.218-3.218V5.468A3.218,3.218,0,0,0,26.816,2.25Z" transform="translate(0 -2.25)" fill="#7e84a3"/>
+            </svg></div>
+                <div class="col-sm-11">
+                    <div id="fbURL">
+                        <div class="load-2"> 
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -203,7 +205,100 @@ let noProfileHTML = `
 </div>
 `;
 
-
+let dropdownContentHTML =`
+<div class="row pt-3 pb-2">
+<div class="col-sm-3"><img class="avatar big" id="accountImg" src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80" /></div>
+<div class="col-sm-6 account">
+    <label>Account</label><h6 id="accountName">John Doe</h6>
+    <label>Email</label><p id="accountEmail">mail@mail.com</p>
+</div>
+<div class="col-sm-3">
+    <div class="row account-icons">
+        <div class="col-sm-4">
+            <svg id="ic-bell" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+            <path id="Tracé_401" data-name="Tracé 401" d="M0,0H24V24H0Z" fill="none"/>
+            <path id="Tracé_402" data-name="Tracé 402" d="M10,5a2,2,0,1,1,4,0,7,7,0,0,1,4,6v3a4,4,0,0,0,2,3H4a4,4,0,0,0,2-3V11a7,7,0,0,1,4-6" fill="none" stroke="#7e84a3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+            <path id="Tracé_403" data-name="Tracé 403" d="M9,17v1a3,3,0,0,0,6,0V17" fill="none" stroke="#7e84a3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+            </svg>
+        </div>
+        <div class="col-sm-4">
+            <svg id="ic_setting" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+            <path id="Tracé_386" data-name="Tracé 386" d="M0,0H24V24H0Z" fill="none"/>
+            <path id="Tracé_387" data-name="Tracé 387" d="M10.325,4.317a1.724,1.724,0,0,1,3.35,0,1.724,1.724,0,0,0,2.573,1.066,1.725,1.725,0,0,1,2.37,2.37,1.724,1.724,0,0,0,1.065,2.572,1.724,1.724,0,0,1,0,3.35,1.724,1.724,0,0,0-1.066,2.573,1.725,1.725,0,0,1-2.37,2.37,1.724,1.724,0,0,0-2.572,1.065,1.724,1.724,0,0,1-3.35,0,1.724,1.724,0,0,0-2.573-1.066,1.725,1.725,0,0,1-2.37-2.37,1.724,1.724,0,0,0-1.065-2.572,1.724,1.724,0,0,1,0-3.35A1.724,1.724,0,0,0,5.383,7.752a1.725,1.725,0,0,1,2.37-2.37,1.723,1.723,0,0,0,2.572-1.065Z" fill="none" stroke="#B4C5D3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+            <circle id="Ellipse_2" data-name="Ellipse 2" cx="3" cy="3" r="3" transform="translate(9 9)" fill="none" stroke="#B4C5D3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+            </svg>
+        </div>
+        <div class="col-sm-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="150.003 246.71 12.927 12.296"><g data-name="Icon feather-edit-3"><path d="M156.467 259.007h6.463" stroke-linejoin="round" stroke-linecap="round" stroke="#b4c5d3" fill="transparent" data-name="Tracé 25"/><path d="M159.698 247.157a1.524 1.524 0 0 1 2.155 2.154l-8.977 8.978-2.873.718.718-2.873 8.977-8.977Z" stroke-linejoin="round" stroke-linecap="round" stroke="#b4c5d3" fill="transparent" data-name="Tracé 26"/></g></svg>
+        </div>
+    </div>
+</div>
+</div>
+<div class="row pt-3 pb-2">
+<div class="col-sm-12">
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="autoSaveWidget">
+        <label class="form-check-label">
+        Auto save widget ?
+        <p class="sub">When socontact finds contact informations</p>
+        </label>
+    </div>
+</div>
+</div>
+<div class="row pt-3 pb-2 pt-2">
+<hr class="divider">
+</div>
+<div class="row pt-3 pb-2">
+<div class="col-sm-12">
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="autoSaveLead">
+        <label class="form-check-label">
+        Auto save lead ?
+        <p class="sub">When socontact finds a new lead</p>
+        </label>
+    </div>
+</div>
+</div>
+<div class="row pb-2">
+<div class="col-sm-12">
+    <ul class="options">
+        <li> 
+            <svg id="ic_users" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+            <path id="Tracé_393" data-name="Tracé 393" d="M0,0H24V24H0Z" fill="none"/>
+            <circle id="Ellipse_3" data-name="Ellipse 3" cx="4" cy="4" r="4" transform="translate(5 3)" fill="none" stroke="#ff7400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+            <path id="Tracé_394" data-name="Tracé 394" d="M3,21V19a4,4,0,0,1,4-4h4a4,4,0,0,1,4,4v2" fill="none" stroke="#ff7400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+            <path id="Tracé_395" data-name="Tracé 395" d="M16,3.13a4,4,0,0,1,0,7.75" fill="none" stroke="#ff7400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+            <path id="Tracé_396" data-name="Tracé 396" d="M21,21V19a4,4,0,0,0-3-3.85" fill="none" stroke="#ff7400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+            </svg> <label>Add teams member</label>
+        </li>
+        <li> 
+            <svg id="ic_inbox" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+            <path id="Tracé_376" data-name="Tracé 376" d="M0,0H24V24H0Z" fill="none"/>
+            <rect id="Rectangle_603" data-name="Rectangle 603" width="18" height="14" rx="2" transform="translate(3 5)" fill="none" stroke="#ff7400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+            <path id="Tracé_377" data-name="Tracé 377" d="M3,7l9,6,9-6" fill="none" stroke="#ff7400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+            </svg> <label>Add new leads</label>
+        </li>
+        <li class="grad" id="btnIntegration">              
+            <svg id="ic_setting" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+            <path id="Tracé_386" data-name="Tracé 386" d="M0,0H24V24H0Z" fill="none"/>
+            <path id="Tracé_387" data-name="Tracé 387" d="M10.325,4.317a1.724,1.724,0,0,1,3.35,0,1.724,1.724,0,0,0,2.573,1.066,1.725,1.725,0,0,1,2.37,2.37,1.724,1.724,0,0,0,1.065,2.572,1.724,1.724,0,0,1,0,3.35,1.724,1.724,0,0,0-1.066,2.573,1.725,1.725,0,0,1-2.37,2.37,1.724,1.724,0,0,0-2.572,1.065,1.724,1.724,0,0,1-3.35,0,1.724,1.724,0,0,0-2.573-1.066,1.725,1.725,0,0,1-2.37-2.37,1.724,1.724,0,0,0-1.065-2.572,1.724,1.724,0,0,1,0-3.35A1.724,1.724,0,0,0,5.383,7.752a1.725,1.725,0,0,1,2.37-2.37,1.723,1.723,0,0,0,2.572-1.065Z" fill="none" stroke="#ff7400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+            <circle id="Ellipse_2" data-name="Ellipse 2" cx="3" cy="3" r="3" transform="translate(9 9)" fill="none" stroke="#ff7400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+            </svg> <label>Integrations</label>
+        </li>
+    </ul>
+</div>
+</div>
+<div class="row pt-3 pb-2">
+<div class="col-sm-6 account-bottom-text">
+    Invit and earn Credit<br>
+    Help center
+    <p class="highlight">Free credits</p>
+</div>
+</div>
+<div class="row pt-3 pb-2 text-center">
+<div class="col-sm-12"><button class="btn-logout" id="logout">Log out</div>
+</div>
+`;
 
 let account_html = `
 <div class="row pt-3 pb-2">
@@ -220,105 +315,139 @@ let account_html = `
     </div>
 </div>
 <div id="drop_down" class="drop-down">
-    <div class="row pt-3 pb-2">
-        <div class="col-sm-3"><img class="avatar big" id="accountImg" src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80" /></div>
-        <div class="col-sm-6 account">
-            <label>Account</label><h6 id="accountName">John Doe</h6>
-            <label>Email</label><p id="accountEmail">mail@mail.com</p>
-        </div>
-        <div class="col-sm-3">
-            <div class="row account-icons">
-                <div class="col-sm-4">
-                    <svg id="ic-bell" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-                    <path id="Tracé_401" data-name="Tracé 401" d="M0,0H24V24H0Z" fill="none"/>
-                    <path id="Tracé_402" data-name="Tracé 402" d="M10,5a2,2,0,1,1,4,0,7,7,0,0,1,4,6v3a4,4,0,0,0,2,3H4a4,4,0,0,0,2-3V11a7,7,0,0,1,4-6" fill="none" stroke="#7e84a3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                    <path id="Tracé_403" data-name="Tracé 403" d="M9,17v1a3,3,0,0,0,6,0V17" fill="none" stroke="#7e84a3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                    </svg>
-                </div>
-                <div class="col-sm-4">
-                    <svg id="ic_setting" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
-                    <path id="Tracé_386" data-name="Tracé 386" d="M0,0H24V24H0Z" fill="none"/>
-                    <path id="Tracé_387" data-name="Tracé 387" d="M10.325,4.317a1.724,1.724,0,0,1,3.35,0,1.724,1.724,0,0,0,2.573,1.066,1.725,1.725,0,0,1,2.37,2.37,1.724,1.724,0,0,0,1.065,2.572,1.724,1.724,0,0,1,0,3.35,1.724,1.724,0,0,0-1.066,2.573,1.725,1.725,0,0,1-2.37,2.37,1.724,1.724,0,0,0-2.572,1.065,1.724,1.724,0,0,1-3.35,0,1.724,1.724,0,0,0-2.573-1.066,1.725,1.725,0,0,1-2.37-2.37,1.724,1.724,0,0,0-1.065-2.572,1.724,1.724,0,0,1,0-3.35A1.724,1.724,0,0,0,5.383,7.752a1.725,1.725,0,0,1,2.37-2.37,1.723,1.723,0,0,0,2.572-1.065Z" fill="none" stroke="#B4C5D3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                    <circle id="Ellipse_2" data-name="Ellipse 2" cx="3" cy="3" r="3" transform="translate(9 9)" fill="none" stroke="#B4C5D3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                    </svg>
-                </div>
-                <div class="col-sm-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="150.003 246.71 12.927 12.296"><g data-name="Icon feather-edit-3"><path d="M156.467 259.007h6.463" stroke-linejoin="round" stroke-linecap="round" stroke="#b4c5d3" fill="transparent" data-name="Tracé 25"/><path d="M159.698 247.157a1.524 1.524 0 0 1 2.155 2.154l-8.977 8.978-2.873.718.718-2.873 8.977-8.977Z" stroke-linejoin="round" stroke-linecap="round" stroke="#b4c5d3" fill="transparent" data-name="Tracé 26"/></g></svg>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row pt-3 pb-2">
-        <div class="col-sm-12">
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="autoSaveWidget">
-                <label class="form-check-label">
-                Auto save widget ?
-                <p class="sub">When socontact finds contact informations</p>
-                </label>
-            </div>
-        </div>
-    </div>
-    <div class="row pt-3 pb-2 pt-2">
-    <hr class="divider">
-    </div>
-    <div class="row pt-3 pb-2">
-        <div class="col-sm-12">
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="autoSaveLead">
-                <label class="form-check-label">
-                Auto save lead ?
-                <p class="sub">When socontact finds a new lead</p>
-                </label>
-            </div>
-        </div>
-    </div>
-    <div class="row pb-2">
-        <div class="col-sm-12">
-            <ul class="options">
-                <li> 
-                    <svg id="ic_users" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
-                    <path id="Tracé_393" data-name="Tracé 393" d="M0,0H24V24H0Z" fill="none"/>
-                    <circle id="Ellipse_3" data-name="Ellipse 3" cx="4" cy="4" r="4" transform="translate(5 3)" fill="none" stroke="#ff7400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                    <path id="Tracé_394" data-name="Tracé 394" d="M3,21V19a4,4,0,0,1,4-4h4a4,4,0,0,1,4,4v2" fill="none" stroke="#ff7400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                    <path id="Tracé_395" data-name="Tracé 395" d="M16,3.13a4,4,0,0,1,0,7.75" fill="none" stroke="#ff7400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                    <path id="Tracé_396" data-name="Tracé 396" d="M21,21V19a4,4,0,0,0-3-3.85" fill="none" stroke="#ff7400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                    </svg> <label>Add teams member</label>
-                </li>
-                <li> 
-                    <svg id="ic_inbox" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
-                    <path id="Tracé_376" data-name="Tracé 376" d="M0,0H24V24H0Z" fill="none"/>
-                    <rect id="Rectangle_603" data-name="Rectangle 603" width="18" height="14" rx="2" transform="translate(3 5)" fill="none" stroke="#ff7400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                    <path id="Tracé_377" data-name="Tracé 377" d="M3,7l9,6,9-6" fill="none" stroke="#ff7400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                    </svg> <label>Add new leads</label>
-                </li>
-                <li class="grad">              
-                    <svg id="ic_setting" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
-                    <path id="Tracé_386" data-name="Tracé 386" d="M0,0H24V24H0Z" fill="none"/>
-                    <path id="Tracé_387" data-name="Tracé 387" d="M10.325,4.317a1.724,1.724,0,0,1,3.35,0,1.724,1.724,0,0,0,2.573,1.066,1.725,1.725,0,0,1,2.37,2.37,1.724,1.724,0,0,0,1.065,2.572,1.724,1.724,0,0,1,0,3.35,1.724,1.724,0,0,0-1.066,2.573,1.725,1.725,0,0,1-2.37,2.37,1.724,1.724,0,0,0-2.572,1.065,1.724,1.724,0,0,1-3.35,0,1.724,1.724,0,0,0-2.573-1.066,1.725,1.725,0,0,1-2.37-2.37,1.724,1.724,0,0,0-1.065-2.572,1.724,1.724,0,0,1,0-3.35A1.724,1.724,0,0,0,5.383,7.752a1.725,1.725,0,0,1,2.37-2.37,1.723,1.723,0,0,0,2.572-1.065Z" fill="none" stroke="#ff7400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                    <circle id="Ellipse_2" data-name="Ellipse 2" cx="3" cy="3" r="3" transform="translate(9 9)" fill="none" stroke="#ff7400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                    </svg> <label>Integrations</label>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="row pt-3 pb-2">
-        <div class="col-sm-6 account-bottom-text">
-            Invit and earn Credit<br>
-            Help center
-            <p class="highlight">Free credits</p>
-        </div>
-    </div>
-    <div class="row pt-3 pb-2 text-center">
-        <div class="col-sm-12"><button class="btn-logout" id="logout">Log out</div>
-    </div>
+    ${dropdownContentHTML}
 </div>
 <div id="app_container" class="row">
    ${noProfileHTML}
 </div>
 `;
 
+let leadEditHTML = `
+<div class="col-sm-12 pt-2 pb-2 p-4">
+    <div class="row white-container p-2">
+        <div class="col-sm-1 btn-back" id="btnBack">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25.243" viewBox="0 0 24 25.243">
+            <g id="Icon_feather-arrow-left" data-name="Icon feather-arrow-left" transform="translate(-6 -5.379)">
+            <path id="Tracé_509" data-name="Tracé 509" d="M28.5,18H7.5" fill="none" stroke="#b4c5d3" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+            <path id="Tracé_510" data-name="Tracé 510" d="M18,28.5,7.5,18,18,7.5" fill="none" stroke="#b4c5d3" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+            </g>
+            </svg>
+        </div>
+        <div class="col-sm-1 ">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="150.003 246.71 12.927 12.296"><g data-name="Icon feather-edit-3"><path d="M156.467 259.007h6.463" stroke-linejoin="round" stroke-linecap="round" stroke="#FF7400" fill="transparent" data-name="Tracé 25"></path><path d="M159.698 247.157a1.524 1.524 0 0 1 2.155 2.154l-8.977 8.978-2.873.718.718-2.873 8.977-8.977Z" stroke-linejoin="round" stroke-linecap="round" stroke="#FF7400" fill="transparent" data-name="Tracé 26"></path></g></svg>
+        </div>
+        <div class="col-sm-10 app-container-title">
+            Edit contact
+        </div>
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label class="label-sm">Name</label>
+                <input type="text" class="form-control form-control-sm" id="name" placeholder="Enter name">
+            </div>
+            <div class="form-group">
+                <label class="label-sm">Last Name</label>
+                <input type="text" class="form-control form-control-sm" id="lastName" placeholder="Last Name">
+            </div>
+            <div class="form-group">
+                <label class="label-sm">Job</label>
+                <input type="text" class="form-control form-control-sm" id="job" placeholder="Enter Job">
+            </div>
+            <div class="form-group">
+                <label class="label-sm">Loction</label>
+                <input type="text" class="form-control form-control-sm" id="location" placeholder="Enter Location">
+            </div>
+            <div class="form-group">
+                <label class="label-sm">Descriptions</label>
+                <textarea class="form-control form-control-sm" id="location" rows="6"></textarea>
+            </div>
+        </div>
+        <div id="companyBlock">
+            <div class="col-sm-12">
+                <label class="other-social-media">Compagny</label>
+            </div>
+            <div class="col-sm-12">
+                <div class="row pt-2 pb-4">
+                    <div class="col-sm-2"><div class="company-logo-circle"></div></div>
+                    <div class="col-sm-5"><div class="company-title" id="companyName">Company name</div></div>
+                    <div class="col-sm-5"><a class="go-to-website" id="companyWebsite" target="_blank">Go to website</a></div>
+                </div>
+            </div>
+            <div class=col-sm-12>
+                <button class="btn-add">Add +</button>
+            </div>
+        </div>
+        <div class="col-sm-12 pt-2">
+            <label class="other-social-media">Compagny categories</label>
+            <button class="btn-add">Add +</button>
+        </div>
+        <div id="socialMediaBlock" class="col-sm-12">
+            <label class="other-social-media">Social medias</label>
+            <div class="col-sm-12 pb-4">
+                <ul id="social_media" class="social-media-icon">
+                    <li>
+                        <div class="load-2"> 
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-12 pt-4 text-center lead">
+            <button class="btn btn-secondary save-lead" id="saveLead">Save modifications</button>
+        </div>
+    </div>
+</div>`;
 
+let integrationHTML = `
+<div class="col-sm-12 pt-2 pb-2">
+    <div class="row p-2">
+        <div class="col-sm-1 btn-back" id="btnBack">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25.243" viewBox="0 0 24 25.243">
+            <g id="Icon_feather-arrow-left" data-name="Icon feather-arrow-left" transform="translate(-6 -5.379)">
+            <path id="Tracé_509" data-name="Tracé 509" d="M28.5,18H7.5" fill="none" stroke="#b4c5d3" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+            <path id="Tracé_510" data-name="Tracé 510" d="M18,28.5,7.5,18,18,7.5" fill="none" stroke="#b4c5d3" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+            </g>
+            </svg>
+        </div>
+        <div class="col-sm-1 ">
+            <svg id="ic_setting" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+            <path id="Tracé_386" data-name="Tracé 386" d="M0,0H24V24H0Z" fill="none"></path>
+            <path id="Tracé_387" data-name="Tracé 387" d="M10.325,4.317a1.724,1.724,0,0,1,3.35,0,1.724,1.724,0,0,0,2.573,1.066,1.725,1.725,0,0,1,2.37,2.37,1.724,1.724,0,0,0,1.065,2.572,1.724,1.724,0,0,1,0,3.35,1.724,1.724,0,0,0-1.066,2.573,1.725,1.725,0,0,1-2.37,2.37,1.724,1.724,0,0,0-2.572,1.065,1.724,1.724,0,0,1-3.35,0,1.724,1.724,0,0,0-2.573-1.066,1.725,1.725,0,0,1-2.37-2.37,1.724,1.724,0,0,0-1.065-2.572,1.724,1.724,0,0,1,0-3.35A1.724,1.724,0,0,0,5.383,7.752a1.725,1.725,0,0,1,2.37-2.37,1.723,1.723,0,0,0,2.572-1.065Z" fill="none" stroke="#ff7400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+            <circle id="Ellipse_2" data-name="Ellipse 2" cx="3" cy="3" r="3" transform="translate(9 9)" fill="none" stroke="#ff7400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle>
+            </svg>
+        </div>
+        <div class="col-sm-10 app-container-title">
+            Integrations
+        </div>
+    </div>
+    <div class="row pt-2">
+        <ul class="options options-lg">
+            <li> 
+                <div class="row">
+                <div class="col-sm-3"><div class="company-logo-circle company-logo-circle-lg">Logo</div></div> 
+                <div class="col-sm-7"><label>Integration Name</label><small class="connected">Connected</small></div>
+                <div class="col-sm-2"><div class="form-check"><input class="form-check-input" type="checkbox" value=""></div></div>
+                </div>
+            </li>
+            <li> 
+                <div class="row">
+                <div class="col-sm-3"><div class="company-logo-circle company-logo-circle-lg">Logo</div></div> 
+                <div class="col-sm-7"><label>Integration Name</label><small class="not-connected">Not connected</small></div>
+                <div class="col-sm-2"><div class="form-check"><input class="form-check-input" type="checkbox" value=""></div></div>
+                </div>
+            </li>
+            <li>              
+                <div class="row">
+                <div class="col-sm-3"><div class="company-logo-circle company-logo-circle-lg">Logo</div></div> 
+                <div class="col-sm-7"><label>Integration Name</label><small class="pending">Pending</small></div>
+                <div class="col-sm-2"><div class="form-check"><input class="form-check-input" type="checkbox" value=""></div></div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>`;
 
 let leadUnlocked = `
 <div class="col-sm-12 pt-2 pb-2 p-4">
@@ -343,10 +472,10 @@ let leadUnlocked = `
             </div>
             </h6><label id="jobTitle">Job Title</label>
         </div>
-        <div class="col-sm-12 pt-4 text-center">
-            <button class="btn btn-secondary add-lead">Add lead</button>
+        <div class="col-sm-12 pt-4 text-center lead">
+            <button class="btn btn-secondary add-lead" id="addLead">Add lead</button>
         </div>
-        <div class="col-sm-12 pt-4">
+        <div id="phoneNumbersBlock" class="col-sm-12 pt-4">
             <div class="row dotted-box pt-2 pb-2">
                 <div class="col-sm-12"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"/></svg><label> PHONE NUMBERS</label></div>
                 <div class="col-sm-12">
@@ -363,7 +492,7 @@ let leadUnlocked = `
             </div>
         </div>
         
-        <div class="col-sm-12">
+        <div id="proEmailsBlock" class="col-sm-12">
             <div class="row dotted-box pt-2 pb-2">
                 <div class="col-sm-12"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg><label> PROFESSIONAL MAILS</label></div>
                 <div class="col-sm-12">
@@ -379,7 +508,7 @@ let leadUnlocked = `
                 </div>
             </div>
         </div>
-        <div class="col-sm-12">
+        <div id="perEmailsBlock" class="col-sm-12">
             <div class="row dotted-box pt-2 pb-2">
                 <div class="col-sm-12"><svg width="48pt" height="48pt" version="1.0" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0 48) scale(.1 -.1)"><path d="m12 408c-17-17-17-319 0-336s439-17 456 0 17 319 0 336-439 17-456 0zm188-68c11-11 20-29 20-40 0-26-34-60-60-60s-60 34-60 60 34 60 60 60c11 0 29-9 40-20zm240-40v-60h-80-80v60 60h80 80v-60zm-200-118c22-10 36-26 38-39 3-23 2-23-118-23s-121 0-118 23c4 29 61 57 118 57 25 0 61-8 80-18z"/><path d="m300 331c0-5 14-19 30-31l30-21 30 21c17 12 30 26 30 31 0 6-13 1-30-11l-30-21-30 21c-16 12-30 17-30 11z"/></g></svg><label> PERSONAL MAIL</label></div>
                 <div class="col-sm-12">
@@ -395,42 +524,44 @@ let leadUnlocked = `
                 </div>
             </div>
         </div>
-        <div class="col-sm-12">
+        <div id="socialMediaBlock" class="col-sm-12">
             <label class="other-social-media">Social medias</label>
-        </div>
-        <div class="col-sm-12 pb-4">
-            <!--div class="row social-media-icon">
-                <div class="col-sm-1"><svg xmlns="http://www.w3.org/2000/svg" width="30.033" height="30.033" viewBox="0 0 30.033 30.033">
-                <path id="Icon_awesome-facebook-square" data-name="Icon awesome-facebook-square" d="M26.816,2.25H3.218A3.218,3.218,0,0,0,0,5.468v23.6a3.218,3.218,0,0,0,3.218,3.218h9.2V22.073H8.2V17.267h4.223V13.6c0-4.166,2.48-6.468,6.28-6.468a25.587,25.587,0,0,1,3.722.324V11.55h-2.1a2.4,2.4,0,0,0-2.71,2.6v3.121h4.611l-.737,4.806H17.614V32.283h9.2a3.218,3.218,0,0,0,3.218-3.218V5.468A3.218,3.218,0,0,0,26.816,2.25Z" transform="translate(0 -2.25)" fill="#7e84a3"/>
-                </svg></div>
-                <div class="col-sm-11">
-                    <div id="fbURL">
+            <div class="col-sm-12 pb-4">
+                <!--div class="row social-media-icon">
+                    <div class="col-sm-1"><svg xmlns="http://www.w3.org/2000/svg" width="30.033" height="30.033" viewBox="0 0 30.033 30.033">
+                    <path id="Icon_awesome-facebook-square" data-name="Icon awesome-facebook-square" d="M26.816,2.25H3.218A3.218,3.218,0,0,0,0,5.468v23.6a3.218,3.218,0,0,0,3.218,3.218h9.2V22.073H8.2V17.267h4.223V13.6c0-4.166,2.48-6.468,6.28-6.468a25.587,25.587,0,0,1,3.722.324V11.55h-2.1a2.4,2.4,0,0,0-2.71,2.6v3.121h4.611l-.737,4.806H17.614V32.283h9.2a3.218,3.218,0,0,0,3.218-3.218V5.468A3.218,3.218,0,0,0,26.816,2.25Z" transform="translate(0 -2.25)" fill="#7e84a3"/>
+                    </svg></div>
+                    <div class="col-sm-11">
+                        <div id="fbURL">
+                            <div class="load-2"> 
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div-->
+                <ul id="social_media" class="social-media-icon">
+                    <li>
                         <div class="load-2"> 
                             <div class="line"></div>
                             <div class="line"></div>
                             <div class="line"></div>
                         </div>
-                    </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id="companyBlock">
+            <div class="col-sm-12">
+                <label class="other-social-media">Compagny</label>
+            </div>
+            <div class="col-sm-12">
+                <div class="row pt-2 pb-4">
+                    <div class="col-sm-2"><div class="company-logo-circle"></div></div>
+                    <div class="col-sm-5"><div class="company-title" id="companyName">Company name</div></div>
+                    <div class="col-sm-5"><a class="go-to-website" id="companyWebsite" target="_blank">Go to website</a></div>
                 </div>
-            </div-->
-            <ul id="social_media" class="social-media-icon">
-                <li>
-                    <div class="load-2"> 
-                        <div class="line"></div>
-                        <div class="line"></div>
-                        <div class="line"></div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div class="col-sm-12">
-            <label class="other-social-media">Compagny</label>
-        </div>
-        <div class="col-sm-12">
-            <div class="row pt-2 pb-4">
-                <div class="col-sm-2"><div class="company-logo-circle"></div></div>
-                <div class="col-sm-5"><div class="company-title" id="companyName">Company name</div></div>
-                <div class="col-sm-5"><a class="go-to-website" id="companyWebsite" target="_blank">Go to website</a></div>
             </div>
         </div>
         <div class="col-sm-12 company-details" id="companyDetails">
@@ -470,7 +601,7 @@ let leadUnlocked = `
                 </div>
             </div>
         </div>
-        <div class="col-sm-12 text-center">
+        <div class="col-sm-12 text-center" id="companyToggleBtnBlock">
             <button class="btn btn-show-company-detail" id="companyDetailsToggle">Show company details</button>
         </div>
     </div>
@@ -567,6 +698,21 @@ function loadPopup() {
         color: #121C31!important;
         opacity: 1;
         height:34.2px;
+    }
+    .form-control-sm{
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        border: 1px solid #B4C5D3;
+        border-radius: 2px;
+        text-align: left;
+        font: normal normal 500 8.36px/12.54px Poppins;
+        letter-spacing: 0.16px;
+        color: #131523;
+    }
+    .label-sm{
+        text-align: left;
+        font: normal normal normal 6.84px/11.4px Poppins;
+        letter-spacing: 0px;
+        color: #7E84A3;
     }
     .form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
         color: #121C31!important;
@@ -704,9 +850,26 @@ function loadPopup() {
         background-color: #7E84A3;
     }
 
+    .btn-add{
+        display:block;
+        width: 35.82px;
+        height: 20.14px;
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        border: 1px solid #0058FF;
+        font: normal normal 600 7.6px/8.36px Muli;
+        letter-spacing: 0px;
+        color: #0058FF;
+    }
+
     .add-lead{
         height: 26.22px;
         width: 93.48px;
+        font: normal normal 600 9.5px/10.26px Muli;
+        letter-spacing: 0px;
+    }
+    .save-lead{
+        height: 26.22px;
+        width: 137.56px;
         font: normal normal 600 9.5px/10.26px Muli;
         letter-spacing: 0px;
     }
@@ -839,6 +1002,32 @@ function loadPopup() {
         margin-left:15px;
         font: normal normal 500 10.64px/10.64px Poppins;
     }
+    ul.options-lg>li{
+        background: #F4FAFF 0% 0% no-repeat padding-box;
+        box-shadow: 0px 1px 4px #15223214;
+        border-radius: 2px;
+        height: 70.68px;
+    }
+    ul.options-lg>li label{
+        font: normal normal bold 10.26px/15.2px Poppins;
+        letter-spacing: 0.17px;
+        color: #5A607F;
+    }
+    ul.options-lg>li small{
+        display:block;
+        font: normal normal normal 6px/7.6px Poppins;
+        letter-spacing: 0px;
+    }
+    ul.options-lg>li small.not-connected{
+        color: #7E84A3;
+    }
+    ul.options-lg>li small.connected{
+        color: #6ED19D;
+    }
+    ul.options-lg>li small.pending{
+        color: #FF7400;
+    }
+
     .grad{
         background: transparent linear-gradient(90deg, #00BDF50F 0%, #F4FAFF 100%) 0% 0% no-repeat padding-box!important;
     }
@@ -888,6 +1077,39 @@ function loadPopup() {
         right: 30px;
         position: absolute;
     }
+    .round-small-button{
+        width:20.52px;
+        height:20.52px;
+        border-radius:50%;
+    }
+    .btn-edit{
+        background: #0058FF 0% 0% no-repeat padding-box;
+        box-shadow: 0px 3px 26px #0058FF4A;
+        border: 1px solid #0058FF;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='150.003 246.71 12.927 12.296'%3E%3Cg data-name='Icon feather-edit-3'%3E%3Cpath d='M156.467 259.007h6.463' stroke-linejoin='round' stroke-linecap='round' stroke='%23b4c5d3' fill='transparent' data-name='Trac%C3%A9 25'%3E%3C/path%3E%3Cpath d='M159.698 247.157a1.524 1.524 0 0 1 2.155 2.154l-8.977 8.978-2.873.718.718-2.873 8.977-8.977Z' stroke-linejoin='round' stroke-linecap='round' stroke='%23ffffff' fill='transparent' data-name='Trac%C3%A9 26'%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
+        background-repeat: no-repeat no-repeat;
+        background-position: center center;
+        right: 60px;
+        position: absolute;
+    }
+    .btn-refresh{
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        border: 1px solid #0058FF;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%230058FF' viewBox='0 0 512 512'%3E%3Cpath d='M105.1 202.6c7.7-21.8 20.2-42.3 37.8-59.8c62.5-62.5 163.8-62.5 226.3 0L386.3 160H336c-17.7 0-32 14.3-32 32s14.3 32 32 32H463.5c0 0 0 0 0 0h.4c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32s-32 14.3-32 32v51.2L414.4 97.6c-87.5-87.5-229.3-87.5-316.8 0C73.2 122 55.6 150.7 44.8 181.4c-5.9 16.7 2.9 34.9 19.5 40.8s34.9-2.9 40.8-19.5zM39 289.3c-5 1.5-9.8 4.2-13.7 8.2c-4 4-6.7 8.8-8.1 14c-.3 1.2-.6 2.5-.8 3.8c-.3 1.7-.4 3.4-.4 5.1V448c0 17.7 14.3 32 32 32s32-14.3 32-32V396.9l17.6 17.5 0 0c87.5 87.4 229.3 87.4 316.7 0c24.4-24.4 42.1-53.1 52.9-83.7c5.9-16.7-2.9-34.9-19.5-40.8s-34.9 2.9-40.8 19.5c-7.7 21.8-20.2 42.3-37.8 59.8c-62.5 62.5-163.8 62.5-226.3 0l-.1-.1L125.6 352H176c17.7 0 32-14.3 32-32s-14.3-32-32-32H48.4c-1.6 0-3.2 .1-4.8 .3s-3.1 .5-4.6 1z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat no-repeat;
+        background-position: center center;
+        right: 30px;
+        position: absolute;
+    }
+    .btn-export{
+        width:42.24px;
+        height:18.24px;
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        border: 1px solid #FF7400;
+        font: normal normal 600 9.12px/10.5px Muli;
+        letter-spacing: 0px;
+        color: #FF7400;  
+    }
     .account-icons{
         display: flex;
         align-items: center;
@@ -901,12 +1123,17 @@ function loadPopup() {
         background: #F4FAFF 0% 0% no-repeat padding-box;
         z-index:9999;
     }
-    .drop-down input[type=checkbox]{
+    .drop-down input[type=checkbox], .lead input[type=checkbox]{
         width:16.34px;
         height:16.34px;
     }
     .drop-down .form-check-label{
         font: normal normal bold 9.5px/9.5px Muli;
+        letter-spacing: 0px;
+        color: #121C31;
+    }
+    .lead .form-check-label{
+        font: normal normal bold 9.5px/23.5px Muli;
         letter-spacing: 0px;
         color: #121C31;
     }
@@ -987,6 +1214,14 @@ function loadPopup() {
         width:25.08px;
         height:25.08px;
     }
+    .company-logo-circle-lg{
+        width:45.22px;
+        height:45.22px;
+        font: normal normal bold 8.36px/12.54px Poppins;
+        letter-spacing: 0.14px;
+        color: #FFFFFF;
+        padding: 16px 0 0 10px;
+    }
     .company-title{
         text-align: left;
         font: normal normal 600 8.36px/25.54px Poppins;
@@ -1065,6 +1300,12 @@ function loadPopup() {
     }
     .company-details{
         display:none;
+    }
+
+    .app-container-title{
+        font: normal normal bold 9.12px/22.16px Poppins;
+        letter-spacing: 0px;
+        color: #FF7400;
     }
     /* line loading */
     .load-wrapp {

@@ -28,9 +28,15 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                         'Authorization': 'Bearer ' + session.token,
                         },
                 }
-                ).then(response => response.text())
-                    .then(text =>sendResponse(text))
-                    .catch(error => console.log(error))
+                )
+                // .then((response) => {
+                //     if(response.status == 200){
+                //        return response.text();
+                //     }
+                // })
+                .then(response => response.text())
+                .then(text =>sendResponse(text))
+                .catch(error => console.log(error))
             }), !0;
 
         case "getUser":
@@ -53,6 +59,24 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 var session = JSON.parse(result.session); 
                 fetch("https://app.socontact.com/api/credits",
                 {
+                    method: "POST",
+                    headers: {
+                        'Authorization': 'Bearer ' + session.token,
+                        },
+                }
+                ).then(response => response.text())
+                    .then(text =>sendResponse(text))
+                    .catch(error => console.log(error))
+            }), !0;
+
+        case "deductCredits":
+            var formData = new FormData();
+            formData.append("profile",request.link);
+            return chrome.storage.local.get(['session'], function(result) {
+                var session = JSON.parse(result.session); 
+                fetch("https://app.socontact.com/api/deductCredit",
+                {
+                    body: formData,
                     method: "POST",
                     headers: {
                         'Authorization': 'Bearer ' + session.token,
