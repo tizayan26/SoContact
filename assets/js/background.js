@@ -86,5 +86,41 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                     .then(text =>sendResponse(text))
                     .catch(error => console.log(error))
             }), !0;
+
+
+        case "addProfile":
+            return chrome.storage.local.get(['session'], function(result) {
+                var session = JSON.parse(result.session); 
+                fetch("https://app.socontact.com/api/new-lead-add",
+                {
+                    body: request.body,
+                    method: "POST",
+                    headers: {
+                        'Authorization': 'Bearer ' + session.token,
+                        'Content-Type': 'application/json'
+                        },
+                }
+                ).then(response => response.text())
+                    .then(text =>sendResponse(text))
+                    .catch(error => console.log(error))
+            }), !0;
+
+        case "sendScrapedProfile":
+            return chrome.storage.local.get(['session'], function(result) {
+                var session = JSON.parse(result.session); 
+                fetch("https://app.socontact.com/api/new-lead-update",
+                {
+                    body: request.body,
+                    method: "POST",
+                    headers: {
+                        'Authorization': 'Bearer ' + session.token,
+                        'Content-Type': 'application/json'
+                        },
+                }
+                ).then(response => response.text())
+                    .then(text =>sendResponse(text))
+                    .catch(error => console.log(error))
+            }), !0;
+        
     }
 })

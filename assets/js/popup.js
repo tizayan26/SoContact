@@ -165,7 +165,7 @@ let contact_detail_linkedIn = `<div class="row white-container p-4">
 <div class="col-sm-12 text-center pt-4 pb-2"><h4 class="msg">It appears that we don’t have enough informations about this contact…yet ;)</h4></div>
 <div class="col-sm-12 text-center"><p class="sub-msg">No worries, you can add it to your waiting list,<br> We’ll send you a notification when the contact is updated</p></div>
 <div class="col-sm-12 pt-4 text-center">
-    <button class="btn btn-secondary add-to-waiting-list" id="signin">Add to waiting list</button>
+    <button class="btn btn-secondary add-to-waiting-list" id="addToWaiting">Add to waiting list</button>
 </div>
 </div>`;
 

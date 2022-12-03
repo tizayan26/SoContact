@@ -14,7 +14,7 @@ const url = location.href;
 }).observe(document, {subtree: true, childList: true});
 
 
-function scrapeLinkedInProfile(){
+function scrapeLinkedInProfile(type){
     if(document.querySelectorAll('img[class="pv-top-card-profile-picture__image pv-top-card-profile-picture__image--show ember-view"]').length > 0){
         var pic = document.querySelectorAll('img[class="pv-top-card-profile-picture__image pv-top-card-profile-picture__image--show ember-view"]')[0];
     }else if(document.querySelectorAll('img[class="ember-view profile-photo-edit__preview"]').length > 0){
@@ -33,18 +33,19 @@ function scrapeLinkedInProfile(){
             profile_image: dataUrl,
             name: document.querySelectorAll('h1[class*="text-heading-xlarge"]')[0].innerText,
             profile_heading: document.querySelectorAll('div[class*="text-body-medium break-words"]')[0].innerText,
-            address_details: [],
+            address_details: {},
             experience: [],
             education: [],
             certification:[],
-            languages: []
+            languages: [],
+            about: ''
         }
         if(document.getElementById('main').children[0].children[1].children[1].children[2]!== undefined){
             linkedInObj['location'] = document.getElementById('main').children[0].children[1].children[1].children[2].children[0].innerText;
-            linkedInObj.address_details.push(ParseAddressEsri(document.getElementById('main').children[0].children[1].children[1].children[2].children[0].innerText));
+            linkedInObj.address_details = ParseAddressEsri(document.getElementById('main').children[0].children[1].children[1].children[2].children[0].innerText);
         }
         if(document.getElementById('about')!==null){
-            linkedInObj['about'] = document.getElementById('about').nextElementSibling.nextElementSibling.children[0].children[0].children[0].children[0].innerText;
+            linkedInObj.about =  document.getElementById('about').nextElementSibling.nextElementSibling.children[0].children[0].children[0].children[0].innerText;
         }
         if(document.getElementById('experience') !== null){
             var experiences = document.getElementById('experience').nextElementSibling.nextElementSibling.children[0].children;
@@ -103,11 +104,14 @@ function scrapeLinkedInProfile(){
             for(var i=0; i<certification.length;i++){
                 var obj = {
                     certification_name: certification[i].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText,
-                    issuing_organization: certification[i].children[0].children[1].children[0].children[0].children[1].children[0].innerText,
+                    issuing_organization: '',
                     validity: '',
                     issue_date: '',
                     expiration_date: '',
                     url: certification[i].children[0].children[0].children[0].href
+                }
+                if(certification[i].children[0].children[1].children[0].children[0].children[1] !== undefined){
+                    obj.issuing_organization = certification[i].children[0].children[1].children[0].children[0].children[1].children[0].innerText;
                 }
                 if(certification[i].children[0].children[1].children[0].children[0].children[2] !== undefined){
                     obj.validity = certification[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText;
@@ -131,12 +135,27 @@ function scrapeLinkedInProfile(){
             for(var i=0; i<languages.length;i++){
                 var obj ={
                     language: languages[i].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText,
-                    proficiency: languages[i].children[0].children[1].children[0].children[0].children[1].children[0].innerText
+                    proficiency: (languages[i].children[0].children[1].children[0].children[0].children[1] !== undefined) ? languages[i].children[0].children[1].children[0].children[0].children[1].children[0].innerText : ''
                 }
                 linkedInObj.languages.push(obj);
             }
         }
         console.log(JSON.stringify(linkedInObj));
+        if(type === 1){
+            chrome.runtime.sendMessage({call: "sendScrapedProfile", body: JSON.stringify(linkedInObj)}, function(response) {
+                console.log(response);
+            })
+        }else if(type === 0){
+            shadowRoot.getElementById('addToWaiting').innerHTML = 'Adding to waiting list' + '<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>'
+            
+            chrome.runtime.sendMessage({call: "addProfile", body: JSON.stringify(linkedInObj)}, function(response) {
+                console.log(response);
+                var res = JSON.parse(response);
+                if(res.dynamowebs_status === "success"){
+                    shadowRoot.getElementById('addToWaiting').innerHTML = "Added to waiting list";
+                }
+            })
+        }
     })
 }
 
@@ -182,13 +201,13 @@ const getProfileDetailsFromAPI = () => {
         if(response!== null || response!= '' || response!== 'null' ){
             var  res = JSON.parse(response);
             if(res.dynamowebs_status=="success"){
-          
                 if(res.masked){
                     shadowRoot.getElementById('contact_found_detail').innerHTML = contact_detail_api;
                 }else{
                     shadowRoot.getElementById('app_container').innerHTML = leadUnlocked;
                 }
                 setTimeout(function(){
+                    scrapeLinkedInProfile(1);
                     if(document.querySelectorAll('img[class="pv-top-card-profile-picture__image pv-top-card-profile-picture__image--show ember-view"]').length > 0){
                         var pic = document.querySelectorAll('img[class="pv-top-card-profile-picture__image pv-top-card-profile-picture__image--show ember-view"]');
                     }else if(document.querySelectorAll('img[class="ember-view profile-photo-edit__preview"]').length > 0){
@@ -387,6 +406,9 @@ const getProfileDetailsFromAPI = () => {
             }else{
                 shadowRoot.getElementById('unlockbuttoncontainer').innerHTML = null;
                 shadowRoot.getElementById('contact_found_detail').innerHTML = contact_detail_linkedIn;
+                shadowRoot.getElementById('addToWaiting').addEventListener('click', () => {
+                    scrapeLinkedInProfile(0);
+                })
             }
         }
         shadowRoot.getElementById('linkedInProfileImg').src = chrome.runtime.getURL('assets/icons/spinner.gif');
@@ -396,7 +418,7 @@ const getProfileDetailsFromAPI = () => {
           <div class="line"></div>
           <div class="line"></div>
         </div>`;
-        scrapeLinkedInProfile();
+       
         var myInterval = setInterval(function () {
             if(getLinkedInProfile()){
                 console.log("Got DOM")
@@ -712,10 +734,10 @@ chrome.storage.local.get(['loggedin'], function(result) {
 })
 
 function unlockLead(){
-    // chrome.runtime.sendMessage({call: "deductCredits", link: linkedin_url}, function(response) {
-    //     console.log(response);
-    //     var res = JSON.parse(response);
-    //     if(res.dynamowebs_status=="success"){
+    chrome.runtime.sendMessage({call: "deductCredits", link: linkedin_url}, function(response) {
+        console.log(response);
+        var res = JSON.parse(response);
+        if(res.dynamowebs_status=="success"){
             chrome.runtime.sendMessage({call: "getProfile", link: linkedin_url}, function(response) {
                 if(response!== null || response!= '' || response!== 'null' ){
                     var  res = JSON.parse(response);
@@ -882,8 +904,8 @@ function unlockLead(){
                     }
                 }
             })
-    //     }
-    // });
+        }
+    });
     
 
  
