@@ -175,16 +175,30 @@ function onUrlChange() {
     getCredits();
 }
 function clickedLeadAdd(res){
+    var linkedin_url = location.origin+location.pathname;
+    chrome.runtime.sendMessage({call: "addLeadToList", link: linkedin_url, id: "1"}, function(response) {
+        console.log(response);
+    })
     shadowRoot.getElementById('addLead').parentElement.classList.remove('text-center');
     shadowRoot.getElementById('addLead').parentElement.innerHTML = ` 
     <div class="form-check">
         <input class="form-check-input" type="checkbox" value="" id="leadAdded" checked>
         <label class="form-check-label">Lead Added</label>
     </div>
+    
+    <select id="bookmarkLists">
+    </select>
     <button class="btn-export">Export</button>
     <button class="round-small-button btn-edit" id="editLead"></button>
     <button class="round-small-button btn-refresh"></button>`;
     shadowRoot.getElementById('editLead').addEventListener('click', () => {editLead(res)});
+    chrome.runtime.sendMessage({call: "getAllList"}, function(response) {
+        lists = JSON.parse(response);
+        var opt = document.createElement('option');
+        opt.innerText = lists[0].list_name;
+        opt.value = lists[0].list_id;
+        shadowRoot.getElementById('bookmarkLists').appendChild(opt);
+    })
 }
 
 const getProfileDetailsFromAPI = () => {
@@ -195,7 +209,7 @@ const getProfileDetailsFromAPI = () => {
     // console.log(tmp_url);
     
     // linkedin_url = "linkedin.com/in/"+tmp_url[0];
-    linkedin_url = location.origin+location.pathname;
+    var linkedin_url = location.origin+location.pathname;
     chrome.runtime.sendMessage({call: "getProfile", link: linkedin_url}, function(response) {
         console.log(response);
         if(response!== null || response!= '' || response!== 'null' ){
@@ -341,7 +355,27 @@ const getProfileDetailsFromAPI = () => {
 
                         shadowRoot.getElementById('addLead').addEventListener('click', () => {
                             clickedLeadAdd(res);
-                        })
+                        });
+
+                        shadowRoot.querySelectorAll('.btn-thumbs-up').forEach(function(element) {
+                            element.addEventListener('click', () => {
+                                // alert("thumbs up!");
+                                var linkedin_url = location.origin+location.pathname;
+                                chrome.runtime.sendMessage({call: "thumbsUp", link: linkedin_url}, function(response) {
+                                    console.log(response);
+                                });
+                            });
+                        });
+
+                        shadowRoot.querySelectorAll('.btn-thumbs-down').forEach(function(element) {
+                            element.addEventListener('click', () => {
+                                // alert("thumbs down!");
+                                var linkedin_url = location.origin+location.pathname;
+                                chrome.runtime.sendMessage({call: "thumbsDown", link: linkedin_url}, function(response) {
+                                    console.log(response);
+                                });
+                            });
+                        });
                             
                     }else{
                         if(res.otherSocialMedia.facebook === undefined){

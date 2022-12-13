@@ -121,6 +121,75 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                     .then(text =>sendResponse(text))
                     .catch(error => console.log(error))
             }), !0;
-        
+
+        case "thumbsUp":
+            return chrome.storage.local.get(['session'], function(result) {
+                var session = JSON.parse(result.session); 
+                var formData = new FormData();
+                formData.append("profile",request.link);
+                fetch("https://app.socontact.com/api/profile-mark-up",
+                {
+                    body: formData,
+                    method: "POST",
+                    headers: {
+                        'Authorization': 'Bearer ' + session.token,
+                        },
+                }
+                ).then(response => response.text())
+                    .then(text =>sendResponse(text))
+                    .catch(error => console.log(error))
+            }), !0;
+
+        case "thumbsDown":
+            return chrome.storage.local.get(['session'], function(result) {
+                var session = JSON.parse(result.session); 
+                var formData = new FormData();
+                formData.append("profile",request.link);
+                fetch("https://app.socontact.com/api/profile-mark-down",
+                {
+                    body: formData,
+                    method: "POST",
+                    headers: {
+                        'Authorization': 'Bearer ' + session.token,
+                        },
+                }
+                ).then(response => response.text())
+                    .then(text =>sendResponse(text))
+                    .catch(error => console.log(error))
+            }), !0;
+
+        case "addLeadToList":
+            return chrome.storage.local.get(['session'], function(result) {
+                var session = JSON.parse(result.session); 
+                var formData = new FormData();
+                formData.append("link",request.link);
+                formData.append("id",request.id);
+                fetch("https://app.socontact.com/api/assign-user-a-profile",
+                {
+                    body: formData,
+                    method: "POST",
+                    headers: {
+                        'Authorization': 'Bearer ' + session.token,
+                        },
+                }
+                ).then(response => response.text())
+                    .then(text =>sendResponse(text))
+                    .catch(error => console.log(error))
+            }), !0;
+
+        case "getAllList":
+            return chrome.storage.local.get(['session'], function(result) {
+                var session = JSON.parse(result.session); 
+                fetch("https://app.socontact.com/api/get-user-lists",
+                {
+                    method: "POST",
+                    headers: {
+                        'Authorization': 'Bearer ' + session.token,
+                        },
+                }
+                ).then(response => response.text())
+                    .then(text =>sendResponse(text))
+                    .catch(error => console.log(error))
+            }), !0;
     }
 })
