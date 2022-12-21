@@ -194,10 +194,13 @@ function clickedLeadAdd(res){
     shadowRoot.getElementById('editLead').addEventListener('click', () => {editLead(res)});
     chrome.runtime.sendMessage({call: "getAllList"}, function(response) {
         lists = JSON.parse(response);
-        var opt = document.createElement('option');
-        opt.innerText = lists[0].list_name;
-        opt.value = lists[0].list_id;
-        shadowRoot.getElementById('bookmarkLists').appendChild(opt);
+        lists.list.forEach((list) =>{
+            var opt = document.createElement('option');
+            opt.innerText = list.list_name;
+            opt.value = list.list_id;
+            shadowRoot.getElementById('bookmarkLists').appendChild(opt);
+        })
+      
     })
 }
 
@@ -214,6 +217,7 @@ const getProfileDetailsFromAPI = () => {
         console.log(response);
         if(response!== null || response!= '' || response!== 'null' ){
             var  res = JSON.parse(response);
+            let profile_detail_res = JSON.parse(response);
             if(res.dynamowebs_status=="success"){
                 if(res.masked){
                     shadowRoot.getElementById('contact_found_detail').innerHTML = contact_detail_api;
@@ -233,7 +237,9 @@ const getProfileDetailsFromAPI = () => {
                     var jobTitle = document.getElementById('experience').nextElementSibling.nextElementSibling.children[0].children[0].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText;
                     res['name'] = name[0].innerText;
                     res['image'] = pic[0].src;
+                    profile_detail_res['image'] = pic[0].src;
                     res['jobtitle'] = jobTitle;
+                    profile_detail_res['jobtitle'] = jobTitle;
                     // shadowRoot.getElementById('linkedInProfileName').innerText = res.name;
                     shadowRoot.getElementById('linkedInProfileName').innerText = res.name;
                     shadowRoot.getElementById('linkedInProfileImg').src = res.image//res.image
@@ -352,10 +358,43 @@ const getProfileDetailsFromAPI = () => {
                             shadowRoot.getElementById('companyDetails').style.display = "none";
                             shadowRoot.getElementById('companyToggleBtnBlock').style.display = "none";
                         }
-
-                        shadowRoot.getElementById('addLead').addEventListener('click', () => {
-                            clickedLeadAdd(res);
+                        var linkedin_url = location.origin+location.pathname;
+                        chrome.runtime.sendMessage({call: "isOnList", link: linkedin_url}, function(response) {
+                            console.log(response);
+                            let isOnlist = JSON.parse(response)
+                            if(isOnlist.is_assigned){
+                                shadowRoot.getElementById('addLeadDiv').classList.remove('text-center');
+                                shadowRoot.getElementById('addLeadDiv').innerHTML = ` 
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="leadAdded" checked>
+                                    <label class="form-check-label">Lead Added</label>
+                                </div>
+                                
+                                <select id="bookmarkLists">
+                                </select>
+                                <button class="btn-export">Export</button>
+                                <button class="round-small-button btn-edit" id="editLead"></button>
+                                <button class="round-small-button btn-refresh"></button>`;
+                                shadowRoot.getElementById('editLead').addEventListener('click', () => {editLead(profile_detail_res)});
+                                chrome.runtime.sendMessage({call: "getAllList"}, function(response) {
+                                    lists = JSON.parse(response);
+                                    lists.list.forEach((list) =>{
+                                        var opt = document.createElement('option');
+                                        opt.innerText = list.list_name;
+                                        opt.value = lists.list_id;
+                                        shadowRoot.getElementById('bookmarkLists').appendChild(opt);
+                                    })
+                                  
+                                })
+                            }else{
+                                shadowRoot.getElementById('addLeadDiv').innerHTML = '<button class="btn btn-secondary add-lead" id="addLead">Add lead</button>';
+                                shadowRoot.getElementById('addLead').addEventListener('click', () => {
+                                    clickedLeadAdd(profile_detail_res);
+                                });
+                            }
                         });
+
+                        
 
                         shadowRoot.querySelectorAll('.btn-thumbs-up').forEach(function(element) {
                             element.addEventListener('click', () => {
@@ -568,15 +607,27 @@ function backDetails(res){
         li.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z" fill="#7e84a3"/></svg>&nbsp;&nbsp;'+res.otherSocialMedia.twitter;
         ul_socialMedia.appendChild(li);
     }
-    shadowRoot.getElementById('addLead').parentElement.classList.remove('text-center');
-    shadowRoot.getElementById('addLead').parentElement.innerHTML = ` 
+    shadowRoot.getElementById('addLeadDiv').classList.remove('text-center');
+    shadowRoot.getElementById('addLeadDiv').innerHTML = ` 
     <div class="form-check">
         <input class="form-check-input" type="checkbox" value="" id="leadAdded" checked>
         <label class="form-check-label">Lead Added</label>
     </div>
+    <select id="bookmarkLists">
+    </select>
     <button class="btn-export">Export</button>
     <button class="round-small-button btn-edit" id="editLead"></button>
     <button class="round-small-button btn-refresh"></button>`;
+    chrome.runtime.sendMessage({call: "getAllList"}, function(response) {
+        lists = JSON.parse(response);
+        lists.list.forEach((list) =>{
+            var opt = document.createElement('option');
+            opt.innerText = list.list_name;
+            opt.value = list.list_id;
+            shadowRoot.getElementById('bookmarkLists').appendChild(opt);
+        })
+      
+    })
     shadowRoot.getElementById('editLead').addEventListener('click', () => {editLead(res)});
     var myInterval = setInterval(function () {
         if(getLinkedInProfile()){
@@ -590,6 +641,18 @@ function backDetails(res){
 
 function editLead(res){
     shadowRoot.getElementById('app_container').innerHTML = leadEditHTML;
+    var linkedin_url = location.origin+location.pathname;
+    chrome.runtime.sendMessage({call: "getProfileData", link: linkedin_url}, function(response) {
+        var res = JSON.parse(response);
+        console.log(res);
+        if(res.dynamowebs_status == "success"){
+            shadowRoot.getElementById('name').value = res.data.full_name;
+            shadowRoot.getElementById('lastName').value = res.data.last_name;
+            shadowRoot.getElementById('job').value = res.data.title;
+            shadowRoot.getElementById('location').value = res.data.address;
+            shadowRoot.getElementById('description').value = res.data.description;
+        }
+    })
     if(res.companyInformation.length > 0){
         shadowRoot.getElementById('companyBlock').style.display = "block";
         shadowRoot.getElementById('companyName').innerText = res.companyInformation[0].name;
@@ -626,6 +689,27 @@ function editLead(res){
         shadowRoot.getElementById('socialMediaBlock').style.display = "none"
     }
     shadowRoot.getElementById('btnBack').addEventListener('click', () => {backDetails(res)})
+    shadowRoot.getElementById('saveLead').addEventListener('click', () => {
+        chrome.runtime.sendMessage(
+            {
+                call: "updateProfileData",
+                link: linkedin_url,
+                full_name: shadowRoot.getElementById('name').value,
+                last_name: shadowRoot.getElementById('lastName').value,
+                title: shadowRoot.getElementById('job').value,
+                address: shadowRoot.getElementById('location').value,
+                description: shadowRoot.getElementById('description').value
+            }, function(response) {
+            var res = JSON.parse(response);
+            console.log(res);
+            if(res.dynamowebs_status == "success"){
+                $(shadowRoot.getElementById('editStatusMsg')).fadeIn();
+                setTimeout(() => {
+                    $(shadowRoot.getElementById('editStatusMsg')).fadeOut();
+                }, 1000);
+            }
+        })
+    })
 }
 
 const getLinkedInProfile = () => {
@@ -768,15 +852,21 @@ chrome.storage.local.get(['loggedin'], function(result) {
 })
 
 function unlockLead(){
+    var linkedin_url = location.origin+location.pathname;
     chrome.runtime.sendMessage({call: "deductCredits", link: linkedin_url}, function(response) {
         console.log(response);
         var res = JSON.parse(response);
         if(res.dynamowebs_status=="success"){
+            var linkedin_url = location.origin+location.pathname;
             chrome.runtime.sendMessage({call: "getProfile", link: linkedin_url}, function(response) {
                 if(response!== null || response!= '' || response!== 'null' ){
                     var  res = JSON.parse(response);
                     if(res.dynamowebs_status=="success"){
                         shadowRoot.getElementById('app_container').innerHTML = leadUnlocked;
+                        shadowRoot.getElementById('addLeadDiv').innerHTML = '<button class="btn btn-secondary add-lead" id="addLead">Add lead</button>';
+                        shadowRoot.getElementById('addLead').addEventListener('click', () => {
+                            clickedLeadAdd(res);
+                        });
                         setTimeout(function(){
                             if(document.querySelectorAll('img[class="pv-top-card-profile-picture__image pv-top-card-profile-picture__image--show ember-view"]').length > 0){
                                 var pic = document.querySelectorAll('img[class="pv-top-card-profile-picture__image pv-top-card-profile-picture__image--show ember-view"]');

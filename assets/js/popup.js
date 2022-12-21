@@ -45,7 +45,7 @@ let login_html = `
         <div class="col-sm-12">
         <button class="btn btn-primary" id="signin">Sign In</button>
         </div>
-        <div id="loginMsg" class="col-sm-12 text-ceter login-msg"></div>
+        <div id="loginMsg" class="col-sm-12 text-center login-msg"></div>
     </div>
     <div class="row pt-3 pb-2">
     <div class="col-sm-4"><hr class="login-divider"></div>
@@ -358,7 +358,7 @@ let leadEditHTML = `
             </div>
             <div class="form-group">
                 <label class="label-sm">Descriptions</label>
-                <textarea class="form-control form-control-sm" id="location" rows="6"></textarea>
+                <textarea class="form-control form-control-sm" id="description" rows="6"></textarea>
             </div>
         </div>
         <div id="companyBlock">
@@ -397,6 +397,7 @@ let leadEditHTML = `
         <div class="col-sm-12 pt-4 text-center lead">
             <button class="btn btn-secondary save-lead" id="saveLead">Save modifications</button>
         </div>
+        <div class="col-sm-12 text-center login-msg" id="editStatusMsg" style="display:none">Updated Successfully!</div>
     </div>
 </div>`;
 
@@ -472,8 +473,13 @@ let leadUnlocked = `
             </div>
             </h6><label id="jobTitle">Job Title</label>
         </div>
-        <div class="col-sm-12 pt-4 text-center lead">
-            <button class="btn btn-secondary add-lead" id="addLead">Add lead</button>
+        <div class="col-sm-12 pt-4 text-center lead" id="addLeadDiv">
+            <!--button class="btn btn-secondary add-lead" id="addLead">Add lead</button-->
+            <div class="load-2"> 
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
         </div>
         <div id="phoneNumbersBlock" class="col-sm-12 pt-4">
             <div class="row dotted-box pt-2 pb-2">
