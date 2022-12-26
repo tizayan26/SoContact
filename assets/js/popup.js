@@ -207,10 +207,16 @@ let noProfileHTML = `
 
 let dropdownContentHTML =`
 <div class="row pt-3 pb-2">
-<div class="col-sm-3"><img class="avatar big" id="accountImg" src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80" /></div>
+<div class="col-sm-3"><img class="avatar big" id="accountImg" src="${chrome.runtime.getURL('assets/icons/spinner.gif')}" /></div>
 <div class="col-sm-6 account">
-    <label>Account</label><h6 id="accountName">John Doe</h6>
-    <label>Email</label><p id="accountEmail">mail@mail.com</p>
+    <label>Account</label><h6 id="accountName">
+    <div class="load-2"> 
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+    </h6>
+    <label>Email</label><p id="accountEmail"></p>
 </div>
 <div class="col-sm-3">
     <div class="row account-icons">

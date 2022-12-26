@@ -14,6 +14,7 @@ const url = location.href;
 }).observe(document, {subtree: true, childList: true});
 
 
+
 function scrapeLinkedInProfile(type){
     if(document.querySelectorAll('img[class="pv-top-card-profile-picture__image pv-top-card-profile-picture__image--show ember-view"]').length > 0){
         var pic = document.querySelectorAll('img[class="pv-top-card-profile-picture__image pv-top-card-profile-picture__image--show ember-view"]')[0];
@@ -464,10 +465,7 @@ const getProfileDetailsFromAPI = () => {
                                 // })
                                 accountDropdown();
                                 shadowRoot.getElementById('logout').addEventListener('click',() => {
-                                    chrome.storage.local.remove('loggedin');
-                                    chrome.storage.local.remove('session');
-                                    shadowRoot.getElementById('popup').innerHTML = login_html;
-                                    shadowRoot.getElementById('signin').addEventListener('click',()=>{signedIn()})
+                                    logout();
                                 })
                             }
                             getProfileDetailsFromAPI();
@@ -741,6 +739,7 @@ function signedIn(){
     let login_pass = shadowRoot.getElementById('password').value;
     if(!login_email || !login_pass){
         shadowRoot.getElementById('loginMsg').innerText = "Email and Password is required!"
+        $(shadowRoot.getElementById('loginMsg')).fadeIn();
     }else{
         chrome.runtime.sendMessage({call: "validateUser", email: login_email, password: login_pass}, function(response) {
             let res = JSON.parse(response);
@@ -764,11 +763,9 @@ function signedIn(){
                 // })
                 accountDropdown();
                 getUserInfoFromAPI();
+                getCredits();
                 shadowRoot.getElementById('logout').addEventListener('click',() => {
-                    chrome.storage.local.remove('loggedin');
-                    chrome.storage.local.remove('session');
-                    shadowRoot.getElementById('popup').innerHTML = login_html;
-                    shadowRoot.getElementById('signin').addEventListener('click',()=>{signedIn()})
+                   logout();
                 })
             }
             shadowRoot.getElementById('loginMsg').innerText = res.dynamowebs_msg;
@@ -807,10 +804,7 @@ function getUserInfoFromAPI(){
                             accountDropdown();
                             getUserInfoFromAPI();
                             shadowRoot.getElementById('logout').addEventListener('click',() => {
-                                chrome.storage.local.remove('loggedin');
-                                chrome.storage.local.remove('session');
-                                shadowRoot.getElementById('popup').innerHTML = login_html;
-                                shadowRoot.getElementById('signin').addEventListener('click',()=>{signedIn()})
+                                logout();
                             })
                         }
                     });
@@ -845,8 +839,7 @@ chrome.storage.local.get(['loggedin'], function(result) {
         // })
         accountDropdown();
         shadowRoot.getElementById('logout').addEventListener('click',() => {
-            shadowRoot.getElementById('popup').innerHTML = login_html;
-            shadowRoot.getElementById('signin').addEventListener('click',()=>{signedIn()})
+          logout();
         })
     }
 })
@@ -1010,10 +1003,7 @@ function unlockLead(){
                                         // })
                                         accountDropdown();
                                         shadowRoot.getElementById('logout').addEventListener('click',() => {
-                                            chrome.storage.local.remove('loggedin');
-                                            chrome.storage.local.remove('session');
-                                            shadowRoot.getElementById('popup').innerHTML = login_html;
-                                            shadowRoot.getElementById('signin').addEventListener('click',()=>{signedIn()})
+                                          logout();
                                         })
                                     }
                                     unlockLead();
@@ -1060,6 +1050,9 @@ function accountDropdown(){
     shadowRoot.getElementById('account_dropdown').addEventListener('click', () => {
         $(shadowRoot.getElementById('drop_down')).slideToggle(800);
         $(shadowRoot.getElementById('app_container')).fadeToggle(200);
+        shadowRoot.getElementById('logout').addEventListener('click',() => {
+            logout();
+        })
         
     })
     shadowRoot.getElementById('btnIntegration').addEventListener('click', () => {
@@ -1074,7 +1067,10 @@ function showIntegrationPage(){
             getUserInfoFromAPI();
             shadowRoot.getElementById('btnIntegration').addEventListener('click', () => {
                 showIntegrationPage();
-            })
+            });
+            shadowRoot.getElementById('logout').addEventListener('click',() => {
+                logout();
+            });
         })
 }
 

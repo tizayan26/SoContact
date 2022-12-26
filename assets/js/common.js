@@ -184,3 +184,11 @@ function getBase64Image(img) {
   
     return address;
   }  
+
+  function logout(){
+    chrome.storage.local.clear(function(){
+        console.log('Cleared!');
+        shadowRoot.getElementById('popup').innerHTML = login_html;
+        shadowRoot.getElementById('signin').addEventListener('click',()=>{signedIn()});
+    });
+}
