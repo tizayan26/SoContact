@@ -51,6 +51,7 @@
     "matches": ["*://*.linkedin.com/*","*://linkedin.com/*"]
   }],
   "permissions": [
+    "activeTab",
     "storage",
     "downloads",
     "tabs",

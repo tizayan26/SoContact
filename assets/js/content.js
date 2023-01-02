@@ -1,4 +1,9 @@
-
+chrome.runtime.onMessage.addListener(function(msg, sender) {
+    switch (msg) {
+        case "toggle":
+            return $(shadowRoot.getElementById('popup')).fadeToggle();
+    }
+});
 let lastUrl = location.href; 
 new MutationObserver(() => {
 const url = location.href;
@@ -245,7 +250,7 @@ const getProfileDetailsFromAPI = () => {
                     shadowRoot.getElementById('linkedInProfileName').innerText = res.name;
                     shadowRoot.getElementById('linkedInProfileImg').src = res.image//res.image
                     if(res.phoneNumbers.length>0){
-                        shadowRoot.getElementById('proEmailsBlock').style.display = "block";
+                        shadowRoot.getElementById('phoneNumbersBlock').style.display = "block";
                         let ul_phones = shadowRoot.getElementById('phoneNumbers');
                         ul_phones.innerHTML = null;
                         res.phoneNumbers.forEach(el => {   
@@ -279,7 +284,7 @@ const getProfileDetailsFromAPI = () => {
                         shadowRoot.getElementById('proEmailsBlock').style.display = "none";
                     }
                     if(res.personalEmail.length>0){
-                        shadowRoot.getElementById('proEmailsBlock').style.display = "block";
+                        shadowRoot.getElementById('perEmailsBlock').style.display = "block";
                         let ul_perEmails = shadowRoot.getElementById('perEmails');
                         ul_perEmails.innerHTML = null;
                         res.personalEmail.forEach(el =>{
@@ -296,7 +301,7 @@ const getProfileDetailsFromAPI = () => {
                         shadowRoot.getElementById('perEmailsBlock').style.display = "none";
                     }
                     if(res.companyInformation.length > 0){
-                        shadowRoot.getElementById('proEmailsBlock').style.display = "block";
+                        shadowRoot.getElementById('companyBlock').style.display = "block";
                         shadowRoot.getElementById('companyName').innerText = res.companyInformation[0].name;
                         shadowRoot.getElementById('companyWebsite').href = res.companyInformation[0].website;
                     }
@@ -1047,6 +1052,11 @@ function unlockLead(){
 }
 
 function accountDropdown(){
+    setInterval(function(){
+        chrome.runtime.sendMessage({call: "getNotification"}, function(response) {
+            console.log(response);
+        })
+    },10000)
     shadowRoot.getElementById('account_dropdown').addEventListener('click', () => {
         $(shadowRoot.getElementById('drop_down')).slideToggle(800);
         $(shadowRoot.getElementById('app_container')).fadeToggle(200);

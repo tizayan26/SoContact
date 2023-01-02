@@ -1,4 +1,7 @@
 // const api_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjYzMzc0NjgsImV4cCI6MTY2NjM0MTA2OCwiZW1haWwiOiJzYW1hZGRkQGdtYWlsLmNvbSJ9.";
+chrome.action.onClicked.addListener(tab => {
+    chrome.tabs.sendMessage(tab.id, "toggle");
+});
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     switch (request.call) {
         case "validateUser":
@@ -261,6 +264,19 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                     .catch(error => console.log(error))
             }), !0; 
             
-        
+        case "getNotification":
+            return chrome.storage.local.get(['session'], function(result) {
+                var session = JSON.parse(result.session); 
+                fetch("https://app.socontact.com/api/get-notifications",
+                {
+                    method: "POST",
+                    headers: {
+                        'Authorization': 'Bearer ' + session.token,
+                        },
+                }
+                ).then(response => response.text())
+                    .then(text =>sendResponse(text))
+                    .catch(error => console.log(error))
+            }), !0;
     }
 })
