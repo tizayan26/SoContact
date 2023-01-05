@@ -1,4 +1,4 @@
-// const api_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjYzMzc0NjgsImV4cCI6MTY2NjM0MTA2OCwiZW1haWwiOiJzYW1hZGRkQGdtYWlsLmNvbSJ9.";
+const API_URL = 'https://app.socontact.com/api/';
 chrome.action.onClicked.addListener(tab => {
     chrome.tabs.sendMessage(tab.id, "toggle");
 });
@@ -8,7 +8,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             var formData = new FormData();
             formData.append("email",request.email);
             formData.append("password",request.password); 
-            return fetch("https://app.socontact.com/api/auth/validateUser",
+            return fetch(API_URL + "auth/validateUser",
             {
                 body: formData,
                 method: "POST",
@@ -22,22 +22,13 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 var session = JSON.parse(result.session);
                 var formData = new FormData();
                 formData.append("link",request.link);
-                // formData.append("token",api_token); 
-                fetch("https://app.socontact.com/api/getProfile",
-                {
+                fetch(API_URL + "getProfile",{
                     body: formData,
                     method: "POST",
                     headers: {
                         'Authorization': 'Bearer ' + session.token,
                         },
-                }
-                )
-                // .then((response) => {
-                //     if(response.status == 200){
-                //        return response.text();
-                //     }
-                // })
-                .then(response => response.text())
+                }).then(response => response.text())
                 .then(text =>sendResponse(text))
                 .catch(error => console.log(error))
             }), !0;
@@ -45,7 +36,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         case "getUser":
             return chrome.storage.local.get(['session'], function(result) {
                 var session = JSON.parse(result.session); 
-                fetch("https://app.socontact.com/api/getUser",
+                fetch(API_URL + "getUser",
                 {
                     method: "POST",
                     headers: {
@@ -60,7 +51,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         case "getCredits":
             return chrome.storage.local.get(['session'], function(result) {
                 var session = JSON.parse(result.session); 
-                fetch("https://app.socontact.com/api/credits",
+                fetch(API_URL + "credits",
                 {
                     method: "POST",
                     headers: {
@@ -77,7 +68,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             formData.append("profile",request.link);
             return chrome.storage.local.get(['session'], function(result) {
                 var session = JSON.parse(result.session); 
-                fetch("https://app.socontact.com/api/deductCredit",
+                fetch(API_URL + "deductCredit",
                 {
                     body: formData,
                     method: "POST",
@@ -94,7 +85,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         case "addProfile":
             return chrome.storage.local.get(['session'], function(result) {
                 var session = JSON.parse(result.session); 
-                fetch("https://app.socontact.com/api/new-lead-add",
+                fetch(API_URL + "new-lead-add",
                 {
                     body: request.body,
                     method: "POST",
@@ -111,7 +102,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         case "sendScrapedProfile":
             return chrome.storage.local.get(['session'], function(result) {
                 var session = JSON.parse(result.session); 
-                fetch("https://app.socontact.com/api/new-lead-update",
+                fetch(API_URL + "new-lead-update",
                 {
                     body: request.body,
                     method: "POST",
@@ -130,7 +121,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 var session = JSON.parse(result.session); 
                 var formData = new FormData();
                 formData.append("profile",request.link);
-                fetch("https://app.socontact.com/api/profile-mark-up",
+                fetch(API_URL + "profile-mark-up",
                 {
                     body: formData,
                     method: "POST",
@@ -148,7 +139,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 var session = JSON.parse(result.session); 
                 var formData = new FormData();
                 formData.append("profile",request.link);
-                fetch("https://app.socontact.com/api/profile-mark-down",
+                fetch(API_URL + "profile-mark-down",
                 {
                     body: formData,
                     method: "POST",
@@ -167,7 +158,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 var formData = new FormData();
                 formData.append("link",request.link);
                 formData.append("id",request.id);
-                fetch("https://app.socontact.com/api/assign-user-a-profile",
+                fetch(API_URL + "assign-user-a-profile",
                 {
                     body: formData,
                     method: "POST",
@@ -183,7 +174,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         case "getAllList":
             return chrome.storage.local.get(['session'], function(result) {
                 var session = JSON.parse(result.session); 
-                fetch("https://app.socontact.com/api/get-user-lists",
+                fetch(API_URL + "get-user-lists",
                 {
                     method: "POST",
                     headers: {
@@ -200,7 +191,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 var session = JSON.parse(result.session); 
                 var formData = new FormData();
                 formData.append("link",request.link);
-                fetch("https://app.socontact.com/api/is-profile-assigned-to-list",
+                fetch(API_URL + "is-profile-assigned-to-list",
                 {
                     body: formData,
                     method: "POST",
@@ -218,7 +209,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 var session = JSON.parse(result.session); 
                 var formData = new FormData();
                 formData.append("link",request.link);
-                fetch("https://app.socontact.com/api/profileData",
+                fetch(API_URL + "profileData",
                 {
                     body: formData,
                     method: "POST",
@@ -251,7 +242,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 if(request.description){
                     formData.append("description",request.description);
                 }
-                fetch("https://app.socontact.com/api/updateProfile",
+                fetch(API_URL + "updateProfile",
                 {
                     body: formData,
                     method: "POST",
@@ -267,7 +258,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         case "getNotification":
             return chrome.storage.local.get(['session'], function(result) {
                 var session = JSON.parse(result.session); 
-                fetch("https://app.socontact.com/api/get-notifications",
+                fetch(API_URL + "get-notifications",
                 {
                     method: "POST",
                     headers: {

@@ -466,14 +466,7 @@ let integrationHTML = `
 let leadUnlocked = `
 <div class="col-sm-12 pt-2 pb-2 p-4">
     <div class="row white-container p-2">
-        <div class="col-sm-12 btn-back" id="btnBack">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25.243" viewBox="0 0 24 25.243">
-            <g id="Icon_feather-arrow-left" data-name="Icon feather-arrow-left" transform="translate(-6 -5.379)">
-            <path id="Tracé_509" data-name="Tracé 509" d="M28.5,18H7.5" fill="none" stroke="#b4c5d3" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
-            <path id="Tracé_510" data-name="Tracé 510" d="M18,28.5,7.5,18,18,7.5" fill="none" stroke="#b4c5d3" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
-            </g>
-            </svg>
-        </div>
+
         <div class="col-sm-4">
             <img class="avatar big" id="linkedInProfileImg" src="${chrome.runtime.getURL('assets/icons/spinner.gif')}" />
         </div>

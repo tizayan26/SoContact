@@ -11,14 +11,11 @@ const url = location.href;
         lastUrl = url;
         chrome.storage.local.get(['loggedin'], function(result) {
             if(result.loggedin){
-                console.log(result);
                 onUrlChange();
             }
         })
     }
 }).observe(document, {subtree: true, childList: true});
-
-
 
 function scrapeLinkedInProfile(type){
     if(document.querySelectorAll('img[class="pv-top-card-profile-picture__image pv-top-card-profile-picture__image--show ember-view"]').length > 0){
@@ -28,12 +25,8 @@ function scrapeLinkedInProfile(type){
     } 
     let base64Img;
     toDataURL(pic.src).then(dataUrl => {
-        console.log(dataUrl);
-        base64Img = dataUrl;
-
-        console.log(base64Img);
-        // profile_image:document.querySelectorAll('img[class="pv-top-card-profile-picture__image pv-top-card-profile-picture__image--show ember-view"]').length > 0 ? document.querySelectorAll('img[class="pv-top-card-profile-picture__image pv-top-card-profile-picture__image--show ember-view"]')[0].src : document.querySelectorAll('img[class="ember-view profile-photo-edit__preview"]')[0].src,
-        //profile_image: getBase64Image(shadowRoot.getElementById('linkedInProfileImg')),
+        // console.log(dataUrl);
+        base64Img = dataUrl;  
         var linkedInObj = {
             linkedinURL: location.href,
             profile_image: dataUrl,
@@ -55,11 +48,7 @@ function scrapeLinkedInProfile(type){
         }
         if(document.getElementById('experience') !== null){
             var experiences = document.getElementById('experience').nextElementSibling.nextElementSibling.children[0].children;
-            // document.getElementById('experience').nextElementSibling.nextElementSibling.children[0].children[0].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText;
-            // console.log(experiences);
-            //document.getElementById('experience').nextElementSibling.nextElementSibling.children[0].children[0]
             for(var i=0; i<experiences.length;i++){
-                // console.log(experiences[i].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText);
                 if(experiences[i].children[0].children[1].children[0].children[0].children[2]!==undefined){
                     var time_length = experiences[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText;
                     var dates = time_length.split('·');
@@ -85,7 +74,6 @@ function scrapeLinkedInProfile(type){
         }
         if(document.getElementById('education') !== null){
             var educations = document.getElementById('education').nextElementSibling.nextElementSibling.children[0].children;
-            //document.getElementById('education').nextElementSibling.nextElementSibling.children[0].children[0].children[0].children[1].children[0].children[0].children
             for(var i=0; i<educations.length;i++){
                 //var dates_array
                 var obj = {
@@ -146,16 +134,15 @@ function scrapeLinkedInProfile(type){
                 linkedInObj.languages.push(obj);
             }
         }
-        console.log(JSON.stringify(linkedInObj));
         if(type === 1){
             chrome.runtime.sendMessage({call: "sendScrapedProfile", body: JSON.stringify(linkedInObj)}, function(response) {
-                console.log(response);
+                // console.log(response);
             })
         }else if(type === 0){
             shadowRoot.getElementById('addToWaiting').innerHTML = 'Adding to waiting list' + '<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>'
             
             chrome.runtime.sendMessage({call: "addProfile", body: JSON.stringify(linkedInObj)}, function(response) {
-                console.log(response);
+                // console.log(response);
                 var res = JSON.parse(response);
                 if(res.dynamowebs_status === "success"){
                     shadowRoot.getElementById('addToWaiting').innerHTML = "Added to waiting list";
@@ -167,10 +154,7 @@ function scrapeLinkedInProfile(type){
 
 function onUrlChange() {
     getUserInfoFromAPI();
-    console.log('URL changed!', location.href);
     var pattern = /linkedin.com\/in/;
-    console.log(location.href.match(pattern));
-    // if(location.href != 'https://www.linkedin.com/feed/' || location.href != 'https://www.linkedin.com/mynetwork/' || location.href != 'https://www.linkedin.com/jobs/' || location.href != 'https://www.linkedin.com/notifications/?filter=all'){
     if(location.href.match(pattern)!= null){
         getProfileDetailsFromAPI();
         console.log('valid URL');
@@ -194,10 +178,13 @@ function clickedLeadAdd(res){
     
     <select id="bookmarkLists">
     </select>
-    <button class="btn-export">Export</button>
+    <!--button class="btn-export">Export</button-->
     <button class="round-small-button btn-edit" id="editLead"></button>
     <button class="round-small-button btn-refresh"></button>`;
-    shadowRoot.getElementById('editLead').addEventListener('click', () => {editLead(res)});
+    shadowRoot.getElementById('editLead').addEventListener('click', () => {
+        editLead(res);
+        shadowRoot.getElementById('btnBack').style.display = "block";
+    });
     chrome.runtime.sendMessage({call: "getAllList"}, function(response) {
         lists = JSON.parse(response);
         lists.list.forEach((list) =>{
@@ -209,18 +196,10 @@ function clickedLeadAdd(res){
       
     })
 }
-
 const getProfileDetailsFromAPI = () => {
     shadowRoot.getElementById('app_container').innerHTML = contactSearchHTML;
-    // let linkedin_url = location.href.replace(/(^\w+:|^)\/\//, '').replace('www.','')
-    // let url_array = linkedin_url.split("/in/");
-    // let tmp_url = url_array[1].split("/")
-    // console.log(tmp_url);
-    
-    // linkedin_url = "linkedin.com/in/"+tmp_url[0];
     var linkedin_url = location.origin+location.pathname;
     chrome.runtime.sendMessage({call: "getProfile", link: linkedin_url}, function(response) {
-        console.log(response);
         if(response!== null || response!= '' || response!== 'null' ){
             var  res = JSON.parse(response);
             let profile_detail_res = JSON.parse(response);
@@ -243,17 +222,14 @@ const getProfileDetailsFromAPI = () => {
                         var pic = document.querySelectorAll('img[class="ember-view profile-photo-edit__preview"]');
                     } 
                     var name = document.querySelectorAll('h1[class*="text-heading-xlarge"]');  
-                    var linkedinDescription = document.querySelectorAll('div[class*="text-body-medium break-words"]')[0].innerText
-                    // document.querySelectorAll('ul[class*="pvs-list"]')[1].querySelectorAll('li')[0].querySelectorAll('div')[7].innerText
                     var jobTitle = document.getElementById('experience').nextElementSibling.nextElementSibling.children[0].children[0].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText;
                     res['name'] = name[0].innerText;
                     res['image'] = pic[0].src;
                     profile_detail_res['image'] = pic[0].src;
                     res['jobtitle'] = jobTitle;
                     profile_detail_res['jobtitle'] = jobTitle;
-                    // shadowRoot.getElementById('linkedInProfileName').innerText = res.name;
                     shadowRoot.getElementById('linkedInProfileName').innerText = res.name;
-                    shadowRoot.getElementById('linkedInProfileImg').src = res.image//res.image
+                    shadowRoot.getElementById('linkedInProfileImg').src = res.image
                     if(res.phoneNumbers.length>0){
                         shadowRoot.getElementById('phoneNumbersBlock').style.display = "block";
                         let ul_phones = shadowRoot.getElementById('phoneNumbers');
@@ -310,7 +286,6 @@ const getProfileDetailsFromAPI = () => {
                         shadowRoot.getElementById('companyName').innerText = res.companyInformation[0].name;
                         shadowRoot.getElementById('companyWebsite').href = res.companyInformation[0].website;
                     }
-                    console.log(res.otherSocialMedia.facebook);
                     if(!res.masked){
                         shadowRoot.getElementById('jobTitle').innerText = jobTitle;
                         if(typeof res.otherSocialMedia === "object"){
@@ -371,7 +346,6 @@ const getProfileDetailsFromAPI = () => {
                         }
                         var linkedin_url = location.origin+location.pathname;
                         chrome.runtime.sendMessage({call: "isOnList", link: linkedin_url}, function(response) {
-                            console.log(response);
                             let isOnlist = JSON.parse(response)
                             if(isOnlist.is_assigned){
                                 shadowRoot.getElementById('addLeadDiv').classList.remove('text-center');
@@ -380,13 +354,15 @@ const getProfileDetailsFromAPI = () => {
                                     <input class="form-check-input" type="checkbox" value="" id="leadAdded" checked>
                                     <label class="form-check-label">Lead Added</label>
                                 </div>
-                                
                                 <select id="bookmarkLists">
                                 </select>
-                                <button class="btn-export">Export</button>
+                                <!--button class="btn-export">Export</button-->
                                 <button class="round-small-button btn-edit" id="editLead"></button>
                                 <button class="round-small-button btn-refresh"></button>`;
-                                shadowRoot.getElementById('editLead').addEventListener('click', () => {editLead(profile_detail_res)});
+                                shadowRoot.getElementById('editLead').addEventListener('click', () => {
+                                    editLead(profile_detail_res);
+                                    shadowRoot.getElementById('btnBack').style.display = "block";
+                                });
                                 chrome.runtime.sendMessage({call: "getAllList"}, function(response) {
                                     lists = JSON.parse(response);
                                     lists.list.forEach((list) =>{
@@ -394,8 +370,7 @@ const getProfileDetailsFromAPI = () => {
                                         opt.innerText = list.list_name;
                                         opt.value = lists.list_id;
                                         shadowRoot.getElementById('bookmarkLists').appendChild(opt);
-                                    })
-                                  
+                                    });
                                 })
                             }else{
                                 shadowRoot.getElementById('addLeadDiv').innerHTML = '<button class="btn btn-secondary add-lead" id="addLead">Add lead</button>';
@@ -404,29 +379,22 @@ const getProfileDetailsFromAPI = () => {
                                 });
                             }
                         });
-
-                        
-
                         shadowRoot.querySelectorAll('.btn-thumbs-up').forEach(function(element) {
                             element.addEventListener('click', () => {
-                                // alert("thumbs up!");
                                 var linkedin_url = location.origin+location.pathname;
                                 chrome.runtime.sendMessage({call: "thumbsUp", link: linkedin_url}, function(response) {
                                     console.log(response);
                                 });
                             });
                         });
-
                         shadowRoot.querySelectorAll('.btn-thumbs-down').forEach(function(element) {
                             element.addEventListener('click', () => {
-                                // alert("thumbs down!");
                                 var linkedin_url = location.origin+location.pathname;
                                 chrome.runtime.sendMessage({call: "thumbsDown", link: linkedin_url}, function(response) {
                                     console.log(response);
                                 });
                             });
-                        });
-                            
+                        });  
                     }else{
                         if(res.otherSocialMedia.facebook === undefined){
                             shadowRoot.getElementById('socialMediaBlock').style.display = "none"
@@ -448,8 +416,6 @@ const getProfileDetailsFromAPI = () => {
                 
             }
             else if(res.dynamowebs_msg=="token_expired"){
-                console.log(res.token);
-                    // console.log(res.message.includes("Token has been expired."));
                 if(res.token!==undefined && res.token == "expired"){
                     chrome.storage.local.get(['session'], function(result) {
                         var session = JSON.parse(result.session);
@@ -468,11 +434,6 @@ const getProfileDetailsFromAPI = () => {
                                     console.log('Session is set to ' + JSON.stringify(session_obj));
                                 });
                                 shadowRoot.getElementById('popup').innerHTML = account_html;
-                                // shadowRoot.getElementById('account_dropdown').addEventListener('click', () => {
-                                //     $(shadowRoot.getElementById('drop_down')).slideToggle(800);
-                                //     $(shadowRoot.getElementById('app_container')).fadeToggle(400);
-                                    
-                                // })
                                 accountDropdown();
                                 shadowRoot.getElementById('logout').addEventListener('click',() => {
                                     logout();
@@ -518,16 +479,6 @@ const getProfileDetailsFromAPI = () => {
 
 function backDetails(res){
     shadowRoot.getElementById('app_container').innerHTML = leadUnlocked;
-    // if(document.querySelectorAll('img[class="pv-top-card-profile-picture__image pv-top-card-profile-picture__image--show ember-view"]').length > 0){
-    //     var pic = document.querySelectorAll('img[class="pv-top-card-profile-picture__image pv-top-card-profile-picture__image--show ember-view"]');
-    // }else if(document.querySelectorAll('img[class="ember-view profile-photo-edit__preview"]').length > 0){
-    //     var pic = document.querySelectorAll('img[class="ember-view profile-photo-edit__preview"]');
-    // } 
-    // var name = document.querySelectorAll('h1[class*="text-heading-xlarge"]');  
-    // var jobTitle = document.getElementById('experience').nextElementSibling.nextElementSibling.children[0].children[0].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText;
-    // res['name'] = name[0].innerText;
-    // res['image'] = pic[0].src;
-    // res['jobtitle'] = jobTitle;
     shadowRoot.getElementById('linkedInProfileName').innerText = res.name;
     shadowRoot.getElementById('linkedInProfileImg').src = res.image;
     shadowRoot.getElementById('jobTitle').innerText = res.jobtitle;
@@ -595,8 +546,6 @@ function backDetails(res){
         shadowRoot.getElementById('companyDetails').style.display = "none";
         shadowRoot.getElementById('companyToggleBtnBlock').style.display = "none";
     }
-    console.log(res.otherSocialMedia.facebook);
-    // shadowRoot.getElementById('fbURL').innerText = res.otherSocialMedia.facebook;
     let ul_socialMedia = shadowRoot.getElementById('social_media');
     ul_socialMedia.innerHTML = null;
     var li = document.createElement('li');
@@ -628,7 +577,7 @@ function backDetails(res){
     </div>
     <select id="bookmarkLists">
     </select>
-    <button class="btn-export">Export</button>
+    <!--button class="btn-export">Export</button-->
     <button class="round-small-button btn-edit" id="editLead"></button>
     <button class="round-small-button btn-refresh"></button>`;
     chrome.runtime.sendMessage({call: "getAllList"}, function(response) {
@@ -641,7 +590,10 @@ function backDetails(res){
         })
       
     })
-    shadowRoot.getElementById('editLead').addEventListener('click', () => {editLead(res)});
+    shadowRoot.getElementById('editLead').addEventListener('click', () => {
+        editLead(res);
+        shadowRoot.getElementById('btnBack').style.display = "block";
+    });
     var myInterval = setInterval(function () {
         if(getLinkedInProfile()){
             console.log("Got DOM")
@@ -657,7 +609,6 @@ function editLead(res){
     var linkedin_url = location.origin+location.pathname;
     chrome.runtime.sendMessage({call: "getProfileData", link: linkedin_url}, function(response) {
         var res = JSON.parse(response);
-        console.log(res);
         if(res.dynamowebs_status == "success"){
             shadowRoot.getElementById('name').value = res.data.full_name;
             shadowRoot.getElementById('lastName').value = res.data.last_name;
@@ -701,7 +652,10 @@ function editLead(res){
     }else{
         shadowRoot.getElementById('socialMediaBlock').style.display = "none"
     }
-    shadowRoot.getElementById('btnBack').addEventListener('click', () => {backDetails(res)})
+    shadowRoot.getElementById('btnBack').addEventListener('click', (event) => {
+        backDetails(res)
+        event.target.style.display = "none";
+    })
     shadowRoot.getElementById('saveLead').addEventListener('click', () => {
         chrome.runtime.sendMessage(
             {
@@ -726,16 +680,12 @@ function editLead(res){
 }
 
 const getLinkedInProfile = () => {
-    // var parser = new DOMParser();
-    // var document = parser.parseFromString(text, 'text/html');
-    // console.log(document.querySelectorAll('img[class="pv-top-card-profile-picture__image pv-top-card-profile-picture__image--show ember-view"]'));
     try{
         if(document.querySelectorAll('img[class="pv-top-card-profile-picture__image pv-top-card-profile-picture__image--show ember-view"]').length > 0){
             var pic = document.querySelectorAll('img[class="pv-top-card-profile-picture__image pv-top-card-profile-picture__image--show ember-view"]');
         }else if(document.querySelectorAll('img[class="ember-view profile-photo-edit__preview"]').length > 0){
             var pic = document.querySelectorAll('img[class="ember-view profile-photo-edit__preview"]');
         } 
-        console.log(pic[0].src);
         var name = document.querySelectorAll('h1[class*="text-heading-xlarge"]');
         shadowRoot.getElementById('linkedInProfileName').innerText = name[0].innerText;
         shadowRoot.getElementById('linkedInProfileImg').src = pic[0].src;
@@ -769,7 +719,6 @@ function signedIn(){
     }else{
         chrome.runtime.sendMessage({call: "validateUser", email: login_email, password: login_pass}, function(response) {
             let res = JSON.parse(response);
-            console.log(res);
             if(res.dynamowebs_status == "success"){
                 var session_obj = {
                     token: res.token,
@@ -778,15 +727,9 @@ function signedIn(){
                     pass: login_pass
                 }
                 chrome.storage.local.set({loggedin: true,session:JSON.stringify(session_obj)}, function() {
-                    console.log('Session is set to ' + JSON.stringify(session_obj));
+                    // console.log('Session is set to ' + JSON.stringify(session_obj));
                 });
-
                 shadowRoot.getElementById('popup').innerHTML = account_html;
-                // shadowRoot.getElementById('account_dropdown').addEventListener('click', () => {
-                //     $(shadowRoot.getElementById('drop_down')).slideToggle(800);
-                //     $(shadowRoot.getElementById('app_container')).fadeToggle(400);
-                    
-                // })
                 accountDropdown();
                 getUserInfoFromAPI();
                 getCredits();
@@ -797,25 +740,17 @@ function signedIn(){
             shadowRoot.getElementById('loginMsg').innerText = res.dynamowebs_msg;
         });
     }
-   
 }
 
 function getUserInfoFromAPI(){
     chrome.runtime.sendMessage({call: "getUser",}, function(response) {
-        console.log(response);
         userObj = JSON.parse(response);
-        
-    
         if(userObj.dynamowebs_msg=="token_expired"){
-            console.log(userObj.token);
-                // console.log(res.message.includes("Token has been expired."));
             if(userObj.token!==undefined && userObj.token == "expired"){
                 chrome.storage.local.get(['session'], function(result) {
                     var session = JSON.parse(result.session);
-
                     chrome.runtime.sendMessage({call: "validateUser", email: session.email, password: session.pass}, function(response) {
                         var res = JSON.parse(response);
-                        console.log(res);
                         if(res.dynamowebs_status == "success"){
                             var session_obj = {
                                 token: res.token,
@@ -824,7 +759,7 @@ function getUserInfoFromAPI(){
                                 pass:  session.pass
                             }
                             chrome.storage.local.set({loggedin: true,session:JSON.stringify(session_obj)}, function() {
-                                console.log('Session is set to ' + JSON.stringify(session_obj));
+                                // console.log('Session is set to ' + JSON.stringify(session_obj));
                             });
                             shadowRoot.getElementById('popup').innerHTML = account_html;
                             accountDropdown();
@@ -846,23 +781,16 @@ function getUserInfoFromAPI(){
             shadowRoot.getElementById('userName').innerHTML = userObj.firstName + '&nbsp;' + userObj.lastName;
 
             shadowRoot.getElementById('accountEmail').innerText = userObj.email;
-            shadowRoot.getElementById('autoSaveWidget').checked = userObj.autoSaveLead;
-            shadowRoot.getElementById('autoOpenLead').checked = userObj.autoOpen;
+            // shadowRoot.getElementById('autoSaveWidget').checked = userObj.autoSaveLead;
+            // shadowRoot.getElementById('autoOpenLead').checked = userObj.autoOpen;
         }
     })
 }
 
 chrome.storage.local.get(['loggedin'], function(result) {
-    console.log(result);
     if(result.loggedin){
         getUserInfoFromAPI();
-
         shadowRoot.getElementById('popup').innerHTML = account_html;
-        // shadowRoot.getElementById('account_dropdown').addEventListener('click', () => {
-        //     $(shadowRoot.getElementById('drop_down')).slideToggle(800);
-        //     $(shadowRoot.getElementById('app_container')).fadeToggle(400);
-            
-        // })
         accountDropdown();
         shadowRoot.getElementById('logout').addEventListener('click',() => {
           logout();
@@ -962,8 +890,6 @@ function unlockLead(){
                                 shadowRoot.getElementById('companyDetails').style.display = "none";
                                 shadowRoot.getElementById('companyToggleBtnBlock').style.display = "none";
                             }
-                            console.log(res.otherSocialMedia.facebook);
-                            // shadowRoot.getElementById('fbURL').innerText = res.otherSocialMedia.facebook;
                             let ul_socialMedia = shadowRoot.getElementById('social_media');
                             ul_socialMedia.innerHTML = null;
                             var li = document.createElement('li');
@@ -1002,8 +928,6 @@ function unlockLead(){
                         }, 5000);
                     }
                     else if(res.dynamowebs_msg=="token_expired"){
-                        console.log(res.token);
-                            // console.log(res.message.includes("Token has been expired."));
                         if(res.token!==undefined && res.token == "expired"){
                             chrome.storage.local.get(['session'], function(result) {
                                 var session = JSON.parse(result.session);
@@ -1022,11 +946,6 @@ function unlockLead(){
                                             console.log('Session is set to ' + JSON.stringify(session_obj));
                                         });
                                         shadowRoot.getElementById('popup').innerHTML = account_html;
-                                        // shadowRoot.getElementById('account_dropdown').addEventListener('click', () => {
-                                        //     $(shadowRoot.getElementById('drop_down')).slideToggle(800);
-                                        //     $(shadowRoot.getElementById('app_container')).fadeToggle(400);
-                                            
-                                        // })
                                         accountDropdown();
                                         shadowRoot.getElementById('logout').addEventListener('click',() => {
                                           logout();
@@ -1034,10 +953,8 @@ function unlockLead(){
                                     }
                                     unlockLead();
                                 });
-            
                             });
-                        }
-                        
+                        } 
                     }else{
                         shadowRoot.getElementById('unlockbuttoncontainer').innerHTML = null;
                         shadowRoot.getElementById('contact_found_detail').innerHTML = contact_detail_linkedIn;
@@ -1046,30 +963,6 @@ function unlockLead(){
             })
         }
     });
-    
-
- 
-    // shadowRoot.getElementById('btnBack').addEventListener('click', () => {
-    //     shadowRoot.getElementById('app_container').innerHTML = html_back_content;
-    //     getProfileDetailsFromAPI();
-        // var myInterval = setInterval(function () {
-        //     if(getLinkedInProfile()){
-        //         console.log("Got DOM")
-        //         clearInterval(myInterval);
-        //     }else{
-        //         console.log("Not found!")
-        //     }
-        // }, 5000);
-    // })
-
-    // shadowRoot.getElementById('companyDetailsToggle').addEventListener('click', () => {
-    //     $(shadowRoot.getElementById('companyDetails')).slideToggle(800);
-    //     if (shadowRoot.getElementById('companyDetailsToggle').innerText === "Show company details") {
-    //         shadowRoot.getElementById('companyDetailsToggle').innerText = "Hide company details";
-    //       } else {
-    //         shadowRoot.getElementById('companyDetailsToggle').innerText = "Show company details";
-    //       }
-    // })
 }
 
 function accountDropdown(){
@@ -1084,7 +977,6 @@ function accountDropdown(){
     shadowRoot.getElementById('notificationBell').addEventListener('click', () => {
         $(shadowRoot.getElementById('notificationContainer')).slideToggle(800);
         chrome.runtime.sendMessage({call: "getNotification"}, function(response) {
-            // console.log(response);
             var res = JSON.parse(response);
             if(res.dynamowebs_status == "success"){
                 shadowRoot.getElementById('notifications').innerHTML = '';
@@ -1112,7 +1004,6 @@ function accountDropdown(){
         })
     });
     shadowRoot.getElementById('btnIntegration').addEventListener('click', () => {
-        // showIntegrationPage();
         chrome.storage.local.get(['session'], function(result) {
             var session = JSON.parse(result.session);
             let URL = `https://app.socontact.com/api/login-extension?token=${session.token}&redirect_url=https://app.socontact.com/user/setting_integration`
@@ -1135,7 +1026,6 @@ function accountDropdown(){
     });
 
     shadowRoot.getElementById('autoOpenWidget').addEventListener('click', (event) => {
-        // alert(event.target.checked);
         chrome.storage.local.set({autoOpen: event.target.checked}, function() {
             console.log('Auto open is set');
         });
@@ -1144,7 +1034,6 @@ function accountDropdown(){
         shadowRoot.getElementById('autoOpenWidget').checked = result.autoOpen;
     })
     shadowRoot.getElementById('autoSaveLead').addEventListener('click', (event) => {
-        // alert(event.target.checked);
         chrome.storage.local.set({autoSave: event.target.checked}, function() {
             console.log('Auto save is set');
         });
@@ -1168,31 +1057,18 @@ function showIntegrationPage(){
             });
         })
 }
-
 function getCredits(){
     chrome.runtime.sendMessage({call: "getCredits"}, function(response) {
-        console.log(response);
         var  res = JSON.parse(response);
         shadowRoot.getElementById('cAmount').innerText = res.organizationCredits.amount;
     })
 }
-// window.onload = function(){
-    // if(location.href != 'https://www.linkedin.com/feed/')
-    
-// }
-// window.addEventListener("load", function load(event){
-//     window.removeEventListener("load", load, false); //remove listener, no longer needed
-    
-// },false);
 $(document).ready(function(){
     chrome.storage.local.get(['loggedin'], function(result) {
-        console.log(result);
         if(result.loggedin){
             var pattern = /linkedin.com\/in/;
-            // if(location.href != 'https://www.linkedin.com/feed/' || location.href != 'https://www.linkedin.com/mynetwork/' || location.href != 'https://www.linkedin.com/jobs/' || location.href != 'https://www.linkedin.com/notifications/?filter=all'){
             if(location.href.match(pattern)!= null){
                 getProfileDetailsFromAPI();
-                console.log("Valid URL"); 
             }else{
                 shadowRoot.getElementById('app_container').innerHTML = noProfileHTML;
             }
