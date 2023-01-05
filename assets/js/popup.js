@@ -2,6 +2,7 @@ init();
 dragElement(shadowRoot.getElementById("icon"));
 
 
+
 let login_html = `
 <div class="p-4 pt-5 pb-0">
     <div class="row pt-3 pb-2">
@@ -18,7 +19,7 @@ let login_html = `
         <div class="col-sm-12">
             <label class="lbl-new-user">New User?</label>
             &nbsp;
-            <a href="#">Create an account</a>
+            <a href="https://app.socontact.com/register" target="_blank">Create an account</a>
         </div>
     </div>
     <div class="row pt-3 pb-2">
@@ -47,7 +48,7 @@ let login_html = `
         </div>
         <div id="loginMsg" class="col-sm-12 text-center login-msg"></div>
     </div>
-    <div class="row pt-3 pb-2">
+    <!--div class="row pt-3 pb-2">
     <div class="col-sm-4"><hr class="login-divider"></div>
     <div class="col-sm-4 pt-2 lbl-oauth">Or Sign In With</div>
     <div class="col-sm-4"><hr class="login-divider"></div>
@@ -57,7 +58,7 @@ let login_html = `
     <div class="col-sm-3"><img src="${chrome.runtime.getURL('assets/icons/fb.png')}" /> </div>
     <div class="col-sm-3"><img src="${chrome.runtime.getURL('assets/icons/linkedin.png')}" /> </div>
     <div class="col-sm-3"><img src="${chrome.runtime.getURL('assets/icons/twitter.png')}" /> </div>
-    </div>
+    </div-->
 </div>`;
 
 let contact_detail_api = ` 
@@ -220,21 +221,27 @@ let dropdownContentHTML =`
 </div>
 <div class="col-sm-3">
     <div class="row account-icons">
-        <div class="col-sm-4">
+        <div class="col-sm-4" id="notificationBell">
             <svg id="ic-bell" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
             <path id="Tracé_401" data-name="Tracé 401" d="M0,0H24V24H0Z" fill="none"/>
             <path id="Tracé_402" data-name="Tracé 402" d="M10,5a2,2,0,1,1,4,0,7,7,0,0,1,4,6v3a4,4,0,0,0,2,3H4a4,4,0,0,0,2-3V11a7,7,0,0,1,4-6" fill="none" stroke="#7e84a3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
             <path id="Tracé_403" data-name="Tracé 403" d="M9,17v1a3,3,0,0,0,6,0V17" fill="none" stroke="#7e84a3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
             </svg>
         </div>
-        <div class="col-sm-4">
+        <div class="notification-container" id="notificationContainer">
+            <div class="notification-content">    
+                <ul id="notifications">
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-4" id="appSettings">
             <svg id="ic_setting" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
             <path id="Tracé_386" data-name="Tracé 386" d="M0,0H24V24H0Z" fill="none"/>
             <path id="Tracé_387" data-name="Tracé 387" d="M10.325,4.317a1.724,1.724,0,0,1,3.35,0,1.724,1.724,0,0,0,2.573,1.066,1.725,1.725,0,0,1,2.37,2.37,1.724,1.724,0,0,0,1.065,2.572,1.724,1.724,0,0,1,0,3.35,1.724,1.724,0,0,0-1.066,2.573,1.725,1.725,0,0,1-2.37,2.37,1.724,1.724,0,0,0-2.572,1.065,1.724,1.724,0,0,1-3.35,0,1.724,1.724,0,0,0-2.573-1.066,1.725,1.725,0,0,1-2.37-2.37,1.724,1.724,0,0,0-1.065-2.572,1.724,1.724,0,0,1,0-3.35A1.724,1.724,0,0,0,5.383,7.752a1.725,1.725,0,0,1,2.37-2.37,1.723,1.723,0,0,0,2.572-1.065Z" fill="none" stroke="#B4C5D3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
             <circle id="Ellipse_2" data-name="Ellipse 2" cx="3" cy="3" r="3" transform="translate(9 9)" fill="none" stroke="#B4C5D3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
             </svg>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-4" id="editUser">
             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="150.003 246.71 12.927 12.296"><g data-name="Icon feather-edit-3"><path d="M156.467 259.007h6.463" stroke-linejoin="round" stroke-linecap="round" stroke="#b4c5d3" fill="transparent" data-name="Tracé 25"/><path d="M159.698 247.157a1.524 1.524 0 0 1 2.155 2.154l-8.977 8.978-2.873.718.718-2.873 8.977-8.977Z" stroke-linejoin="round" stroke-linecap="round" stroke="#b4c5d3" fill="transparent" data-name="Tracé 26"/></g></svg>
         </div>
     </div>
@@ -243,9 +250,9 @@ let dropdownContentHTML =`
 <div class="row pt-3 pb-2">
 <div class="col-sm-12">
     <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="autoSaveWidget">
+        <input class="form-check-input" type="checkbox" value="" id="autoOpenWidget">
         <label class="form-check-label">
-        Auto save widget ?
+        Auto open widget ?
         <p class="sub">When socontact finds contact informations</p>
         </label>
     </div>
@@ -268,7 +275,7 @@ let dropdownContentHTML =`
 <div class="row pb-2">
 <div class="col-sm-12">
     <ul class="options">
-        <li> 
+        <li id="btnTeamMembers"> 
             <svg id="ic_users" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
             <path id="Tracé_393" data-name="Tracé 393" d="M0,0H24V24H0Z" fill="none"/>
             <circle id="Ellipse_3" data-name="Ellipse 3" cx="4" cy="4" r="4" transform="translate(5 3)" fill="none" stroke="#ff7400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
@@ -277,7 +284,7 @@ let dropdownContentHTML =`
             <path id="Tracé_396" data-name="Tracé 396" d="M21,21V19a4,4,0,0,0-3-3.85" fill="none" stroke="#ff7400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
             </svg> <label>Add teams member</label>
         </li>
-        <li> 
+        <li id="btnNewLead"> 
             <svg id="ic_inbox" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
             <path id="Tracé_376" data-name="Tracé 376" d="M0,0H24V24H0Z" fill="none"/>
             <rect id="Rectangle_603" data-name="Rectangle 603" width="18" height="14" rx="2" transform="translate(3 5)" fill="none" stroke="#ff7400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
@@ -1318,6 +1325,44 @@ function loadPopup() {
         font: normal normal bold 9.12px/22.16px Poppins;
         letter-spacing: 0px;
         color: #FF7400;
+    }
+    .notification-container{
+        display: none;
+        position: absolute;
+        top: 20px;
+        min-width: 200px;
+        background-color: #fff;
+        box-shadow: 0px 1px 24px #b4c5d346;
+        border-radius: 2px;
+        text-align: left;
+        font: normal normal normal 9.46px/6.88px Poppins;
+        letter-spacing: 0.12px;
+        right: 40px;
+        padding:0;
+    }
+    .notification-content{
+        padding: 10px 0;
+        overflow: auto;
+        max-height: 45vh;
+    }
+    .notification-content > ul{
+        margin: 0;
+        padding: 0;
+        list-style:none;
+        color: #121C31;
+    }
+    .notification-content > ul a{
+        font: normal normal normal 9.12px/13.3px Poppins;
+        color: #FF7400;
+    }
+    .notification-content > ul > li{
+        padding: 10px 5px;
+    }
+    .notification-content > ul > li:hover{
+        background: #e5eef1f5;
+    }
+    .account-icons svg{
+        cursor:pointer;
     }
     /* line loading */
     .load-wrapp {

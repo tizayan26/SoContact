@@ -225,6 +225,11 @@ const getProfileDetailsFromAPI = () => {
             var  res = JSON.parse(response);
             let profile_detail_res = JSON.parse(response);
             if(res.dynamowebs_status=="success"){
+                chrome.storage.local.get('autoOpen', function(result){
+                    if(result.autoOpen){
+                        $(shadowRoot.getElementById('popup')).fadeIn()
+                    }
+                })
                 if(res.masked){
                     shadowRoot.getElementById('contact_found_detail').innerHTML = contact_detail_api;
                 }else{
@@ -485,6 +490,11 @@ const getProfileDetailsFromAPI = () => {
                 shadowRoot.getElementById('addToWaiting').addEventListener('click', () => {
                     scrapeLinkedInProfile(0);
                 })
+                chrome.storage.local.get('autoSave', function(result){
+                    if(result.autoSave){
+                        shadowRoot.getElementById('addToWaiting').dispatchEvent(new Event("click"));
+                    }
+                })
             }
         }
         shadowRoot.getElementById('linkedInProfileImg').src = chrome.runtime.getURL('assets/icons/spinner.gif');
@@ -742,6 +752,17 @@ const getLinkedInProfile = () => {
 function signedIn(){
     let login_email = shadowRoot.getElementById('email').value;
     let login_pass = shadowRoot.getElementById('password').value;
+    let rmCheck = shadowRoot.getElementById("keepme");
+
+    if(localStorage.checkbox && localStorage.checkbox !== "") {
+        rmCheck.setAttribute("checked", "checked");
+        login_email.value = localStorage.username;
+        login_pass.value = localStorage.password;
+    } else {
+        rmCheck.removeAttribute("checked");
+        login_email.value = "";
+        login_pass.value = "";
+    }
     if(!login_email || !login_pass){
         shadowRoot.getElementById('loginMsg').innerText = "Email and Password is required!"
         $(shadowRoot.getElementById('loginMsg')).fadeIn();
@@ -771,7 +792,7 @@ function signedIn(){
                 getCredits();
                 shadowRoot.getElementById('logout').addEventListener('click',() => {
                    logout();
-                })
+                });
             }
             shadowRoot.getElementById('loginMsg').innerText = res.dynamowebs_msg;
         });
@@ -826,7 +847,7 @@ function getUserInfoFromAPI(){
 
             shadowRoot.getElementById('accountEmail').innerText = userObj.email;
             shadowRoot.getElementById('autoSaveWidget').checked = userObj.autoSaveLead;
-            shadowRoot.getElementById('autoSaveLead').checked = userObj.autoOpen;
+            shadowRoot.getElementById('autoOpenLead').checked = userObj.autoOpen;
         }
     })
 }
@@ -1052,22 +1073,86 @@ function unlockLead(){
 }
 
 function accountDropdown(){
-    setInterval(function(){
-        chrome.runtime.sendMessage({call: "getNotification"}, function(response) {
-            console.log(response);
-        })
-    },10000)
     shadowRoot.getElementById('account_dropdown').addEventListener('click', () => {
         $(shadowRoot.getElementById('drop_down')).slideToggle(800);
         $(shadowRoot.getElementById('app_container')).fadeToggle(200);
         shadowRoot.getElementById('logout').addEventListener('click',() => {
             logout();
+        });
+       
+    })
+    shadowRoot.getElementById('notificationBell').addEventListener('click', () => {
+        $(shadowRoot.getElementById('notificationContainer')).slideToggle(800);
+        chrome.runtime.sendMessage({call: "getNotification"}, function(response) {
+            // console.log(response);
+            var res = JSON.parse(response);
+            if(res.dynamowebs_status == "success"){
+                shadowRoot.getElementById('notifications').innerHTML = '';
+                res.data.forEach((data) => {
+                    console.log(data.description)
+                    var li = document.createElement('li');
+                    li.innerHTML = data.description;
+                    shadowRoot.getElementById('notifications').appendChild(li);
+                })
+            }
         })
-        
-    })
+    });
+    shadowRoot.getElementById('appSettings').addEventListener('click', () => {
+        chrome.storage.local.get(['session'], function(result) {
+            var session = JSON.parse(result.session);
+            let URL = `https://app.socontact.com/api/login-extension?token=${session.token}&redirect_url=https://app.socontact.com/user/settings`
+            window.open(URL, '_blank');
+        })
+    });
+    shadowRoot.getElementById('editUser').addEventListener('click', () => {
+        chrome.storage.local.get(['session'], function(result) {
+            var session = JSON.parse(result.session);
+            let URL = `https://app.socontact.com/api/login-extension?token=${session.token}&redirect_url=https://app.socontact.com/user/settings`
+            window.open(URL, '_blank');
+        })
+    });
     shadowRoot.getElementById('btnIntegration').addEventListener('click', () => {
-        showIntegrationPage();
+        // showIntegrationPage();
+        chrome.storage.local.get(['session'], function(result) {
+            var session = JSON.parse(result.session);
+            let URL = `https://app.socontact.com/api/login-extension?token=${session.token}&redirect_url=https://app.socontact.com/user/setting_integration`
+            window.open(URL, '_blank');
+        })
+    });
+    shadowRoot.getElementById('btnTeamMembers').addEventListener('click', () => {
+        chrome.storage.local.get(['session'], function(result) {
+            var session = JSON.parse(result.session);
+            let URL = `https://app.socontact.com/api/login-extension?token=${session.token}&redirect_url=https://app.socontact.com/user/organization`
+            window.open(URL, '_blank');
+        })
+    });
+    shadowRoot.getElementById('btnNewLead').addEventListener('click', () => {
+        chrome.storage.local.get(['session'], function(result) {
+            var session = JSON.parse(result.session);
+            let URL = `https://app.socontact.com/api/login-extension?token=${session.token}&redirect_url=https://app.socontact.com/user/leads`
+            window.open(URL, '_blank');
+        })
+    });
+
+    shadowRoot.getElementById('autoOpenWidget').addEventListener('click', (event) => {
+        // alert(event.target.checked);
+        chrome.storage.local.set({autoOpen: event.target.checked}, function() {
+            console.log('Auto open is set');
+        });
     })
+    chrome.storage.local.get('autoOpen', function(result){
+        shadowRoot.getElementById('autoOpenWidget').checked = result.autoOpen;
+    })
+    shadowRoot.getElementById('autoSaveLead').addEventListener('click', (event) => {
+        // alert(event.target.checked);
+        chrome.storage.local.set({autoSave: event.target.checked}, function() {
+            console.log('Auto save is set');
+        });
+    })
+    chrome.storage.local.get('autoSave', function(result){
+        shadowRoot.getElementById('autoSaveLead').checked = result.autoSave;
+    })
+
 }
 
 function showIntegrationPage(){

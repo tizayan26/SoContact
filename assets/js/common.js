@@ -189,6 +189,22 @@ function getBase64Image(img) {
     chrome.storage.local.clear(function(){
         console.log('Cleared!');
         shadowRoot.getElementById('popup').innerHTML = login_html;
+        lsRememberMe();
         shadowRoot.getElementById('signin').addEventListener('click',()=>{signedIn()});
     });
+}
+
+function lsRememberMe() {
+  let emailInput = shadowRoot.getElementById('email').value;
+  let passInput = shadowRoot.getElementById('password').value;
+  var rmCheck = shadowRoot.getElementById("keepme");
+  if (rmCheck.checked && emailInput.value !== "") {
+    localStorage.username = emailInput.value;
+    localStorage.password = passInput.value;
+    localStorage.checkbox = rmCheck.value;
+  } else {
+    localStorage.username = "";
+    localStorage.password = "";
+    localStorage.checkbox = "";
+  }
 }
