@@ -128,7 +128,7 @@ function scrapeLinkedInProfile(type){
                         obj.validity = certification[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText;
                         var dates_array = certification[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText.trim().split('·');
                         var start_date = new Date(dates_array[0].trim());
-                        var end_date = dates_array[1] == "No Expiration Date" ? new Date() : new Date(dates_array[1].trim());
+                        var end_date = (dates_array[1]!==undefined) ? dates_array[1].trim() == "No Expiration Date" ? new Date() : new Date(dates_array[1].trim()) : '';
                         obj.issue_date = moment(start_date).format('YYYY-MM-DD');
                         obj.expiration_date =  moment(end_date).format('YYYY-MM-DD');
                     }
@@ -659,8 +659,9 @@ function backDetails(res){
     }else{
         shadowRoot.getElementById('proEmailsBlock').style.display = "none";
     }
+    // alert(res.personalEmail.length);
     if(res.personalEmail.length>0){
-        shadowRoot.getElementById('perEmails').style.display = "block";
+        shadowRoot.getElementById('perEmailsBlock').style.display = "block";
         let ul_perEmails = shadowRoot.getElementById('perEmails');
         ul_perEmails.innerHTML = null;
         res.personalEmail.forEach(el =>{
@@ -674,7 +675,7 @@ function backDetails(res){
             ul_perEmails.appendChild(li);
         })
     }else{
-        shadowRoot.getElementById('perEmails').style.display = "none";
+        shadowRoot.getElementById('perEmailsBlock').style.display = "none";
     }
     if(res.companyInformation.length > 0 || (res.companyInformation[0].mainIndustry !== "" && res.companyInformation[0].employees !== "" && res.companyInformation[0].headQuarters !== "" && res.companyInformation[0].founded !== "")){
         shadowRoot.getElementById('companyName').innerText = res.companyInformation[0].name;
