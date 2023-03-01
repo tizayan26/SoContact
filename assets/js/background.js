@@ -269,5 +269,20 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                     .then(text =>sendResponse(text))
                     .catch(error => console.log(error))
             }), !0;
+
+        case "setBadge":
+            return chrome.action.setBadgeText({text: request.count.toString()}),chrome.action.setBadgeBackgroundColor({color: 'red'}), !0;
+
+        case "changeLang":
+            return fetch(request.url).then(response => response.text())
+                .then(text =>sendResponse(text))
+                .catch(error => console.log(error)),!0;
     }
-})
+});
+chrome.tabs.onUpdated.addListener(function (tabId , info, tab) {
+    if(tab.url.indexOf('www.linkedin.com/in')>0){
+        if (info.status === 'complete') {
+            chrome.tabs.sendMessage(tabId, "complete");
+        }
+    }
+});

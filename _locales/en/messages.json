@@ -1,0 +1,98 @@
+{
+  "extName": {
+    "message": "SoContact : Get Phone Numbers and Emails",
+    "description": ""
+  },
+  "extDesc": {
+    "message": "Get your prospects’ phone number and email instantly from LinkedIn. Convert leads with and automate your prospecting.",
+    "description": ""
+  },
+  "greetingHeading": {
+    "message": "Hello ",
+    "description": ""
+  },
+  "greetingSub": {
+    "message": "Welcome back, we’re happy to see you again ;)",
+    "description": ""
+  },
+  "instructionHeading": {
+    "message": "Navigate to a profile page",
+    "description": ""
+  },
+  "instructionSub": {
+    "message": "No worries, you can add it to your waiting list, Visit any LinkedIn profile and click on the so contact plugin to get contact information.",
+    "description": ""
+  },
+  "cr": {
+    "message": "credits",
+    "description": ""
+  },
+  "ac": {
+    "message": "Account",
+    "description": ""
+  },
+  "email": {
+    "message": "Email",
+    "description": ""
+  },
+  "autoopenHead": {
+    "message": "Auto open widget ?",
+    "description": ""
+  },
+  "autoopenSub": {
+    "message": "When socontact finds contact informations",
+    "description": ""
+  },
+  "autosvHeading": {
+    "message": "Auto save lead ?",
+    "description": ""
+  },
+  "autosvSub": {
+    "message": "When socontact finds a new lead",
+    "description": ""
+  },
+  "atm": {
+    "message": "Add teams member",
+    "description": ""
+  },
+  "anl": {
+    "message": "Add new leads",
+    "description": ""
+  },
+  "integration": {
+    "message": "Integrations",
+    "description": ""
+  },
+  "inv": {
+    "message": "Invite and earn Credit",
+    "description": ""
+  },
+  "help": {
+    "message": "Help center",
+    "description": ""
+  },
+  "fc": {
+    "message": "Free credits",
+    "description": ""
+  },
+  "lo": {
+    "message": "Log out",
+    "description": ""
+  },
+  "cf": {
+    "message": "Contact Found",
+    "description": ""
+  },
+  "cfHeading":{
+    "message":"It appears that we don’t have enough informations about this contact…yet ;)",
+    "description": ""
+  },
+  "cfSub":{
+    "message":"No worries, you can add it to your waiting list,<br> We’ll send you a notification when the contact is updated",
+    "description": ""
+  },
+  "cfBtn":{
+    "message":"Add to waiting list",
+    "description": ""
+  }  
+}

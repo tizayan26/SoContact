@@ -1,5 +1,7 @@
+let lang = "fr";
 let profile_image;
 let profile_name;
+let loading_flag = true;
 let shadowWrapper = document.createElement('div');
 shadowWrapper.id = "shadow-wrapper";
 document.body.appendChild(shadowWrapper);
@@ -187,24 +189,82 @@ function getBase64Image(img) {
 
   function logout(){
     chrome.storage.local.clear(function(){
+        var error = chrome.runtime.lastError;
+        if (error) {
+            console.error(error);
+        }
+        // do something more
         console.log('Cleared!');
         shadowRoot.getElementById('popup').innerHTML = login_html;
-        lsRememberMe();
+        getRememberData();
         shadowRoot.getElementById('signin').addEventListener('click',()=>{signedIn()});
     });
 }
 
 function lsRememberMe() {
-  let emailInput = shadowRoot.getElementById('email').value;
-  let passInput = shadowRoot.getElementById('password').value;
+  var emailInput = shadowRoot.getElementById('email').value;
+  var passInput = shadowRoot.getElementById('password').value;
   var rmCheck = shadowRoot.getElementById("keepme");
   if (rmCheck.checked && emailInput.value !== "") {
-    localStorage.username = emailInput.value;
-    localStorage.password = passInput.value;
-    localStorage.checkbox = rmCheck.value;
+    localStorage.setItem('username',emailInput.value);
+    localStorage.setItem('password',passInput.value);
+    localStorage.setItem('check',rmCheck.value);
   } else {
-    localStorage.username = "";
-    localStorage.password = "";
-    localStorage.checkbox = "";
+    localStorage.setItem('username',"");
+    localStorage.setItem('assword',"");
+    localStorage.setItem('check',false);
   }
+}
+
+function getRememberData(){
+  var emailInput = shadowRoot.getElementById('email').value;
+  var passInput = shadowRoot.getElementById('password').value;
+  var rmCheck = shadowRoot.getElementById("keepme");
+  if(localStorage.getItem('check')){
+    emailInput.value = localStorage.getItem('username');
+    passInput.value = localStorage.getItem('password');
+    rmCheck.checked = localStorage.getItem('check');
+  }
+}
+
+function changeLangNoProfile(lang){
+  chrome.runtime.sendMessage({call: "changeLang", url: chrome.runtime.getURL("_locales/" + lang + "/messages.json")}, function(response) {
+      let msg = JSON.parse(response);
+      $(shadowRoot.getElementById('gheading')).text(msg.greetingHeading.message);
+      $(shadowRoot.getElementById('gsub')).text(msg.greetingSub.message);
+      $(shadowRoot.getElementById('gsub')).text(msg.greetingSub.message);
+      $(shadowRoot.getElementById('instheading')).text(msg.instructionHeading.message);
+      $(shadowRoot.getElementById('instsub')).text(msg.instructionSub.message);
+      $(shadowRoot.getElementById('cr')).text(msg.cr.message);
+      $(shadowRoot.getElementById('acc')).text(msg.acc.message);
+  });
+}
+function changeLangDropdown(lang){
+  chrome.runtime.sendMessage({call: "changeLang", url: chrome.runtime.getURL("_locales/" + lang + "/messages.json")}, function(response) {
+      let msg = JSON.parse(response);
+      $(shadowRoot.getElementById('acc')).text(msg.ac.message);
+      $(shadowRoot.getElementById('email')).text(msg.email.message);
+      $(shadowRoot.getElementById('aoHead')).text(msg.autoopenHead.message);
+      $(shadowRoot.getElementById('aoSub')).text(msg.autoopenSub.message);
+      $(shadowRoot.getElementById('asHead')).text(msg.autosvHeading.message);
+      $(shadowRoot.getElementById('asSub')).text(msg.autosvSub.message);
+      $(shadowRoot.getElementById('atm')).text(msg.atm.message);
+      $(shadowRoot.getElementById('anl')).text(msg.atm.message);
+      $(shadowRoot.getElementById('itgrn')).text(msg.atm.message);
+      $(shadowRoot.getElementById('inv')).text(msg.inv.message);
+      $(shadowRoot.getElementById('inv')).text(msg.inv.message);
+      $(shadowRoot.getElementById('hc')).text(msg.help.message);
+      $(shadowRoot.getElementById('fc')).text(msg.fc.message);
+      $(shadowRoot.getElementById('logout')).text(msg.lo.message);
+  });
+}
+
+function changeLangContactFound(lang){
+  chrome.runtime.sendMessage({call: "changeLang", url: chrome.runtime.getURL("_locales/" + lang + "/messages.json")}, function(response) {
+    let msg = JSON.parse(response);
+    $(shadowRoot.getElementById('cf')).text(msg.cf.message);
+    $(shadowRoot.getElementById('head')).text(msg.cfHeading.message);
+    $(shadowRoot.getElementById('sub')).html(msg.cfSub.message);
+    $(shadowRoot.getElementById('addToWaiting')).text(msg.cfBtn.message);
+  });
 }

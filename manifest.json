@@ -1,10 +1,9 @@
 {
-  "name": "SoContact",
-  "version": "1.0",
-  "description": "Get Anyone's Mobile Numbers and Emails.",
+  "name": "SoContact : Get Phone Numbers and Emails",
+  "version": "1.0.0.3",
+  "description": "Get your prospects’ phone number and email instantly from LinkedIn. Convert leads with and automate your prospecting.",
+    "default_locale": "en",
   "author": "Nasirul Akbar Khan",
-    
-
   "action": {
     "default_icon":{
       "16": "assets/icons/icon16.png",
@@ -14,7 +13,6 @@
       "128": "assets/icons/icon128.png"
     }
   },
-
   "icons": {
     "16": "assets/icons/icon16.png",
     "32": "assets/icons/icon32.png",
@@ -22,11 +20,9 @@
     "64": "assets/icons/icon64.png",
     "128": "assets/icons/icon128.png"
   },
-
   "background": {
     "service_worker": "assets/js/background.js"
   },
-
   "content_scripts": [ 
     {
       "all_frames": false,
@@ -41,11 +37,7 @@
       "run_at": "document_end"
     }
   ],
-    
-    
   "manifest_version": 3,
-
-  
   "web_accessible_resources":[{
     "resources": ["assets/css/style.css", "assets/icons/*", "assets/img/*"],
     "matches": ["*://*.linkedin.com/*","*://linkedin.com/*"]
@@ -53,16 +45,9 @@
   "permissions": [
     "activeTab",
     "storage",
-    "downloads",
-    "tabs",
-    "identity",
-    "identity.email"  
+    "tabs"
   ],
   "host_permissions": [
-    "https://fonts.gstatic.com/",
-    "https://fonts.googleapis.com/",
-    "http://fonts.googleapis.com/",
-    "https://fonts.googleapis.com/",
     "https://app.socontact.com/"
   ]
 }

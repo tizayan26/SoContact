@@ -1,10 +1,12 @@
 init();
-dragElement(shadowRoot.getElementById("icon"));
+// dragElement(shadowRoot.getElementById("icon"));
+dragElement(shadowRoot.getElementById("icon_button"));
 
 
 
 let login_html = `
-<div class="p-4 pt-5 pb-0">
+<div class="login-container">
+<div class="p-6 pt-26 pb-0">
     <div class="row pt-3 pb-2">
         <div class="col-sm-12 text-center">
             <img class="logo" src="${chrome.runtime.getURL('assets/icons/logo.png')}" /> 
@@ -59,14 +61,14 @@ let login_html = `
     <div class="col-sm-3"><img src="${chrome.runtime.getURL('assets/icons/linkedin.png')}" /> </div>
     <div class="col-sm-3"><img src="${chrome.runtime.getURL('assets/icons/twitter.png')}" /> </div>
     </div-->
-</div>`;
+</div></div>`;
 
 let contact_detail_api = ` 
 <div class="row white-container p-1">
     <div class="col-sm-12 pt-4">
-        <div class="row dotted-box pt-2 pb-2">
-            <div class="col-sm-4"><img class="avatar big" id="linkedInProfileImg" src="${chrome.runtime.getURL('assets/icons/spinner.gif')}" /></div> <!--https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80-->
-            <div class="col-sm-8 account">
+        <div class="d-flex dotted-box">
+            <div class="p-4"><img class="avatar big" id="linkedInProfileImg" src="${chrome.runtime.getURL('assets/icons/spinner.gif')}" /></div> <!--https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80-->
+            <div class="p-4 account">
                 <label>Contact Found</label><h6 id="linkedInProfileName"> <div class="load-2">
                 <div class="line"></div>
                 <div class="line"></div>
@@ -124,17 +126,17 @@ let contact_detail_api = `
         </div>
     </div>
     <div id="companyBlock" class="col-sm-12">
-        <div class="row pt-4 pb-4">
-            <div class="col-sm-2"><div class="company-logo-circle"></div></div>
-            <div class="col-sm-5"><div class="company-title" id="companyName">Company name</div></div>
-            <div class="col-sm-5"><a class="go-to-website" id="companyWebsite" target="_blank">Go to website</a></div>
+        <div class="d-flex pt-4 pb-4">
+            <div class="p-2"><div class="company-logo-circle"></div></div>
+            <div class="p-2"><div class="company-title" id="companyName" style="overflow:hidden;max-width:196px;">Company name</div></div>
+            <div class="pt-2 pb-2"><a class="go-to-website" id="companyWebsite" target="_blank">Go to website</a></div>
         </div>
     </div>
     <div id="socialMediaBlock">
-        <div class="col-sm-12">
+        <div class="col-sm-12 p-4 pt-0 pb-0">
             <label class="other-social-media">Other social media</label>
         </div>
-        <div class="col-sm-12 pb-4">
+        <div class="col-sm-12 p-4">
             <div class="row social-media-icon">
                 <div class="col-sm-1"><svg xmlns="http://www.w3.org/2000/svg" width="30.033" height="30.033" viewBox="0 0 30.033 30.033">
                 <path id="Icon_awesome-facebook-square" data-name="Icon awesome-facebook-square" d="M26.816,2.25H3.218A3.218,3.218,0,0,0,0,5.468v23.6a3.218,3.218,0,0,0,3.218,3.218h9.2V22.073H8.2V17.267h4.223V13.6c0-4.166,2.48-6.468,6.28-6.468a25.587,25.587,0,0,1,3.722.324V11.55h-2.1a2.4,2.4,0,0,0-2.71,2.6v3.121h4.611l-.737,4.806H17.614V32.283h9.2a3.218,3.218,0,0,0,3.218-3.218V5.468A3.218,3.218,0,0,0,26.816,2.25Z" transform="translate(0 -2.25)" fill="#7e84a3"/>
@@ -154,23 +156,30 @@ let contact_detail_api = `
 </div>
 `;
 
-let contact_detail_linkedIn = `<div class="row white-container p-4">
-<div class="col-sm-4"><img class="avatar big" id="linkedInProfileImg" src="${chrome.runtime.getURL('assets/icons/spinner.gif')}" /></div><!--https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80-->
-<div class="col-sm-8 account">
-    <label>Contact Found</label><h6 id="linkedInProfileName"><div class="load-2">
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-  </div></h6><!--John Doe-->
-</div>
-<div class="col-sm-12 text-center pt-4 pb-2"><h4 class="msg">It appears that we don’t have enough informations about this contact…yet ;)</h4></div>
-<div class="col-sm-12 text-center"><p class="sub-msg">No worries, you can add it to your waiting list,<br> We’ll send you a notification when the contact is updated</p></div>
-<div class="col-sm-12 pt-4 text-center">
-    <button class="btn btn-secondary add-to-waiting-list" id="addToWaiting">Add to waiting list</button>
-</div>
+let contact_detail_linkedIn = `
+<div class="row white-container padding-contact-found">
+    <div clas="col-sm-12">
+        <div class="d-flex">
+            <div class="p-4"><img class="avatar big" id="linkedInProfileImg" src="${chrome.runtime.getURL('assets/icons/spinner.gif')}" /></div><!--https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80-->
+            <div class="p-4 account">
+                <label id="cf">Contact Found</label><h6 id="linkedInProfileName">
+                <div class="load-2">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                </div></h6><!--John Doe-->
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 text-center pt-4 pb-2"><h4 class="msg" id="head">It appears that we don’t have enough informations about this contact…yet ;)</h4></div>
+    <div class="col-sm-12 text-center"><p class="sub-msg" id="sub">No worries, you can add it to your waiting list,<br> We’ll send you a notification when the contact is updated</p></div>
+    <div class="col-sm-12 pt-4 text-center">
+        <button class="btn btn-secondary add-to-waiting-list" id="addToWaiting">Add to waiting list</button>
+    </div>
 </div>`;
 
 let contactSearchHTML = `
+<div class="no-credit-alert" id="noCreditAlert">You don't have enough credit to unlock details</div>
 <div class="col-sm-12 pt-5 pb-2 text-center">
 <img class="logoQ" src="${chrome.runtime.getURL('assets/icons/logoQ.png')}" />
 </div>
@@ -186,16 +195,16 @@ let contactSearchHTML = `
 let noProfileHTML = `
     <div class="col-sm-12 pt-4 pb-2 text-center">
     <div class="intro-container">
-        <h2>Hello <span id="userName">[user name]<span></h2>
-        Welcome back, we’re happy to see you again ;)
+        <h2><span id="gheading">Hello</span> <span id="userName">[user name]<span></h2>
+        <span id="gsub">Welcome back, we’re happy to see you again ;)</span>
     </div>
     </div>
     <div class="col-sm-12 pt-2 pb-2 text-center">
     <div class="intro-container">
         <div class="row">
             <div class="col-sm-12">
-                <h3>Navigate to a profile page</h3>
-                No worries, you can add it to your waiting list, Visit any LinkedIn profile and click on the so contact plugin to get contact information.
+                <h3 id="instheading">Navigate to a profile page</h3>
+                <span id="instsub">No worries, you can add it to your waiting list, Visit any LinkedIn profile and click on the so contact plugin to get contact information.</span>
                 
             </div>
             <div class="col-sm-12 pt-3">
@@ -208,66 +217,68 @@ let noProfileHTML = `
 
 let dropdownContentHTML =`
 <div class="row pt-3 pb-2">
-<div class="col-sm-3"><img class="avatar big" id="accountImg" src="${chrome.runtime.getURL('assets/icons/spinner.gif')}" /></div>
-<div class="col-sm-6 account">
-    <label>Account</label><h6 id="accountName">
-    <div class="load-2"> 
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
-    </div>
-    </h6>
-    <label>Email</label><p id="accountEmail"></p>
-</div>
-<div class="col-sm-3">
-    <div class="row account-icons">
-        <div class="col-sm-4" id="notificationBell">
-            <svg id="ic-bell" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-            <path id="Tracé_401" data-name="Tracé 401" d="M0,0H24V24H0Z" fill="none"/>
-            <path id="Tracé_402" data-name="Tracé 402" d="M10,5a2,2,0,1,1,4,0,7,7,0,0,1,4,6v3a4,4,0,0,0,2,3H4a4,4,0,0,0,2-3V11a7,7,0,0,1,4-6" fill="none" stroke="#7e84a3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-            <path id="Tracé_403" data-name="Tracé 403" d="M9,17v1a3,3,0,0,0,6,0V17" fill="none" stroke="#7e84a3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-            </svg>
+    <div class="d-flex">
+        <div class="p-4"><img class="avatar big" id="accountImg" src="${chrome.runtime.getURL('assets/icons/spinner.gif')}" /></div>
+        <div class="p-2 account">
+            <label id="acc">Account</label><h6 id="accountName">
+            <div class="load-2"> 
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+            </h6>
+            <label id="email">Email</label><p id="accountEmail"></p>
         </div>
-        <div class="notification-container" id="notificationContainer">
-            <div class="notification-content">    
-                <ul id="notifications">
-                </ul>
+        <div class="p-2">
+            <div class="d-flex account-icons">
+                <div class="p-2" id="notificationBell">
+                    <svg id="ic-bell" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                    <path id="Tracé_401" data-name="Tracé 401" d="M0,0H24V24H0Z" fill="none"/>
+                    <path id="Tracé_402" data-name="Tracé 402" d="M10,5a2,2,0,1,1,4,0,7,7,0,0,1,4,6v3a4,4,0,0,0,2,3H4a4,4,0,0,0,2-3V11a7,7,0,0,1,4-6" fill="none" stroke="#7e84a3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                    <path id="Tracé_403" data-name="Tracé 403" d="M9,17v1a3,3,0,0,0,6,0V17" fill="none" stroke="#7e84a3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                    </svg>
+                </div>
+                <div class="notification-container" id="notificationContainer">
+                    <div class="notification-content">    
+                        <ul id="notifications">
+                        </ul>
+                    </div>
+                </div>
+                <div class="p-2" id="appSettings">
+                    <svg id="ic_setting" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+                    <path id="Tracé_386" data-name="Tracé 386" d="M0,0H24V24H0Z" fill="none"/>
+                    <path id="Tracé_387" data-name="Tracé 387" d="M10.325,4.317a1.724,1.724,0,0,1,3.35,0,1.724,1.724,0,0,0,2.573,1.066,1.725,1.725,0,0,1,2.37,2.37,1.724,1.724,0,0,0,1.065,2.572,1.724,1.724,0,0,1,0,3.35,1.724,1.724,0,0,0-1.066,2.573,1.725,1.725,0,0,1-2.37,2.37,1.724,1.724,0,0,0-2.572,1.065,1.724,1.724,0,0,1-3.35,0,1.724,1.724,0,0,0-2.573-1.066,1.725,1.725,0,0,1-2.37-2.37,1.724,1.724,0,0,0-1.065-2.572,1.724,1.724,0,0,1,0-3.35A1.724,1.724,0,0,0,5.383,7.752a1.725,1.725,0,0,1,2.37-2.37,1.723,1.723,0,0,0,2.572-1.065Z" fill="none" stroke="#B4C5D3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                    <circle id="Ellipse_2" data-name="Ellipse 2" cx="3" cy="3" r="3" transform="translate(9 9)" fill="none" stroke="#B4C5D3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                    </svg>
+                </div>
+                <div class="p-2" id="editUser">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="150.003 246.71 12.927 12.296"><g data-name="Icon feather-edit-3"><path d="M156.467 259.007h6.463" stroke-linejoin="round" stroke-linecap="round" stroke="#b4c5d3" fill="transparent" data-name="Tracé 25"/><path d="M159.698 247.157a1.524 1.524 0 0 1 2.155 2.154l-8.977 8.978-2.873.718.718-2.873 8.977-8.977Z" stroke-linejoin="round" stroke-linecap="round" stroke="#b4c5d3" fill="transparent" data-name="Tracé 26"/></g></svg>
+                </div>
             </div>
         </div>
-        <div class="col-sm-4" id="appSettings">
-            <svg id="ic_setting" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
-            <path id="Tracé_386" data-name="Tracé 386" d="M0,0H24V24H0Z" fill="none"/>
-            <path id="Tracé_387" data-name="Tracé 387" d="M10.325,4.317a1.724,1.724,0,0,1,3.35,0,1.724,1.724,0,0,0,2.573,1.066,1.725,1.725,0,0,1,2.37,2.37,1.724,1.724,0,0,0,1.065,2.572,1.724,1.724,0,0,1,0,3.35,1.724,1.724,0,0,0-1.066,2.573,1.725,1.725,0,0,1-2.37,2.37,1.724,1.724,0,0,0-2.572,1.065,1.724,1.724,0,0,1-3.35,0,1.724,1.724,0,0,0-2.573-1.066,1.725,1.725,0,0,1-2.37-2.37,1.724,1.724,0,0,0-1.065-2.572,1.724,1.724,0,0,1,0-3.35A1.724,1.724,0,0,0,5.383,7.752a1.725,1.725,0,0,1,2.37-2.37,1.723,1.723,0,0,0,2.572-1.065Z" fill="none" stroke="#B4C5D3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-            <circle id="Ellipse_2" data-name="Ellipse 2" cx="3" cy="3" r="3" transform="translate(9 9)" fill="none" stroke="#B4C5D3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-            </svg>
-        </div>
-        <div class="col-sm-4" id="editUser">
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="150.003 246.71 12.927 12.296"><g data-name="Icon feather-edit-3"><path d="M156.467 259.007h6.463" stroke-linejoin="round" stroke-linecap="round" stroke="#b4c5d3" fill="transparent" data-name="Tracé 25"/><path d="M159.698 247.157a1.524 1.524 0 0 1 2.155 2.154l-8.977 8.978-2.873.718.718-2.873 8.977-8.977Z" stroke-linejoin="round" stroke-linecap="round" stroke="#b4c5d3" fill="transparent" data-name="Tracé 26"/></g></svg>
-        </div>
     </div>
 </div>
-</div>
-<div class="row pt-3 pb-2">
+<div class="row pt-4 pb-4">
 <div class="col-sm-12">
     <div class="form-check">
         <input class="form-check-input" type="checkbox" value="" id="autoOpenWidget">
         <label class="form-check-label">
-        Auto open widget ?
-        <p class="sub">When socontact finds contact informations</p>
+        <span id="aoHead">Auto open widget ?</span>
+        <p class="sub" id="aoSub">When socontact finds contact informations</p>
         </label>
     </div>
 </div>
 </div>
-<div class="row pt-3 pb-2 pt-2">
+<div class="row pt-4 pb-2 pt-2">
 <hr class="divider">
 </div>
-<div class="row pt-3 pb-2">
+<div class="row pt-4 pb-4">
 <div class="col-sm-12">
     <div class="form-check">
         <input class="form-check-input" type="checkbox" value="" id="autoSaveLead">
         <label class="form-check-label">
-        Auto save lead ?
-        <p class="sub">When socontact finds a new lead</p>
+        <span id="asHead">Auto save lead ?</span>
+        <p class="sub" id="asSub">When socontact finds a new lead</p>
         </label>
     </div>
 </div>
@@ -276,36 +287,36 @@ let dropdownContentHTML =`
 <div class="col-sm-12">
     <ul class="options">
         <li id="btnTeamMembers"> 
-            <svg id="ic_users" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+            <svg id="ic_users" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
             <path id="Tracé_393" data-name="Tracé 393" d="M0,0H24V24H0Z" fill="none"/>
             <circle id="Ellipse_3" data-name="Ellipse 3" cx="4" cy="4" r="4" transform="translate(5 3)" fill="none" stroke="#ff7400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
             <path id="Tracé_394" data-name="Tracé 394" d="M3,21V19a4,4,0,0,1,4-4h4a4,4,0,0,1,4,4v2" fill="none" stroke="#ff7400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
             <path id="Tracé_395" data-name="Tracé 395" d="M16,3.13a4,4,0,0,1,0,7.75" fill="none" stroke="#ff7400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
             <path id="Tracé_396" data-name="Tracé 396" d="M21,21V19a4,4,0,0,0-3-3.85" fill="none" stroke="#ff7400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-            </svg> <label>Add teams member</label>
+            </svg> <label id="atm">Add teams member</label>
         </li>
         <li id="btnNewLead"> 
-            <svg id="ic_inbox" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+            <svg id="ic_inbox" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
             <path id="Tracé_376" data-name="Tracé 376" d="M0,0H24V24H0Z" fill="none"/>
             <rect id="Rectangle_603" data-name="Rectangle 603" width="18" height="14" rx="2" transform="translate(3 5)" fill="none" stroke="#ff7400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
             <path id="Tracé_377" data-name="Tracé 377" d="M3,7l9,6,9-6" fill="none" stroke="#ff7400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-            </svg> <label>Add new leads</label>
+            </svg> <label id="anl">Add new leads</label>
         </li>
         <li class="grad" id="btnIntegration">              
-            <svg id="ic_setting" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+            <svg id="ic_setting" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
             <path id="Tracé_386" data-name="Tracé 386" d="M0,0H24V24H0Z" fill="none"/>
             <path id="Tracé_387" data-name="Tracé 387" d="M10.325,4.317a1.724,1.724,0,0,1,3.35,0,1.724,1.724,0,0,0,2.573,1.066,1.725,1.725,0,0,1,2.37,2.37,1.724,1.724,0,0,0,1.065,2.572,1.724,1.724,0,0,1,0,3.35,1.724,1.724,0,0,0-1.066,2.573,1.725,1.725,0,0,1-2.37,2.37,1.724,1.724,0,0,0-2.572,1.065,1.724,1.724,0,0,1-3.35,0,1.724,1.724,0,0,0-2.573-1.066,1.725,1.725,0,0,1-2.37-2.37,1.724,1.724,0,0,0-1.065-2.572,1.724,1.724,0,0,1,0-3.35A1.724,1.724,0,0,0,5.383,7.752a1.725,1.725,0,0,1,2.37-2.37,1.723,1.723,0,0,0,2.572-1.065Z" fill="none" stroke="#ff7400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
             <circle id="Ellipse_2" data-name="Ellipse 2" cx="3" cy="3" r="3" transform="translate(9 9)" fill="none" stroke="#ff7400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-            </svg> <label>Integrations</label>
+            </svg> <label id="itgrn">Integrations</label>
         </li>
     </ul>
 </div>
 </div>
 <div class="row pt-3 pb-2">
 <div class="col-sm-6 account-bottom-text">
-    Invit and earn Credit<br>
-    Help center
-    <p class="highlight">Free credits</p>
+    <span id="inv">Invite and earn Credit</span><br>
+    <span id="hc">Help center</span><br>
+    <p class="highlight" id="fc">Free credits</p>
 </div>
 </div>
 <div class="row pt-3 pb-2 text-center">
@@ -314,23 +325,27 @@ let dropdownContentHTML =`
 `;
 
 let account_html = `
-<div class="row pt-3 pb-2">
-    <div class="col-sm-5">
+<div class="d-flex pt-3 pb-2" style="justify-content: space-between;">
+    <div class="p-1">
         <img class="logo-small" src="${chrome.runtime.getURL('assets/icons/logo.png')}" /> 
     </div>
-    <div class="col-sm-5">
+    <div class="p-1">
         <div class="coin-container">
-            <img src="${chrome.runtime.getURL('assets/icons/coin.png')}" /> <span id="cAmount">100</span> credits
+            <img src="${chrome.runtime.getURL('assets/icons/coin.png')}" /> <span id="cAmount">
+            <div class="spinner-grow spinner-grow-sm" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            </span> <span id="cr">credits</span>
         </div>
     </div>
-    <div class="col-sm-2">
-        <img class="avatar" id="account_dropdown" src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80" />
+    <div class=p-1">
+        <img class="avatar" id="account_dropdown" src="${chrome.runtime.getURL('assets/icons/spinner.gif')}" />
     </div>
 </div>
 <div id="drop_down" class="drop-down">
     ${dropdownContentHTML}
 </div>
-<div id="app_container" class="row">
+<div id="app_container" class="row app-container-main">
    ${noProfileHTML}
 </div>
 `;
@@ -385,14 +400,14 @@ let leadEditHTML = `
                     <div class="col-sm-5"><a class="go-to-website" id="companyWebsite" target="_blank">Go to website</a></div>
                 </div>
             </div>
-            <div class=col-sm-12>
+            <!--div class=col-sm-12>
                 <button class="btn-add">Add +</button>
-            </div>
+            </div-->
         </div>
-        <div class="col-sm-12 pt-2">
+        <!--div class="col-sm-12 pt-2">
             <label class="other-social-media">Compagny categories</label>
             <button class="btn-add">Add +</button>
-        </div>
+        </div-->
         <div id="socialMediaBlock" class="col-sm-12">
             <label class="other-social-media">Social medias</label>
             <div class="col-sm-12 pb-4">
@@ -465,19 +480,26 @@ let integrationHTML = `
 
 let leadUnlocked = `
 <div class="col-sm-12 pt-2 pb-2 p-4">
-    <div class="row white-container p-2">
-
-        <div class="col-sm-4">
-            <img class="avatar big" id="linkedInProfileImg" src="${chrome.runtime.getURL('assets/icons/spinner.gif')}" />
-        </div>
-        <div class="col-sm-8 account">
-            <h6 id="linkedInProfileName">
-            <div class="load-2"> 
-                <div class="line"></div>
-                <div class="line"></div>
-                <div class="line"></div>
+    <div class="row white-container p-2 pt-5 pb-5">
+        <div class="d-flex">
+            <div class="p-4">
+                <img class="avatar big" id="linkedInProfileImg" src="${chrome.runtime.getURL('assets/icons/spinner.gif')}" />
             </div>
-            </h6><label id="jobTitle">Job Title</label>
+            <div class="p-4 account">
+                <h6 id="linkedInProfileName">
+                <div class="load-2"> 
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
+                </h6><label id="jobTitle">
+                    <div class="load-2"> 
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                    </div>
+                </label>
+            </div>
         </div>
         <div class="col-sm-12 pt-4 text-center lead" id="addLeadDiv">
             <!--button class="btn btn-secondary add-lead" id="addLead">Add lead</button-->
@@ -569,47 +591,55 @@ let leadUnlocked = `
                 <label class="other-social-media">Compagny</label>
             </div>
             <div class="col-sm-12">
-                <div class="row pt-2 pb-4">
-                    <div class="col-sm-2"><div class="company-logo-circle"></div></div>
-                    <div class="col-sm-5"><div class="company-title" id="companyName">Company name</div></div>
-                    <div class="col-sm-5"><a class="go-to-website" id="companyWebsite" target="_blank">Go to website</a></div>
+                <div class="d-flex pt-2 pb-4">
+                    <div class="p-2"><div class="company-logo-circle"></div></div>
+                    <div class="p-2"><div class="company-title" id="companyName">Company name</div></div>
+                    <div class="pt-2 pb-2"><a class="go-to-website" id="companyWebsite" target="_blank">Go to website</a></div>
                 </div>
             </div>
         </div>
         <div class="col-sm-12 company-details" id="companyDetails">
             <div class="row pt-2 pb-2">
-                <div class="col-sm-12">
-                    <label class="other-social-media">History</label>
+                <div class="row" id="historyBlock">
+                    <div class="col-sm-12">
+                        <label class="other-social-media">History</label>
+                    </div>
+                    <div class="col-sm-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="9.1846" height="9.1846" viewBox="0 0 24.167 24.167"><path data-name="Icon material-access-time" d="M12.071 0a12.083 12.083 0 1 0 12.095 12.083A12.077 12.077 0 0 0 12.071 0Zm.012 21.75a9.667 9.667 0 1 1 9.667-9.667 9.664 9.664 0 0 1-9.667 9.667Zm.6-15.708h-1.808v7.25l6.344 3.806.906-1.486-5.442-3.229Z" fill="#7e84a3"/></svg>
+                    </div>
+                    <div class="col-sm-11" id="foundedIn">
+                        <label class="social-media-icon">Founded in : 2004</label>
+                    </div>
                 </div>
-                <div class="col-sm-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="9.1846" height="9.1846" viewBox="0 0 24.167 24.167"><path data-name="Icon material-access-time" d="M12.071 0a12.083 12.083 0 1 0 12.095 12.083A12.077 12.077 0 0 0 12.071 0Zm.012 21.75a9.667 9.667 0 1 1 9.667-9.667 9.664 9.664 0 0 1-9.667 9.667Zm.6-15.708h-1.808v7.25l6.344 3.806.906-1.486-5.442-3.229Z" fill="#7e84a3"/></svg>
+                <div class="row" id="industryBlock">
+                    <div class="col-sm-12">
+                        <label class="other-social-media">Industry</label>
+                    </div>
+                    <div class="col-sm-12">
+                        <label class="social-media-icon" id="industry">Software</label>
+                    </div>
                 </div>
-                <div class="col-sm-11" id="foundedIn">
-                    <label class="social-media-icon">Founded in : 2004</label>
+                <div class="row" id="employeeBlock">
+                    <div class="col-sm-12">
+                        <label class="other-social-media">Employees</label>
+                    </div>
+                    <div class="col-sm-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="10.8414" height="7.5886" viewBox="0 0 28.529 19.97"><path data-name="Icon awesome-users" d="M4.279 8.558a2.853 2.853 0 1 0-2.853-2.853 2.856 2.856 0 0 0 2.853 2.853Zm19.971 0a2.853 2.853 0 1 0-2.85-2.853 2.856 2.856 0 0 0 2.85 2.853Zm1.426 1.429h-2.853a2.845 2.845 0 0 0-2.01.829 6.52 6.52 0 0 1 3.348 4.871H27.1a1.425 1.425 0 0 0 1.426-1.426v-1.423a2.856 2.856 0 0 0-2.85-2.851Zm-11.412 0a4.993 4.993 0 1 0-4.992-4.995 4.99 4.99 0 0 0 4.993 4.995Zm3.424 1.426h-.37a6.893 6.893 0 0 1-6.107 0h-.37a5.137 5.137 0 0 0-5.135 5.135v1.284a2.14 2.14 0 0 0 2.14 2.14h12.838a2.14 2.14 0 0 0 2.14-2.14v-1.286a5.137 5.137 0 0 0-5.136-5.135Zm-9.972-.6a2.845 2.845 0 0 0-2.01-.829H2.853A2.856 2.856 0 0 0 0 12.838v1.426a1.425 1.425 0 0 0 1.426 1.423h2.938a6.537 6.537 0 0 1 3.352-4.873Z" fill="#7e84a3"/></svg>
+                    </div>
+                    <div class="col-sm-11">
+                        <label class="social-media-icon" id="employeeCount">224</label>
+                    </div>
                 </div>
-                <div class="col-sm-12">
-                    <label class="other-social-media">Industry</label>
-                </div>
-                <div class="col-sm-12">
-                    <label class="social-media-icon" id="industry">Software</label>
-                </div>
-                <div class="col-sm-12">
-                    <label class="other-social-media">Employees</label>
-                </div>
-                <div class="col-sm-1">
-                <svg xmlns="http://www.w3.org/2000/svg" width="10.8414" height="7.5886" viewBox="0 0 28.529 19.97"><path data-name="Icon awesome-users" d="M4.279 8.558a2.853 2.853 0 1 0-2.853-2.853 2.856 2.856 0 0 0 2.853 2.853Zm19.971 0a2.853 2.853 0 1 0-2.85-2.853 2.856 2.856 0 0 0 2.85 2.853Zm1.426 1.429h-2.853a2.845 2.845 0 0 0-2.01.829 6.52 6.52 0 0 1 3.348 4.871H27.1a1.425 1.425 0 0 0 1.426-1.426v-1.423a2.856 2.856 0 0 0-2.85-2.851Zm-11.412 0a4.993 4.993 0 1 0-4.992-4.995 4.99 4.99 0 0 0 4.993 4.995Zm3.424 1.426h-.37a6.893 6.893 0 0 1-6.107 0h-.37a5.137 5.137 0 0 0-5.135 5.135v1.284a2.14 2.14 0 0 0 2.14 2.14h12.838a2.14 2.14 0 0 0 2.14-2.14v-1.286a5.137 5.137 0 0 0-5.136-5.135Zm-9.972-.6a2.845 2.845 0 0 0-2.01-.829H2.853A2.856 2.856 0 0 0 0 12.838v1.426a1.425 1.425 0 0 0 1.426 1.423h2.938a6.537 6.537 0 0 1 3.352-4.873Z" fill="#7e84a3"/></svg>
-                </div>
-                <div class="col-sm-11">
-                    <label class="social-media-icon" id="employeeCount">224</label>
-                </div>
-                <div class="col-sm-12">
-                    <label class="other-social-media">Headquarter</label>
-                </div>
-                <div class="col-sm-1">
-                <svg xmlns="http://www.w3.org/2000/svg" width="6.42846" height="9.18346" viewBox="0 0 16.917 24.167"><path id="Icon_material-location-on" data-name="Icon material-location-on" d="M14.5,2.417a8.452,8.452,0,0,0-8.458,8.458c0,6.344,8.458,15.708,8.458,15.708s8.458-9.365,8.458-15.708A8.452,8.452,0,0,0,14.5,2.417Zm0,11.479a3.021,3.021,0,1,1,3.021-3.021A3.022,3.022,0,0,1,14.5,13.9Z" transform="translate(-6.042 -2.417)" fill="#7e84a3"/></svg>
-                </div>
-                <div class="col-sm-11">
-                    <label class="social-media-icon" id="hq"></label>
+                <div class="row" id="headquarterBlock">
+                    <div class="col-sm-12">
+                        <label class="other-social-media">Headquarter</label>
+                    </div>
+                    <div class="col-sm-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="6.42846" height="9.18346" viewBox="0 0 16.917 24.167"><path id="Icon_material-location-on" data-name="Icon material-location-on" d="M14.5,2.417a8.452,8.452,0,0,0-8.458,8.458c0,6.344,8.458,15.708,8.458,15.708s8.458-9.365,8.458-15.708A8.452,8.452,0,0,0,14.5,2.417Zm0,11.479a3.021,3.021,0,1,1,3.021-3.021A3.022,3.022,0,0,1,14.5,13.9Z" transform="translate(-6.042 -2.417)" fill="#7e84a3"/></svg>
+                    </div>
+                    <div class="col-sm-11">
+                        <label class="social-media-icon" id="hq"></label>
+                    </div>
                 </div>
             </div>
         </div>
@@ -619,7 +649,8 @@ let leadUnlocked = `
     </div>
 </div>`;
 
-let html_back_content = `<div class="col-sm-12 pt-5 pb-2 text-center">
+let html_back_content = `
+<div class="col-sm-12 pt-5 pb-2 text-center">
 <img class="logoQ" src="${chrome.runtime.getURL('assets/icons/logoQ.png')}" />
 </div>
 <div class="col-sm-12 pt-3 pb-2 text-center">
@@ -637,18 +668,25 @@ loadPopup();
 
 function init() {
 
-    shadowRoot.innerHTML = '<style>.icon-head{position:fixed;top: 50%;left: 50%;z-index:99999999999;cursor:pointer;}</style>';
+    shadowRoot.innerHTML = '<style>.button-main{position:fixed;top: 50%;right: 10px;z-index:99999999999;}.icon-head{cursor:pointer;border-radius: 10px;}.widget-notification {color: rgb(255, 255, 255);width: 20px;height: 20px;font-weight: 700;display: flex;align-items: center;justify-content: center;font-size: 13px;position: relative;right:12px;top: 12px;background: red;border-radius: 50%;z-index:99999999999;}</style>';
+    let button = document.createElement('div');
+    button.className = "button-main";
+    button.id = "icon_button";
+    button.draggable = "true";
     let icon_head = document.createElement('img');
     icon_head.className = "icon-head";
     icon_head.id = "icon";
     icon_head.title = "SoContact";
-    icon_head.draggable = "true";
+    // icon_head.draggable = "true";
     icon_head.src = chrome.runtime.getURL("assets/icons/icon48.png");
-    icon_head.addEventListener('click', () => {
+    // icon_head.src = chrome.runtime.getURL("assets/img/logo.gif");
+    // icon_head.addEventListener('click', () => {
+    button.appendChild(icon_head);
+    button.addEventListener('click', () => {
         // shadowRoot.getElementById('popup').style.display = "block";
         $(shadowRoot.getElementById('popup')).fadeIn();
     })
-    shadowRoot.append(icon_head);
+    shadowRoot.append(button);
 }
 
 
@@ -668,12 +706,18 @@ function loadPopup() {
 
     let style = document.createElement('style');
     style.innerHTML = `@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&family=Poppins:wght@400;500;600;700&display=swap');/* @import url("https://use.typekit.net/nbf5bjj.css"); */
+    
+
+    .pt-26{
+        padding-top: 8rem!important;
+    }
+    
     *{
         font-family: 'poppins', sans-serif!important;
     }
     
     body{
-        font-size: 12px;
+        font-size: 16px;
         position: fixed;
         top: 0;
         right: 0;
@@ -687,42 +731,54 @@ function loadPopup() {
         opacity: 1;
         backdrop-filter: blur(25px);
         -webkit-backdrop-filter: blur(25px);
-        width: 285px;
-        min-height: 616.6108px;
+        max-width: 400px;
+        width: 100%;
+        min-height: 95vh;
         padding:10px;
         display:none;
     }
+    .login-container{
+        overflow:auto;
+        min-height: 300px;
+        min-width: 400px;
+    }
     h2{
         text-align: left;
-        font: normal normal bold 25.08px/30.78px Poppins;
+        font: normal normal bold 36px/51px Poppins;
+        /*font: normal normal bold 25.08px/30.78px Poppins;*/
         letter-spacing: 0.53px;
         color: #121C31;
         opacity: 1;
     }
 
     .form-control{
+        border-radius: 8px;
+        font: normal normal normal 15px/18.82px Poppins;
+        height:50px;
+        padding:0 2rem;
         background: #FCFEFF 0% 0% no-repeat padding-box;
-        border-radius: 4px;
         border: none;
         text-align: left;
-        font: normal normal normal 10px/14.82px Poppins;
         letter-spacing: 0px;
         color: #121C31!important;
         opacity: 1;
-        height:34.2px;
+ 
+    }
+    .p-6{
+        padding: 4rem;
     }
     .form-control-sm{
         background: #FFFFFF 0% 0% no-repeat padding-box;
         border: 1px solid #B4C5D3;
         border-radius: 2px;
         text-align: left;
-        font: normal normal 500 8.36px/12.54px Poppins;
+        font: normal normal 500 12px/16px Poppins;
         letter-spacing: 0.16px;
         color: #131523;
     }
     .label-sm{
         text-align: left;
-        font: normal normal normal 6.84px/11.4px Poppins;
+        font: normal normal normal 11px/17px Poppins;
         letter-spacing: 0px;
         color: #7E84A3;
     }
@@ -742,18 +798,18 @@ function loadPopup() {
         
     }
     .form-check-input[type=checkbox] {
-        border-radius: 4px;
         opacity: 1;
-        width: 21px;
-        height: 20px;
         outline: none;
         border: 1px solid #B4C5D3;
+        border-radius: 5px;
+        width: 25px;
+        height: 24px;
     }
 
     .form-check-label{
-        padding: 0 0 0 10px;
+        padding: 0 0 0 12px;
+        font: normal normal normal 15.4px/28.48px Poppins;
         text-align: left;
-        font: normal normal normal 11.4px/24.48px Poppins;
         letter-spacing: 0px;
         color: #121C31;
         opacity: 1;
@@ -761,48 +817,54 @@ function loadPopup() {
 
     .logo{
         vertical-align: middle;
-        width: 105.1536px;
-        height: 105.1536px;
+        width: 154px;
+        height: auto;
         box-shadow: 0px 1px 10px #b4c5d346;
-        border-radius: 12px;
+        border-radius: 30%;
     }
     .logo-small{
         vertical-align: middle;
-        width: 35.8112px;
-        height: 35.8112px;
         box-shadow: 0px 1px 10px #b4c5d346;
-        border-radius: 4px;
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+    }
+
+    .logoQ{
+        width:75.1632px;
+        height:75.1632px;
     }
 
     .coin-container{
-        padding: 5px;
+        padding: 10px 0;
         background: #FF7400 0% 0% no-repeat padding-box;
         border-radius: 4px;
         opacity: 1;
-        text-align: left;
-        font: normal normal bold 11.78px/15.54px Muli;
+        text-align: center;
+        font: normal normal bold 14px/15.54px Muli;
         letter-spacing: 0px;
         color: #FFFFFF;
-        width: 90px;
-        margin-left: 18px;
+        width: 150px;
+        margin-left: 80px;
     }
     .coin-container img{
-        width: 11.02px;
+        width: 16px;
         height: auto;
     }
 
     .avatar{
-        width: auto;
-        height: 24.32px;
+        width: 35px;
+        height: 35px;
         border-radius: 50%;
         cursor:pointer;
     }
 
     .avatar.big{
-        width: 60px;
-        height: 60px;
+        width: 80px;
+        height: 80px;
         cursor:none;
     }
+
 
   
     /* The Close Button */
@@ -823,19 +885,20 @@ function loadPopup() {
         display: inline;
     }
    
+ 
     .btn-primary{
         background: #FF7400 0% 0% no-repeat padding-box;
         border-radius: 7px;
         opacity: 1;
         text-align: center;
-        font: normal normal 600 11.4px/15.58px Noto Sans;
         letter-spacing: 0px;
         color: #FFFFFF;
         opacity: 1;
         outline: none;
         border: none;
         width: 100%;
-        height:34.2px;
+        font: normal normal 600 14.4px/17.58px Noto Sans;
+        height:45px;
     }
     .btn-primary:hover{
         background-color: #F99600;
@@ -847,6 +910,11 @@ function loadPopup() {
         border:none;
     }
 
+    .add-to-waiting-list {
+        width: 175.9px;
+        height: 40.22px;
+    }
+
     .btn-secondary{
         background: #0058FF 0% 0% no-repeat padding-box;
         box-shadow: 0px 3px 11px #0058FF4A;
@@ -854,7 +922,7 @@ function loadPopup() {
         width: 80%;
         outline: none;
         border: none;
-        font: normal normal 600 10px/11px Muli;
+        font: normal normal 600 12px/13px Muli;
         letter-spacing: 0px;
         color: #FFFFFF;
     }
@@ -874,31 +942,34 @@ function loadPopup() {
     }
 
     .add-lead{
-        height: 26.22px;
-        width: 93.48px;
-        font: normal normal 600 9.5px/10.26px Muli;
+        height: 40px;
+        width: 130px;
+        font: normal normal 400 12.5px/13.26px Muli;
         letter-spacing: 0px;
     }
     .save-lead{
-        height: 26.22px;
-        width: 137.56px;
-        font: normal normal 600 9.5px/10.26px Muli;
+        height: 40px;
+        width: 185px;
+        font: normal normal 400 12.5px/13.26px Muli;
         letter-spacing: 0px;
     }
-
+    .social-media-icon svg{
+        width:14.4114px;
+        height:14.4114px;
+    }
     .btn-unlock{
-        width: 125.4px;
-        height: 26.22px;
+        width: 172.4px;
+        height: 35.22px;
+        font: normal normal 600 11.5px/11.26px Muli;
+        background-position-x: 35px;
+        background-size: 10px;
+        background-position-y: 9px;
         border: 1px solid #0058FF;
         border-radius: 2px;
-        font: normal normal 600 9.5px/11.26px Muli;
         letter-spacing: 0px;
         color: #0058FF;
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath fill='%230058FF' d='M144 144v48H304V144c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192V144C80 64.5 144.5 0 224 0s144 64.5 144 144v48h16c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V256c0-35.3 28.7-64 64-64H80z'/%3E%3C/svg%3E");
         background-repeat: no-repeat;
-        background-position-x: 20px;
-        background-size: 8px;
-        background-position-y: 7px;
         background-clip: padding-box;
         background-color: #F4FAFF;
         text-align: center;
@@ -909,15 +980,15 @@ function loadPopup() {
         background: #F4FAFF 0% 0% no-repeat padding-box;
         border: 1px solid #0058FF;
         border-radius: 4px;
-        font: normal normal 600 9.5px/10.26px Muli;
+        font: normal normal 500 13.5px/14.26px Muli;
         letter-spacing: 0px;
         color: #0058FF;
         width: 100%;
-        height: 26.22px;
+        height: 40px;
     }
 
     .btn-back svg{
-        width: 8px;
+        width: 16px;
         cursor: pointer;
     }
 
@@ -930,7 +1001,8 @@ function loadPopup() {
     }
 
     a{
-        font: normal normal 600 11.4px/17.48px Poppins;
+        font: normal normal 600 15px/21px Poppins;
+
         letter-spacing: 0px;
         color: #0058FF;
         opacity: 1;
@@ -938,7 +1010,7 @@ function loadPopup() {
     }
     .lbl-new-user{
         text-align: left;
-        font: normal normal normal 12.54px/18.24px Poppins;
+        font: normal normal normal 18px/33px Poppins;
         letter-spacing: -0.17px;
         color: #121C31;
         opacity: 1;
@@ -966,17 +1038,18 @@ function loadPopup() {
         border-radius: 2px;
         background-color: #505050;
     }
-  
-
+    .padding-contact-found{
+        padding:6rem 1.5rem;
+    }
     .account > label{
         text-align: left;
-        font: normal normal normal 8px/18.76px Poppins;
+        font: normal normal normal 15px/38px Poppins;
         letter-spacing: 0px;
         color: #7E84A3;
     }
     .account h6{
         text-align: left;
-        font: normal normal 800 11px/8.02px Gilroy;
+        font: normal normal 800 18px/15.02px Gilroy;
         letter-spacing: 0.72px;
         color: #121C31;
         opacity: 1;
@@ -990,7 +1063,7 @@ function loadPopup() {
     }
     .account p{
         text-align: left;
-        font: normal normal normal 9.46px/6.88px Poppins;
+        font: normal normal normal 14px/12px Poppins;
         letter-spacing: 0.12px;
         color: #131523;
     }
@@ -1006,13 +1079,13 @@ function loadPopup() {
         text-align: left;
         letter-spacing: 0.2px;
         color: #121C31;
-        padding:16px 12px;
-        margin:6px 0;
-        height: 52.44px;
+        padding: 28px 12px;
+        margin: 6px 0;
+        height: 80px;
     }
     ul.options>li>label{
         margin-left:15px;
-        font: normal normal 500 10.64px/10.64px Poppins;
+        font: normal normal 500 18px/18px Poppins;
     }
     ul.options-lg>li{
         background: #F4FAFF 0% 0% no-repeat padding-box;
@@ -1044,28 +1117,28 @@ function loadPopup() {
         background: transparent linear-gradient(90deg, #00BDF50F 0%, #F4FAFF 100%) 0% 0% no-repeat padding-box!important;
     }
     .account-bottom-text{
-        font: normal normal 500 9.12px/13.3px Poppins;
+        font: normal normal 500 16px/20px Poppins;
         text-align: left;
         letter-spacing: 0.17px;
         color: #171725;
     }
     .account-bottom-text .highlight{
-        font: normal normal normal 9.12px/13.3px Poppins;
+        font: normal normal bold 16px/20px Poppins;
         color: #FF7400;
     }
-    .btn-logout{
+    .btn-logout {
         border: 1px solid #D7DBEC;
         border-radius: 4px;
         text-align: left;
-        font: normal normal 600 9.6px/4.56px Noto Sans;
+        font: normal normal 400 14px/10px Noto Sans;
         letter-spacing: 0px;
         color: #7E84A3;
-        padding: 12px 40px;
+        padding: 16px 70px;
         background: transparent;
     }
     .btn-small{
-        width:23.94px;
-        height:12.92px;
+        width: 26.94px;
+        height: 15.92px;
         border: 1px solid #D7DBEC;
         border-radius: 2px;
         background-color:#FFFFFF;
@@ -1079,15 +1152,23 @@ function loadPopup() {
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' style='width:8.36px;height:8.36px' viewBox='0 0 24 24'%3E%3Cpath fill='%23B4C5D3' d='M23,10C23,8.89 22.1,8 21,8H14.68L15.64,3.43C15.66,3.33 15.67,3.22 15.67,3.11C15.67,2.7 15.5,2.32 15.23,2.05L14.17,1L7.59,7.58C7.22,7.95 7,8.45 7,9V19A2,2 0 0,0 9,21H18C18.83,21 19.54,20.5 19.84,19.78L22.86,12.73C22.95,12.5 23,12.26 23,12V10M1,21H5V9H1V21Z' /%3E%3C/svg%3E");
         background-repeat: no-repeat no-repeat;
         background-position: center center;
-        right: 60px;
-        position: absolute;
+        // right: 60px;
+        // position: absolute;
+    }
+    .btn-thumbs-up:hover{
+        background-color: #0058FF;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' style='width:8.36px;height:8.36px' viewBox='0 0 24 24'%3E%3Cpath fill='%23FFFFFF' d='M23,10C23,8.89 22.1,8 21,8H14.68L15.64,3.43C15.66,3.33 15.67,3.22 15.67,3.11C15.67,2.7 15.5,2.32 15.23,2.05L14.17,1L7.59,7.58C7.22,7.95 7,8.45 7,9V19A2,2 0 0,0 9,21H18C18.83,21 19.54,20.5 19.84,19.78L22.86,12.73C22.95,12.5 23,12.26 23,12V10M1,21H5V9H1V21Z' /%3E%3C/svg%3E");
     }
     .btn-thumbs-down{
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' style='width:8.36px;height:8.36px' viewBox='0 0 24 24'%3E%3Cpath fill='%23B4C5D3' d='M19,15H23V3H19M15,3H6C5.17,3 4.46,3.5 4.16,4.22L1.14,11.27C1.05,11.5 1,11.74 1,12V14A2,2 0 0,0 3,16H9.31L8.36,20.57C8.34,20.67 8.33,20.77 8.33,20.88C8.33,21.3 8.5,21.67 8.77,21.94L9.83,23L16.41,16.41C16.78,16.05 17,15.55 17,15V5C17,3.89 16.1,3 15,3Z' /%3E%3C/svg%3E");
         background-repeat: no-repeat no-repeat;
         background-position: center center;
-        right: 30px;
-        position: absolute;
+        // right: 30px;
+        // position: absolute;
+    }
+    .btn-thumbs-down:hover{
+        background-color: #0058FF;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' style='width:8.36px;height:8.36px' viewBox='0 0 24 24'%3E%3Cpath fill='%23FFFFFF' d='M19,15H23V3H19M15,3H6C5.17,3 4.46,3.5 4.16,4.22L1.14,11.27C1.05,11.5 1,11.74 1,12V14A2,2 0 0,0 3,16H9.31L8.36,20.57C8.34,20.67 8.33,20.77 8.33,20.88C8.33,21.3 8.5,21.67 8.77,21.94L9.83,23L16.41,16.41C16.78,16.05 17,15.55 17,15V5C17,3.89 16.1,3 15,3Z' /%3E%3C/svg%3E");
     }
     .round-small-button{
         width:20.52px;
@@ -1095,14 +1176,21 @@ function loadPopup() {
         border-radius:50%;
     }
     .btn-edit{
-        background: #0058FF 0% 0% no-repeat padding-box;
+        background: #FFFFFF 0% 0% no-repeat padding-box;
         box-shadow: 0px 3px 26px #0058FF4A;
         border: 1px solid #0058FF;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='150.003 246.71 12.927 12.296'%3E%3Cg data-name='Icon feather-edit-3'%3E%3Cpath d='M156.467 259.007h6.463' stroke-linejoin='round' stroke-linecap='round' stroke='%230058FF' fill='transparent' data-name='Trac%C3%A9 25'%3E%3C/path%3E%3Cpath d='M159.698 247.157a1.524 1.524 0 0 1 2.155 2.154l-8.977 8.978-2.873.718.718-2.873 8.977-8.977Z' stroke-linejoin='round' stroke-linecap='round' stroke='%230058FF' fill='transparent' data-name='Trac%C3%A9 26'%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
+        background-repeat: no-repeat no-repeat;
+        background-position: center center;
+        // right: 60px;
+        // position: absolute;
+    }
+    .btn-edit:hover{
+        background: #0058FF 0% 0% no-repeat padding-box;
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='150.003 246.71 12.927 12.296'%3E%3Cg data-name='Icon feather-edit-3'%3E%3Cpath d='M156.467 259.007h6.463' stroke-linejoin='round' stroke-linecap='round' stroke='%23b4c5d3' fill='transparent' data-name='Trac%C3%A9 25'%3E%3C/path%3E%3Cpath d='M159.698 247.157a1.524 1.524 0 0 1 2.155 2.154l-8.977 8.978-2.873.718.718-2.873 8.977-8.977Z' stroke-linejoin='round' stroke-linecap='round' stroke='%23ffffff' fill='transparent' data-name='Trac%C3%A9 26'%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
         background-repeat: no-repeat no-repeat;
         background-position: center center;
-        right: 60px;
-        position: absolute;
+      
     }
     .btn-refresh{
         background: #FFFFFF 0% 0% no-repeat padding-box;
@@ -1110,8 +1198,14 @@ function loadPopup() {
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%230058FF' viewBox='0 0 512 512'%3E%3Cpath d='M105.1 202.6c7.7-21.8 20.2-42.3 37.8-59.8c62.5-62.5 163.8-62.5 226.3 0L386.3 160H336c-17.7 0-32 14.3-32 32s14.3 32 32 32H463.5c0 0 0 0 0 0h.4c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32s-32 14.3-32 32v51.2L414.4 97.6c-87.5-87.5-229.3-87.5-316.8 0C73.2 122 55.6 150.7 44.8 181.4c-5.9 16.7 2.9 34.9 19.5 40.8s34.9-2.9 40.8-19.5zM39 289.3c-5 1.5-9.8 4.2-13.7 8.2c-4 4-6.7 8.8-8.1 14c-.3 1.2-.6 2.5-.8 3.8c-.3 1.7-.4 3.4-.4 5.1V448c0 17.7 14.3 32 32 32s32-14.3 32-32V396.9l17.6 17.5 0 0c87.5 87.4 229.3 87.4 316.7 0c24.4-24.4 42.1-53.1 52.9-83.7c5.9-16.7-2.9-34.9-19.5-40.8s-34.9 2.9-40.8 19.5c-7.7 21.8-20.2 42.3-37.8 59.8c-62.5 62.5-163.8 62.5-226.3 0l-.1-.1L125.6 352H176c17.7 0 32-14.3 32-32s-14.3-32-32-32H48.4c-1.6 0-3.2 .1-4.8 .3s-3.1 .5-4.6 1z'/%3E%3C/svg%3E");
         background-repeat: no-repeat no-repeat;
         background-position: center center;
-        right: 30px;
-        position: absolute;
+        // right: 30px;
+        // position: absolute;
+    }
+    .btn-refresh:hover{
+        background: #0058FF 0% 0% no-repeat padding-box;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23FFFFFF' viewBox='0 0 512 512'%3E%3Cpath d='M105.1 202.6c7.7-21.8 20.2-42.3 37.8-59.8c62.5-62.5 163.8-62.5 226.3 0L386.3 160H336c-17.7 0-32 14.3-32 32s14.3 32 32 32H463.5c0 0 0 0 0 0h.4c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32s-32 14.3-32 32v51.2L414.4 97.6c-87.5-87.5-229.3-87.5-316.8 0C73.2 122 55.6 150.7 44.8 181.4c-5.9 16.7 2.9 34.9 19.5 40.8s34.9-2.9 40.8-19.5zM39 289.3c-5 1.5-9.8 4.2-13.7 8.2c-4 4-6.7 8.8-8.1 14c-.3 1.2-.6 2.5-.8 3.8c-.3 1.7-.4 3.4-.4 5.1V448c0 17.7 14.3 32 32 32s32-14.3 32-32V396.9l17.6 17.5 0 0c87.5 87.4 229.3 87.4 316.7 0c24.4-24.4 42.1-53.1 52.9-83.7c5.9-16.7-2.9-34.9-19.5-40.8s-34.9 2.9-40.8 19.5c-7.7 21.8-20.2 42.3-37.8 59.8c-62.5 62.5-163.8 62.5-226.3 0l-.1-.1L125.6 352H176c17.7 0 32-14.3 32-32s-14.3-32-32-32H48.4c-1.6 0-3.2 .1-4.8 .3s-3.1 .5-4.6 1z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat no-repeat;
+        background-position: center center;
     }
     .btn-export{
         width:42.24px;
@@ -1122,6 +1216,9 @@ function loadPopup() {
         letter-spacing: 0px;
         color: #FF7400;  
     }
+    .leadAddMsg{
+        display:none;
+    }
     .account-icons{
         display: flex;
         align-items: center;
@@ -1130,31 +1227,35 @@ function loadPopup() {
     }
     .drop-down{
         display:none;
-        position: fixed;
-        width: 265px;
+        position: fixed;     
+        width: 95%;
         background: #F4FAFF 0% 0% no-repeat padding-box;
         z-index:9999;
+        padding: 0 0 15px 0;
+        overflow-y: auto;
+        overflow-x: hidden;
+        max-height: 90%
     }
     .drop-down input[type=checkbox], .lead input[type=checkbox]{
-        width:16.34px;
-        height:16.34px;
+        width:22px;
+        height:22px;
     }
     .drop-down .form-check-label{
-        font: normal normal bold 9.5px/9.5px Muli;
+        font: normal normal 600 15px/16px Muli;
         letter-spacing: 0px;
         color: #121C31;
     }
     .lead .form-check-label{
-        font: normal normal bold 9.5px/23.5px Muli;
+        font: normal normal bold 12px/20px Muli;
         letter-spacing: 0px;
         color: #121C31;
     }
     .drop-down .form-check-label>.sub{
-        font: normal normal 600 9.5px/9.5px Muli;
+        font: normal normal 300 15px/15px Muli;
     }
     .title-contact-search{
         text-align: center;
-        font: normal normal bold 10.64px/15.96px Poppins;
+        font: normal normal bold 14.64px/19.96px Poppins;
         letter-spacing: 0.2px;
         color: #FF7400
     }
@@ -1166,34 +1267,32 @@ function loadPopup() {
     
     .white-container .msg{
         text-align: center;
-        font: normal normal bold 11.4px/17.48px Poppins;
+        font: normal normal bold 16.4px/22.48px Poppins;
         letter-spacing: 0.21px;
         color: #121C31;
     }
     .white-container .sub-msg{
         text-align: center;
-        font: normal normal normal 6.84px/10.26px Poppins;
+        font: normal normal normal 12.84px/16.26px Poppins;
         letter-spacing: 0.13px;
         color: #121C31;
     }
-    .add-to-waiting-list{
-        width:134.9px;
-        height:26.22px;
-    }
+   
     .dotted-box{
         border: 1px dashed #B4C5D3;
         border-radius: 2px;
         margin: 4px 0;
+        padding:1vw;
     }
     .dotted-box label:not(.account>label){
-        font: normal normal bold 7.22px/12.16px Poppins;
+        font: normal normal bold 10.22px/15.16px Poppins;
         letter-spacing: 0px;
         color: #7E84A3;
         margin-left: 4px;
     }
     .dotted-box svg{
-        width: 7px;
-        height: 7px;
+        width: 10px;
+        height: 10px;
         fill: #7E84A3;
     }
     .dotted-box ul{
@@ -1202,7 +1301,7 @@ function loadPopup() {
     }
     .dotted-box ul li{
         text-align: left;
-        font: normal normal bold 8.36px/12.54px Poppins;
+        font: normal normal bold 10.36px/15.54px Poppins;
         letter-spacing: 0.16px;
         color: #0058FF;
     }
@@ -1211,20 +1310,17 @@ function loadPopup() {
         padding-left:10px
     }
     .dotted-box ul li svg{
-        width: 7px;
-        height: 7px;
+        width: 10px;
+        height: 10px;
         fill: #0058FF;
     }
-    .logoQ{
-        width:51.1632px;
-        height:51.1632px;
-    }
+ 
     .company-logo-circle{
         background: #0058FF 0% 0% no-repeat padding-box;
         border: 1px solid #0058FF19;
         border-radius:50%;
-        width:25.08px;
-        height:25.08px;
+        width:35px;
+        height:35px;
     }
     .company-logo-circle-lg{
         width:45.22px;
@@ -1235,34 +1331,32 @@ function loadPopup() {
         padding: 16px 0 0 10px;
     }
     .company-title{
+        font: normal normal 600 12px/36.54px Poppins;
         text-align: left;
-        font: normal normal 600 8.36px/25.54px Poppins;
         letter-spacing: 0.16px;
         color: #131523;
+        width: 190px;
     }
     .go-to-website{
+        font: normal normal 600 10.22px/28.02px Poppins;
         text-align: right;
-        font: normal normal 600 7.22px/25.02px Poppins;
         letter-spacing: 0.14px;
         color: #00BDF5;
          margin-left: 35px;
     }
     .other-social-media{
+        font: normal normal normal 10.22px/15.16px Poppins;
         text-align: left;
-        font: normal normal normal 7.22px/12.16px Poppins;
         letter-spacing: 0px;
         color: #7E84A3;
     }
     .social-media-icon{
+        font: normal normal 500 11.36px/15.54px Poppins;
         text-align: left;
-        font: normal normal 500 8.36px/12.54px Poppins;
         letter-spacing: 0.16px;
         color: #131523;
     }
-    .social-media-icon svg{
-        width:11.4114px;
-        height:11.4114px;
-    }
+   
 
     ul.social-media-icon{
         list-style:none;
@@ -1281,23 +1375,21 @@ function loadPopup() {
         border-radius: 3px;
         opacity: 1;
         backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-
         text-align: center;
-        font: normal normal normal 6.84px/10.26px Poppins;
+        font: normal normal normal 12px/18px Poppins;
         letter-spacing: 0.13px;
         color: #121C31;
         padding: 17.4px 0;
     }
     .intro-container h2{
         text-align: center;
-        font: normal normal bold 13.68px/20.9px Poppins;
+        font: normal normal bold 20px/27px Poppins;
         letter-spacing: 0.26px;
         color: #0058FF;
     }
     .intro-container h3{
         text-align: center;
-        font: normal normal bold 11.4px/17.48px Poppins;
+        font: normal normal bold 14px/20px Poppins;
         letter-spacing: 0.21px;
         color: #121C31;
     }
@@ -1315,15 +1407,15 @@ function loadPopup() {
     }
 
     .app-container-title{
-        font: normal normal bold 9.12px/22.16px Poppins;
+        font: normal normal bold 14px/27px Poppins;
         letter-spacing: 0px;
         color: #FF7400;
     }
     .notification-container{
         display: none;
         position: absolute;
-        top: 20px;
-        min-width: 200px;
+        top: 30px;
+        min-width: 260px;
         background-color: #fff;
         box-shadow: 0px 1px 24px #b4c5d346;
         border-radius: 2px;
@@ -1357,6 +1449,40 @@ function loadPopup() {
     .account-icons svg{
         cursor:pointer;
     }
+    .app-container-main{
+        overflow-y: auto;
+        max-height: 85vh;
+    }
+    .app-container-main::-webkit-scrollbar {
+        height: 6px;
+        width: 6px;
+        //background-color: #D4D4D4;
+        background-color: transparent;
+    }
+    .app-container-main::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    }   
+    .app-container-main::-webkit-scrollbar-thumb {
+        border-radius: 2px;
+        background-color: #FF7400;
+    }
+    .tick-mark {
+        position: relative;
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        background-color: #FF7400;
+        border-radius: 6px;
+    }
+    .no-credit-alert{
+        background-color: #FF7400;
+        position: absolute;
+        padding: 14px;
+        width: 99%;
+        text-align: center;
+        display:none;
+    }
+    
     /* line loading */
     .load-wrapp {
         float: left;

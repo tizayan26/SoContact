@@ -1,0 +1,98 @@
+{
+  "extName": {
+    "message": "SoContact : Get Phone Numbers and Emails",
+    "description": ""
+  },
+  "extDesc": {
+    "message": "Get your prospects’ phone number and email instantly from LinkedIn. Convert leads with and automate your prospecting.",
+    "description": ""
+  },
+  "greetingHeading": {
+    "message": "Bonjour ",
+    "description": ""
+  },
+  "greetingSub": {
+    "message": "Bienvenue, nous sommes heureux de vous revoir ;)",
+    "description": ""
+  },
+  "instructionHeading": {
+    "message": "Accéder à une page de profil",
+    "description": ""
+  },
+  "instructionSub": {
+    "message": "Pas de soucis, vous pouvez l'ajouter à votre liste d'attente, visiter n'importe quel profil LinkedIn et cliquer sur le plugin so contact pour obtenir des informations de contact.",
+    "description": ""
+  },
+  "cr": {
+    "message": "crédits",
+    "description": ""
+  },
+  "ac": {
+    "message": "Compte",
+    "description": ""
+  },
+  "email": {
+    "message": "E-mail",
+    "description": ""
+  },
+  "autoopenHead": {
+    "message": "Widget ouvert automatiquement ?",
+    "description": ""
+  },
+  "autoopenSub": {
+    "message": "Quand socontact trouve des informations de contact",
+    "description": ""
+  },
+  "autosvHeading": {
+    "message": "Enregistrement automatique du prospect ?",
+    "description": ""
+  },
+  "autosvSub": {
+    "message": "Quand socontact trouve un nouveau lead",
+    "description": ""
+  },
+  "atm": {
+    "message": "Ajouter un membre aux équipes",
+    "description": ""
+  },
+  "anl": {
+    "message": "Ajouter de nouveaux prospects",
+    "description": ""
+  },
+  "integration": {
+    "message": "Intégrations",
+    "description": ""
+  },
+  "inv": {
+    "message": "Invitez et gagnez des crédits",
+    "description": ""
+  },
+  "help": {
+    "message": "Centre d'aide",
+    "description": ""
+  },
+  "fc": {
+    "message": "Crédits gratuits",
+    "description": ""
+  },
+  "lo": {
+    "message": "Se déconnecter",
+    "description": ""
+  },
+  "cf": {
+    "message": "Contact trouvé",
+    "description": ""
+  },
+  "cfHeading":{
+    "message":"Il semble que nous n'ayons pas assez d'informations sur ce contact… pour le moment ;)",
+    "description": ""
+  },
+  "cfSub":{
+    "message":"Pas de soucis, vous pouvez l'ajouter à votre liste d'attente,<br> Nous vous enverrons une notification lorsque le contact sera mis à jour",
+    "description": ""
+  },
+  "cfBtn":{
+    "message":"Ajouter à la liste d'attente",
+    "description": ""
+  }  
+}
