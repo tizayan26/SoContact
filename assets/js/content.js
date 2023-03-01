@@ -879,26 +879,29 @@ function editLead(res){
         backDetails(res)
         event.target.style.display = "none";
     })
-    shadowRoot.getElementById('saveLead').addEventListener('click', () => {
+    // shadowRoot.getElementById('saveLead').addEventListener('click', () => {
+    $(shadowRoot.getElementById('saveLead')).off('click').on('click', () => {
+    
         chrome.runtime.sendMessage(
             {
                 call: "updateProfileData",
                 link: linkedin_url,
                 full_name: shadowRoot.getElementById('name').value,
-                last_name: shadowRoot.getElementById('lastName').value,
+                // last_name: shadowRoot.getElementById('lastName').value,
                 title: shadowRoot.getElementById('job').value,
                 address: shadowRoot.getElementById('location').value,
                 description: shadowRoot.getElementById('description').value
             }, function(response) {
             var res = JSON.parse(response);
             console.log(res);
+            alert('test');
             if(res.dynamowebs_status == "success"){
                 $(shadowRoot.getElementById('editStatusMsg')).fadeIn();
                 setTimeout(() => {
                     $(shadowRoot.getElementById('editStatusMsg')).fadeOut();
                 }, 1000);
             }
-        })
+        });
     })
 }
 

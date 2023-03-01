@@ -1,4 +1,4 @@
-let lang = "en";
+let lang = "fr";
 let profile_image;
 let profile_name;
 let loading_flag = true;
@@ -236,7 +236,7 @@ function changeLangNoProfile(lang){
       $(shadowRoot.getElementById('instheading')).text(msg.instructionHeading.message);
       $(shadowRoot.getElementById('instsub')).text(msg.instructionSub.message);
       $(shadowRoot.getElementById('cr')).text(msg.cr.message);
-      $(shadowRoot.getElementById('acc')).text(msg.acc.message);
+      // $(shadowRoot.getElementById('acc')).text(msg.acc.message);
   });
 }
 function changeLangDropdown(lang){
