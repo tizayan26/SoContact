@@ -100,7 +100,7 @@
     "description": ""
   },    
   "alBtn":{
-    "message":"Add lead",
+    "message":"Ajouter un prospect",
     "description": ""
   },    
   "pn":{
@@ -150,5 +150,37 @@
   "companyWebsite":{
     "message":"Aller sur un site Internet",
     "description": ""
-  }                  
+  },
+  "scd":{
+    "message":"Afficher les détails de l'entreprise",
+    "description": ""
+  },        
+  "hcd":{
+    "message":"Masquer les détails de l'entreprise",
+    "description": ""
+  },
+  "lblLeadAdded":{
+    "message":"Prospect ajouté",
+    "description": ""
+  },
+  "editTitle":{
+    "message":"Modifier le contact",
+    "description": ""
+  },        
+  "lblName":{
+    "message":"Nom",
+    "description": ""
+  },        
+  "lblJob":{
+    "message":"Emploi",
+    "description": ""
+  } ,      
+  "lblLoc":{
+    "message":"Emplacement",
+    "description": ""
+  },        
+  "lblDesc":{
+    "message":"Descriptions",
+    "description": ""
+  }                                
 }

@@ -126,7 +126,7 @@ let contact_detail_api = `
         </div>
     </div>
     <div id="companyBlock" class="col-sm-12">
-        <div class="d-flex pt-4 pb-4">
+        <div class="d-flex pt-4 pb-4 justify-content-between">
             <div class="p-2"><div class="company-logo-circle"></div></div>
             <div class="p-2"><div class="company-title" id="companyName" style="overflow:hidden;max-width:196px;">Company name</div></div>
             <div class="pt-2 pb-2"><a class="go-to-website" id="companyWebsite" target="_blank">Go to website</a></div>
@@ -364,12 +364,12 @@ let leadEditHTML = `
         <div class="col-sm-1 ">
         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="150.003 246.71 12.927 12.296"><g data-name="Icon feather-edit-3"><path d="M156.467 259.007h6.463" stroke-linejoin="round" stroke-linecap="round" stroke="#FF7400" fill="transparent" data-name="Tracé 25"></path><path d="M159.698 247.157a1.524 1.524 0 0 1 2.155 2.154l-8.977 8.978-2.873.718.718-2.873 8.977-8.977Z" stroke-linejoin="round" stroke-linecap="round" stroke="#FF7400" fill="transparent" data-name="Tracé 26"></path></g></svg>
         </div>
-        <div class="col-sm-10 app-container-title">
+        <div class="col-sm-10 app-container-title" id="editTitle">
             Edit contact
         </div>
         <div class="col-sm-12">
             <div class="form-group">
-                <label class="label-sm">Name</label>
+                <label class="label-sm" id="lblName">Name</label>
                 <input type="text" class="form-control form-control-sm" id="name" placeholder="Enter name">
             </div>
             <!--div class="form-group">
@@ -377,15 +377,15 @@ let leadEditHTML = `
                 <input type="text" class="form-control form-control-sm" id="lastName" placeholder="Last Name">
             </div-->
             <div class="form-group">
-                <label class="label-sm">Job</label>
+                <label class="label-sm" id="lblJob">Job</label>
                 <input type="text" class="form-control form-control-sm" id="job" placeholder="Enter Job">
             </div>
             <div class="form-group">
-                <label class="label-sm">Loction</label>
+                <label class="label-sm" id="lblLoc">Loction</label>
                 <input type="text" class="form-control form-control-sm" id="location" placeholder="Enter Location">
             </div>
             <div class="form-group">
-                <label class="label-sm">Descriptions</label>
+                <label class="label-sm" id="lblDesc">Descriptions</label>
                 <textarea class="form-control form-control-sm" id="description" rows="6"></textarea>
             </div>
         </div>
@@ -1348,7 +1348,7 @@ function loadPopup() {
         text-align: right;
         letter-spacing: 0.14px;
         color: #00BDF5;
-         margin-left: 35px;
+        /*margin-left: 35px;*/
     }
     .other-social-media{
         font: normal normal normal 10.22px/15.16px Poppins;

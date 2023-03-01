@@ -278,6 +278,7 @@ function changeLangContactLockedDetail(lang){
     $(shadowRoot.getElementById('proML')).text(msg.proML.message);
     $(shadowRoot.getElementById('perML')).text(msg.perML.message);
     $(shadowRoot.getElementById('osm')).text(msg.osm.message);
+    $(shadowRoot.getElementById('companyWebsite')).text(msg.companyWebsite.message);
   });
 }
 
@@ -292,6 +293,21 @@ function changeLangContactDetail(lang){
     $(shadowRoot.getElementById('lblIndustry')).text(msg.lblIndustry.message);
     $(shadowRoot.getElementById('lblEmployees')).text(msg.lblEmployees.message);
     $(shadowRoot.getElementById('lblHq')).text(msg.lblHq.message);
+    $(shadowRoot.getElementById('lblCom')).text(msg.lblCom.message);
+    $(shadowRoot.getElementById('companyWebsite')).text(msg.companyWebsite.message);
+    $(shadowRoot.getElementById('companyDetailsToggle')).text(msg.scd.message);
+  });
+}
+
+function changeLangEditLead(lang){
+  chrome.runtime.sendMessage({call: "changeLang", url: chrome.runtime.getURL("_locales/" + lang + "/messages.json")}, function(response) {
+    let msg = JSON.parse(response);
+    $(shadowRoot.getElementById('editTitle')).text(msg.editTitle.message);
+    $(shadowRoot.getElementById('lblName')).text(msg.lblName.message);
+    $(shadowRoot.getElementById('lblJob')).text(msg.lblJob.message);
+    $(shadowRoot.getElementById('lblLoc')).text(msg.lblLoc.message);
+    $(shadowRoot.getElementById('lblDesc')).text(msg.lblDesc.message);
+    $(shadowRoot.getElementById('sm')).text(msg.sm.message);
     $(shadowRoot.getElementById('lblCom')).text(msg.lblCom.message);
     $(shadowRoot.getElementById('companyWebsite')).text(msg.companyWebsite.message);
   });

@@ -204,7 +204,7 @@ function clickedLeadAdd(res){
         <div class="tick-mark">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16"><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/></svg>
         </div>
-        <label class="form-check-label">Lead Added</label>
+        <label class="form-check-label" id="lblLeadAdded">Lead Added</label>
     </div>
     <div class="d-flex justify-content-between">
         <div class="p-2">
@@ -218,6 +218,10 @@ function clickedLeadAdd(res){
         </div>
     </div>
         `;
+    chrome.runtime.sendMessage({call: "changeLang", url: chrome.runtime.getURL("_locales/" + lang + "/messages.json")}, function(response) {
+        let msg = JSON.parse(response);
+        $(shadowRoot.getElementById('lblLeadAdded')).text(msg.lblLeadAdded.message);
+    });
     $(shadowRoot.getElementById('leadAddMsg')).fadeIn(800);
     setTimeout(function(){
         $(shadowRoot.getElementById('leadAddMsg')).fadeOut(800);
@@ -449,11 +453,19 @@ const getProfileDetailsFromAPI = () => {
                             // shadowRoot.getElementById('companyDetailsToggle').addEventListener('click', () => {
                             $(shadowRoot.getElementById('companyDetailsToggle')).off('click').on('click', () => {
                                 $(shadowRoot.getElementById('companyDetails')).slideToggle(800);
-                                if (shadowRoot.getElementById('companyDetailsToggle').innerText === "Show company details") {
-                                    shadowRoot.getElementById('companyDetailsToggle').innerText = "Hide company details";
-                                }else{
-                                    shadowRoot.getElementById('companyDetailsToggle').innerText = "Show company details";
-                                }
+                                // if (shadowRoot.getElementById('companyDetailsToggle').innerText === "Show company details") {
+                                //     shadowRoot.getElementById('companyDetailsToggle').innerText = "Hide company details";
+                                // }else{
+                                //     shadowRoot.getElementById('companyDetailsToggle').innerText = "Show company details";
+                                // }
+                                chrome.runtime.sendMessage({call: "changeLang", url: chrome.runtime.getURL("_locales/" + lang + "/messages.json")}, function(response) {
+                                    let msg = JSON.parse(response);
+                                    if (shadowRoot.getElementById('companyDetailsToggle').innerText === msg.scd.message) {
+                                        shadowRoot.getElementById('companyDetailsToggle').innerText = msg.hcd.message;
+                                    }else{
+                                        shadowRoot.getElementById('companyDetailsToggle').innerText = msg.scd.message;
+                                    }
+                                });
                             })
                         }else{
                             shadowRoot.getElementById('companyBlock').style.display = "none"
@@ -478,7 +490,7 @@ const getProfileDetailsFromAPI = () => {
                                     <div class="tick-mark">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16"><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/></svg>
                                     </div>
-                                    <label class="form-check-label">Lead Added</label>
+                                    <label class="form-check-label" id="lblLeadAdded">Lead Added</label>
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <div class="p-2">
@@ -492,6 +504,10 @@ const getProfileDetailsFromAPI = () => {
                                     </div>
                                 </div>
                                 `;
+                                chrome.runtime.sendMessage({call: "changeLang", url: chrome.runtime.getURL("_locales/" + lang + "/messages.json")}, function(response) {
+                                    let msg = JSON.parse(response);
+                                    $(shadowRoot.getElementById('lblLeadAdded')).text(msg.lblLeadAdded.message);
+                                });
                                 // shadowRoot.getElementById('editLead').addEventListener('click', () => {
                                 $(shadowRoot.getElementById('editLead')).off('click').on('click', () => {
                                     editLead(profile_detail_res);
@@ -515,6 +531,13 @@ const getProfileDetailsFromAPI = () => {
                                 // shadowRoot.getElementById('addLead').addEventListener('click', () => {
                                 $(shadowRoot.getElementById('addLead')).off('click').on('click', () => {
                                     clickedLeadAdd(profile_detail_res);
+                                });
+                                chrome.runtime.sendMessage({call: "changeLang", url: chrome.runtime.getURL("_locales/" + lang + "/messages.json")}, function(response) {
+                                    let msg = JSON.parse(response);
+                                    shadowRoot.getElementById('addLeadDiv').innerHTML = `<button class="btn btn-secondary add-lead" id="addLead">${msg.alBtn.message}</button>`;
+                                    $(shadowRoot.getElementById('addLead')).off('click').on('click', () => {
+                                        clickedLeadAdd(profile_detail_res);
+                                    });
                                 });
                             }
                         });
@@ -722,11 +745,19 @@ function backDetails(res){
         // shadowRoot.getElementById('companyDetailsToggle').addEventListener('click', () => {
         $(shadowRoot.getElementById('companyDetailsToggle')).off('click').on('click', () => {
             $(shadowRoot.getElementById('companyDetails')).slideToggle(800);
-            if (shadowRoot.getElementById('companyDetailsToggle').innerText === "Show company details") {
-                shadowRoot.getElementById('companyDetailsToggle').innerText = "Hide company details";
-            }else{
-                shadowRoot.getElementById('companyDetailsToggle').innerText = "Show company details";
-            }
+            // if (shadowRoot.getElementById('companyDetailsToggle').innerText === "Show company details") {
+            //     shadowRoot.getElementById('companyDetailsToggle').innerText = "Hide company details";
+            // }else{
+            //     shadowRoot.getElementById('companyDetailsToggle').innerText = "Show company details";
+            // }
+            chrome.runtime.sendMessage({call: "changeLang", url: chrome.runtime.getURL("_locales/" + lang + "/messages.json")}, function(response) {
+                let msg = JSON.parse(response);
+                if (shadowRoot.getElementById('companyDetailsToggle').innerText === msg.scd.message) {
+                    shadowRoot.getElementById('companyDetailsToggle').innerText = msg.hcd.message;
+                }else{
+                    shadowRoot.getElementById('companyDetailsToggle').innerText = msg.scd.message;
+                }
+            });
         })
     }else{
         shadowRoot.getElementById('companyBlock').style.display = "none"
@@ -776,7 +807,7 @@ function backDetails(res){
         <div class="tick-mark">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16"><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/></svg>
         </div>
-        <label class="form-check-label">Lead Added</label>
+        <label class="form-check-label" id="lblLeadAdded">Lead Added</label>
     </div>
     <div class="d-flex justify-content-between">
         <div class="p-2">
@@ -790,6 +821,11 @@ function backDetails(res){
         </div>
     </div>
     `;
+
+    chrome.runtime.sendMessage({call: "changeLang", url: chrome.runtime.getURL("_locales/" + lang + "/messages.json")}, function(response) {
+        let msg = JSON.parse(response);
+        $(shadowRoot.getElementById('lblLeadAdded')).text(msg.lblLeadAdded.message);
+    });
     chrome.runtime.sendMessage({call: "getAllList"}, function(response) {
         lists = JSON.parse(response);
         lists.list.forEach((list) =>{
@@ -829,6 +865,7 @@ function backDetails(res){
 
 function editLead(res){
     shadowRoot.getElementById('app_container').innerHTML = leadEditHTML;
+    changeLangEditLead(lang);
     var linkedin_url = location.origin+location.pathname;
     chrome.runtime.sendMessage({call: "getProfileData", link: linkedin_url}, function(response) {
         var res = JSON.parse(response);
@@ -854,7 +891,7 @@ function editLead(res){
         shadowRoot.getElementById('companyBlock').style.display = "none";
     }
     // if(typeof res.otherSocialMedia === "object" && res.otherSocialMedia.length > 0){
-        if(res.otherSocialMedia.facebook !== null || res.otherSocialMedia.linkedin !== null || res.otherSocialMedia.instagram !== null || res.otherSocialMedia.twitter !== null){
+    if(res.otherSocialMedia.facebook !== null || res.otherSocialMedia.linkedin !== null || res.otherSocialMedia.instagram !== null || res.otherSocialMedia.twitter !== null){
         let ul_socialMedia = shadowRoot.getElementById('social_media');
         ul_socialMedia.innerHTML = null;
         var li = document.createElement('li');
@@ -884,7 +921,8 @@ function editLead(res){
     }
     // shadowRoot.getElementById('btnBack').addEventListener('click', (event) => {
     $(shadowRoot.getElementById('btnBack')).off('click').on('click', (event) => {
-        backDetails(res)
+        backDetails(res);
+        changeLangContactDetail(lang);
         event.target.style.display = "none";
     })
     // shadowRoot.getElementById('saveLead').addEventListener('click', () => {
@@ -1048,8 +1086,16 @@ function unlockLead(){
                         if(res.dynamowebs_status=="success"){
                             shadowRoot.getElementById('app_container').innerHTML = leadUnlocked;
                             shadowRoot.getElementById('addLeadDiv').innerHTML = '<button class="btn btn-secondary add-lead" id="addLead">Add lead</button>';
-                            shadowRoot.getElementById('addLead').addEventListener('click', () => {
+                            // shadowRoot.getElementById('addLead').addEventListener('click', () => {
+                            $(shadowRoot.getElementById('addLead')).off('click').on('click', () => {
                                 clickedLeadAdd(res);
+                            });
+                            chrome.runtime.sendMessage({call: "changeLang", url: chrome.runtime.getURL("_locales/" + lang + "/messages.json")}, function(response) {
+                                let msg = JSON.parse(response);
+                                shadowRoot.getElementById('addLeadDiv').innerHTML = `<button class="btn btn-secondary add-lead" id="addLead">${msg.alBtn.message}</button>`;
+                                $(shadowRoot.getElementById('addLead')).off('click').on('click', () => {
+                                    clickedLeadAdd(res);
+                                });
                             });
                             setTimeout(function(){
                                 // if(document.querySelectorAll('img[class="pv-top-card-profile-picture__image pv-top-card-profile-picture__image--show ember-view"]').length > 0){
@@ -1177,11 +1223,19 @@ function unlockLead(){
                                     // shadowRoot.getElementById('companyDetailsToggle').addEventListener('click', () => {
                                     $(shadowRoot.getElementById('companyDetailsToggle')).off('click').on('click', () => {
                                         $(shadowRoot.getElementById('companyDetails')).slideToggle(800);
-                                        if (shadowRoot.getElementById('companyDetailsToggle').innerText === "Show company details") {
-                                            shadowRoot.getElementById('companyDetailsToggle').innerText = "Hide company details";
-                                        }else{
-                                            shadowRoot.getElementById('companyDetailsToggle').innerText = "Show company details";
-                                        }
+                                        // if (shadowRoot.getElementById('companyDetailsToggle').innerText === "Show company details") {
+                                        //     shadowRoot.getElementById('companyDetailsToggle').innerText = "Hide company details";
+                                        // }else{
+                                        //     shadowRoot.getElementById('companyDetailsToggle').innerText = "Show company details";
+                                        // }
+                                        chrome.runtime.sendMessage({call: "changeLang", url: chrome.runtime.getURL("_locales/" + lang + "/messages.json")}, function(response) {
+                                            let msg = JSON.parse(response);
+                                            if (shadowRoot.getElementById('companyDetailsToggle').innerText === msg.scd.message) {
+                                                shadowRoot.getElementById('companyDetailsToggle').innerText = msg.hcd.message;
+                                            }else{
+                                                shadowRoot.getElementById('companyDetailsToggle').innerText = msg.scd.message;
+                                            }
+                                        });
                                     })
                                 }else{
                                     shadowRoot.getElementById('companyBlock').style.display = "none"
@@ -1431,7 +1485,7 @@ function refresh(){
                     <div class="tick-mark">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16"><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/></svg>
                     </div>
-                    <label class="form-check-label">Lead Added</label>
+                    <label class="form-check-label" id="lblLeadAdded">Lead Added</label>
                 </div>
                 <div class="d-flex justify-content-between">
                     <div class="p-2">
@@ -1445,7 +1499,10 @@ function refresh(){
                     </div>
                 </div>
                     `;
-              
+                chrome.runtime.sendMessage({call: "changeLang", url: chrome.runtime.getURL("_locales/" + lang + "/messages.json")}, function(response) {
+                    let msg = JSON.parse(response);
+                    $(shadowRoot.getElementById('lblLeadAdded')).text(msg.lblLeadAdded.message);
+                });
                 setTimeout(function(){
                     // shadowRoot.getElementById('editLead').addEventListener('click', () => {
                     $(shadowRoot.getElementById('editLead')).off('click').on('click', () => {
@@ -1561,11 +1618,19 @@ function refresh(){
                         // shadowRoot.getElementById('companyDetailsToggle').addEventListener('click', () => {
                         $(shadowRoot.getElementById('companyDetailsToggle')).off('click').on('click', () => {
                             $(shadowRoot.getElementById('companyDetails')).slideToggle(800);
-                            if (shadowRoot.getElementById('companyDetailsToggle').innerText === "Show company details") {
-                                shadowRoot.getElementById('companyDetailsToggle').innerText = "Hide company details";
-                            }else{
-                                shadowRoot.getElementById('companyDetailsToggle').innerText = "Show company details";
-                            }
+                            // if (shadowRoot.getElementById('companyDetailsToggle').innerText === "Show company details") {
+                            //     shadowRoot.getElementById('companyDetailsToggle').innerText = "Hide company details";
+                            // }else{
+                            //     shadowRoot.getElementById('companyDetailsToggle').innerText = "Show company details";
+                            // }
+                            chrome.runtime.sendMessage({call: "changeLang", url: chrome.runtime.getURL("_locales/" + lang + "/messages.json")}, function(response) {
+                                let msg = JSON.parse(response);
+                                if (shadowRoot.getElementById('companyDetailsToggle').innerText === msg.scd.message) {
+                                    shadowRoot.getElementById('companyDetailsToggle').innerText = msg.hcd.message;
+                                }else{
+                                    shadowRoot.getElementById('companyDetailsToggle').innerText = msg.scd.message;
+                                }
+                            });
                         })
                     }else{
                         shadowRoot.getElementById('companyBlock').style.display = "none"

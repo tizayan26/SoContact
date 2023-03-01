@@ -150,5 +150,37 @@
   "companyWebsite":{
     "message":"Go to website",
     "description": ""
+  },        
+  "scd":{
+    "message":"Show company details",
+    "description": ""
+  },        
+  "hcd":{
+    "message":"Hide company details",
+    "description": ""
+  },
+  "lblLeadAdded":{
+    "message":"Lead Added",
+    "description": ""
+  },       
+  "editTitle":{
+    "message":"Edit contact",
+    "description": ""
+  },        
+  "lblName":{
+    "message":"Name",
+    "description": ""
+  },        
+  "lblJob":{
+    "message":"Job",
+    "description": ""
+  } ,      
+  "lblLoc":{
+    "message":"Location",
+    "description": ""
+  },        
+  "lblDesc":{
+    "message":"Descriptions",
+    "description": ""
   }        
 }
