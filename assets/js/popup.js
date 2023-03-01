@@ -69,7 +69,7 @@ let contact_detail_api = `
         <div class="d-flex dotted-box">
             <div class="p-4"><img class="avatar big" id="linkedInProfileImg" src="${chrome.runtime.getURL('assets/icons/spinner.gif')}" /></div> <!--https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80-->
             <div class="p-4 account">
-                <label>Contact Found</label><h6 id="linkedInProfileName"> <div class="load-2">
+                <label id="cf">Contact Found</label><h6 id="linkedInProfileName"> <div class="load-2">
                 <div class="line"></div>
                 <div class="line"></div>
                 <div class="line"></div>
@@ -79,7 +79,7 @@ let contact_detail_api = `
     </div>
     <div id="phoneNumbersBlock" class="col-sm-12">
         <div class="row dotted-box pt-2 pb-2">
-            <div class="col-sm-12"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"/></svg><label> PHONE NUMBERS</label></div>
+            <div class="col-sm-12"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"/></svg><label id="pn"> PHONE NUMBERS</label></div>
             <div class="col-sm-12">
                 <ul id="phoneNumbers">
                     <!--li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M288.1 0l86.5 164 182.7 31.6L428 328.5 454.4 512 288.1 430.2 121.7 512l26.4-183.5L18.9 195.6 201.5 164 288.1 0z"/></svg> +33 00 ** ** ** ** </li-->
@@ -95,7 +95,7 @@ let contact_detail_api = `
     </div>
     <div id="proEmailsBlock" class="col-sm-12">
         <div class="row dotted-box pt-2 pb-2">
-            <div class="col-sm-12"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg><label> PROFESSIONAL MAILS</label></div>
+            <div class="col-sm-12"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg><label id="proML"> PROFESSIONAL MAILS</label></div>
             <div class="col-sm-12">
                 <ul id="proEmails">
                     <!--li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M288.1 0l86.5 164 182.7 31.6L428 328.5 454.4 512 288.1 430.2 121.7 512l26.4-183.5L18.9 195.6 201.5 164 288.1 0z"/></svg> *******@********.com</li-->
@@ -111,7 +111,7 @@ let contact_detail_api = `
     </div>
     <div id="perEmailsBlock" class="col-sm-12">
         <div class="row dotted-box pt-2 pb-2">
-            <div class="col-sm-12"><svg width="48pt" height="48pt" version="1.0" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0 48) scale(.1 -.1)"><path d="m12 408c-17-17-17-319 0-336s439-17 456 0 17 319 0 336-439 17-456 0zm188-68c11-11 20-29 20-40 0-26-34-60-60-60s-60 34-60 60 34 60 60 60c11 0 29-9 40-20zm240-40v-60h-80-80v60 60h80 80v-60zm-200-118c22-10 36-26 38-39 3-23 2-23-118-23s-121 0-118 23c4 29 61 57 118 57 25 0 61-8 80-18z"/><path d="m300 331c0-5 14-19 30-31l30-21 30 21c17 12 30 26 30 31 0 6-13 1-30-11l-30-21-30 21c-16 12-30 17-30 11z"/></g></svg><label> PERSONAL MAIL</label></div>
+            <div class="col-sm-12"><svg width="48pt" height="48pt" version="1.0" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0 48) scale(.1 -.1)"><path d="m12 408c-17-17-17-319 0-336s439-17 456 0 17 319 0 336-439 17-456 0zm188-68c11-11 20-29 20-40 0-26-34-60-60-60s-60 34-60 60 34 60 60 60c11 0 29-9 40-20zm240-40v-60h-80-80v60 60h80 80v-60zm-200-118c22-10 36-26 38-39 3-23 2-23-118-23s-121 0-118 23c4 29 61 57 118 57 25 0 61-8 80-18z"/><path d="m300 331c0-5 14-19 30-31l30-21 30 21c17 12 30 26 30 31 0 6-13 1-30-11l-30-21-30 21c-16 12-30 17-30 11z"/></g></svg><label id="perML"> PERSONAL MAIL</label></div>
             <div class="col-sm-12">
                 <ul id="perEmails">
                     <!--li><svg width="48pt" height="48pt" version="1.0" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0 48) scale(.1 -.1)"><path d="m12 408c-17-17-17-319 0-336s439-17 456 0 17 319 0 336-439 17-456 0zm188-68c11-11 20-29 20-40 0-26-34-60-60-60s-60 34-60 60 34 60 60 60c11 0 29-9 40-20zm240-40v-60h-80-80v60 60h80 80v-60zm-200-118c22-10 36-26 38-39 3-23 2-23-118-23s-121 0-118 23c4 29 61 57 118 57 25 0 61-8 80-18z"/><path d="m300 331c0-5 14-19 30-31l30-21 30 21c17 12 30 26 30 31 0 6-13 1-30-11l-30-21-30 21c-16 12-30 17-30 11z"/></g></svg> *******@********.com</li-->
@@ -134,7 +134,7 @@ let contact_detail_api = `
     </div>
     <div id="socialMediaBlock">
         <div class="col-sm-12 p-4 pt-0 pb-0">
-            <label class="other-social-media">Other social media</label>
+            <label class="other-social-media" id="osm">Other social media</label>
         </div>
         <div class="col-sm-12 p-4">
             <div class="row social-media-icon">
@@ -184,7 +184,7 @@ let contactSearchHTML = `
 <img class="logoQ" src="${chrome.runtime.getURL('assets/icons/logoQ.png')}" />
 </div>
 <div class="col-sm-12 pt-3 pb-2 text-center">
-    <h4 class="title-contact-search">Contact Search</h4>
+    <h4 class="title-contact-search" id="conSrh">Contact Search</h4>
 </div>
 <div class="col-sm-12" id="unlockbuttoncontainer">
 </div>
@@ -391,7 +391,7 @@ let leadEditHTML = `
         </div>
         <div id="companyBlock">
             <div class="col-sm-12">
-                <label class="other-social-media">Compagny</label>
+                <label class="other-social-media" id="lblCom">Compagny</label>
             </div>
             <div class="col-sm-12">
                 <div class="row pt-2 pb-4">
@@ -409,7 +409,7 @@ let leadEditHTML = `
             <button class="btn-add">Add +</button>
         </div-->
         <div id="socialMediaBlock" class="col-sm-12">
-            <label class="other-social-media">Social medias</label>
+            <label class="other-social-media" id="sm">Social medias</label>
             <div class="col-sm-12 pb-4">
                 <ul id="social_media" class="social-media-icon">
                     <li>
@@ -511,7 +511,7 @@ let leadUnlocked = `
         </div>
         <div id="phoneNumbersBlock" class="col-sm-12 pt-4">
             <div class="row dotted-box pt-2 pb-2">
-                <div class="col-sm-12"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"/></svg><label> PHONE NUMBERS</label></div>
+                <div class="col-sm-12"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"/></svg><label id="pn"> PHONE NUMBERS</label></div>
                 <div class="col-sm-12">
                     <ul id="phoneNumbers">
                         <!--li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M288.1 0l86.5 164 182.7 31.6L428 328.5 454.4 512 288.1 430.2 121.7 512l26.4-183.5L18.9 195.6 201.5 164 288.1 0z"/></svg> +33 00 ** ** ** ** </li-->
@@ -559,7 +559,7 @@ let leadUnlocked = `
             </div>
         </div>
         <div id="socialMediaBlock" class="col-sm-12">
-            <label class="other-social-media">Social medias</label>
+            <label class="other-social-media" id="sm">Social medias</label>
             <div class="col-sm-12 pb-4">
                 <!--div class="row social-media-icon">
                     <div class="col-sm-1"><svg xmlns="http://www.w3.org/2000/svg" width="30.033" height="30.033" viewBox="0 0 30.033 30.033">
@@ -588,7 +588,7 @@ let leadUnlocked = `
         </div>
         <div id="companyBlock">
             <div class="col-sm-12">
-                <label class="other-social-media">Compagny</label>
+                <label class="other-social-media" id="lblCom">Compagny</label>
             </div>
             <div class="col-sm-12">
                 <div class="d-flex pt-2 pb-4">
@@ -602,18 +602,20 @@ let leadUnlocked = `
             <div class="row pt-2 pb-2">
                 <div class="row" id="historyBlock">
                     <div class="col-sm-12">
-                        <label class="other-social-media">History</label>
+                        <label class="other-social-media" id="lblHistory">History</label>
                     </div>
-                    <div class="col-sm-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="9.1846" height="9.1846" viewBox="0 0 24.167 24.167"><path data-name="Icon material-access-time" d="M12.071 0a12.083 12.083 0 1 0 12.095 12.083A12.077 12.077 0 0 0 12.071 0Zm.012 21.75a9.667 9.667 0 1 1 9.667-9.667 9.664 9.664 0 0 1-9.667 9.667Zm.6-15.708h-1.808v7.25l6.344 3.806.906-1.486-5.442-3.229Z" fill="#7e84a3"/></svg>
-                    </div>
-                    <div class="col-sm-11" id="foundedIn">
-                        <label class="social-media-icon">Founded in : 2004</label>
+                    <div class="d-flex">
+                        <div class="px-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="9.1846" height="9.1846" viewBox="0 0 24.167 24.167"><path data-name="Icon material-access-time" d="M12.071 0a12.083 12.083 0 1 0 12.095 12.083A12.077 12.077 0 0 0 12.071 0Zm.012 21.75a9.667 9.667 0 1 1 9.667-9.667 9.664 9.664 0 0 1-9.667 9.667Zm.6-15.708h-1.808v7.25l6.344 3.806.906-1.486-5.442-3.229Z" fill="#7e84a3"/></svg>
+                        </div>
+                        <div id="foundedIn">
+                            <label class="social-media-icon">Founded in : 2004</label>
+                        </div>
                     </div>
                 </div>
                 <div class="row" id="industryBlock">
                     <div class="col-sm-12">
-                        <label class="other-social-media">Industry</label>
+                        <label class="other-social-media" id="lblIndustry">Industry</label>
                     </div>
                     <div class="col-sm-12">
                         <label class="social-media-icon" id="industry">Software</label>
@@ -621,24 +623,28 @@ let leadUnlocked = `
                 </div>
                 <div class="row" id="employeeBlock">
                     <div class="col-sm-12">
-                        <label class="other-social-media">Employees</label>
+                        <label class="other-social-media" id="lblEmployees">Employees</label>
                     </div>
-                    <div class="col-sm-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="10.8414" height="7.5886" viewBox="0 0 28.529 19.97"><path data-name="Icon awesome-users" d="M4.279 8.558a2.853 2.853 0 1 0-2.853-2.853 2.856 2.856 0 0 0 2.853 2.853Zm19.971 0a2.853 2.853 0 1 0-2.85-2.853 2.856 2.856 0 0 0 2.85 2.853Zm1.426 1.429h-2.853a2.845 2.845 0 0 0-2.01.829 6.52 6.52 0 0 1 3.348 4.871H27.1a1.425 1.425 0 0 0 1.426-1.426v-1.423a2.856 2.856 0 0 0-2.85-2.851Zm-11.412 0a4.993 4.993 0 1 0-4.992-4.995 4.99 4.99 0 0 0 4.993 4.995Zm3.424 1.426h-.37a6.893 6.893 0 0 1-6.107 0h-.37a5.137 5.137 0 0 0-5.135 5.135v1.284a2.14 2.14 0 0 0 2.14 2.14h12.838a2.14 2.14 0 0 0 2.14-2.14v-1.286a5.137 5.137 0 0 0-5.136-5.135Zm-9.972-.6a2.845 2.845 0 0 0-2.01-.829H2.853A2.856 2.856 0 0 0 0 12.838v1.426a1.425 1.425 0 0 0 1.426 1.423h2.938a6.537 6.537 0 0 1 3.352-4.873Z" fill="#7e84a3"/></svg>
-                    </div>
-                    <div class="col-sm-11">
-                        <label class="social-media-icon" id="employeeCount">224</label>
+                    <div class="d-flex">
+                        <div class="px-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10.8414" height="7.5886" viewBox="0 0 28.529 19.97"><path data-name="Icon awesome-users" d="M4.279 8.558a2.853 2.853 0 1 0-2.853-2.853 2.856 2.856 0 0 0 2.853 2.853Zm19.971 0a2.853 2.853 0 1 0-2.85-2.853 2.856 2.856 0 0 0 2.85 2.853Zm1.426 1.429h-2.853a2.845 2.845 0 0 0-2.01.829 6.52 6.52 0 0 1 3.348 4.871H27.1a1.425 1.425 0 0 0 1.426-1.426v-1.423a2.856 2.856 0 0 0-2.85-2.851Zm-11.412 0a4.993 4.993 0 1 0-4.992-4.995 4.99 4.99 0 0 0 4.993 4.995Zm3.424 1.426h-.37a6.893 6.893 0 0 1-6.107 0h-.37a5.137 5.137 0 0 0-5.135 5.135v1.284a2.14 2.14 0 0 0 2.14 2.14h12.838a2.14 2.14 0 0 0 2.14-2.14v-1.286a5.137 5.137 0 0 0-5.136-5.135Zm-9.972-.6a2.845 2.845 0 0 0-2.01-.829H2.853A2.856 2.856 0 0 0 0 12.838v1.426a1.425 1.425 0 0 0 1.426 1.423h2.938a6.537 6.537 0 0 1 3.352-4.873Z" fill="#7e84a3"/></svg>
+                        </div>
+                        <div>
+                            <label class="social-media-icon" id="employeeCount">224</label>
+                        </div>
                     </div>
                 </div>
                 <div class="row" id="headquarterBlock">
                     <div class="col-sm-12">
-                        <label class="other-social-media">Headquarter</label>
+                        <label class="other-social-media" id="lblHq">Headquarter</label>
                     </div>
-                    <div class="col-sm-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="6.42846" height="9.18346" viewBox="0 0 16.917 24.167"><path id="Icon_material-location-on" data-name="Icon material-location-on" d="M14.5,2.417a8.452,8.452,0,0,0-8.458,8.458c0,6.344,8.458,15.708,8.458,15.708s8.458-9.365,8.458-15.708A8.452,8.452,0,0,0,14.5,2.417Zm0,11.479a3.021,3.021,0,1,1,3.021-3.021A3.022,3.022,0,0,1,14.5,13.9Z" transform="translate(-6.042 -2.417)" fill="#7e84a3"/></svg>
-                    </div>
-                    <div class="col-sm-11">
-                        <label class="social-media-icon" id="hq"></label>
+                    <div class="d-flex">
+                        <div class="px-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="6.42846" height="9.18346" viewBox="0 0 16.917 24.167"><path id="Icon_material-location-on" data-name="Icon material-location-on" d="M14.5,2.417a8.452,8.452,0,0,0-8.458,8.458c0,6.344,8.458,15.708,8.458,15.708s8.458-9.365,8.458-15.708A8.452,8.452,0,0,0,14.5,2.417Zm0,11.479a3.021,3.021,0,1,1,3.021-3.021A3.022,3.022,0,0,1,14.5,13.9Z" transform="translate(-6.042 -2.417)" fill="#7e84a3"/></svg>
+                        </div>
+                        <div>
+                            <label class="social-media-icon" id="hq"></label>
+                        </div>
                     </div>
                 </div>
             </div>

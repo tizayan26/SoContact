@@ -173,6 +173,7 @@ function scrapeLinkedInProfile(type){
 function onUrlChange() {
     if(shadowRoot.getElementById('badge')!==null){
         shadowRoot.getElementById('badge').remove();
+        // chrome.runtime.sendMessage({call: "setBadge", count: ''});
     }
     shadowRoot.getElementById('icon').src = chrome.runtime.getURL("assets/img/logo.gif");
     getUserInfoFromAPI();
@@ -257,9 +258,12 @@ const getProfileDetailsFromAPI = () => {
                 })
                 if(res.masked){
                     shadowRoot.getElementById('contact_found_detail').innerHTML = contact_detail_api;
+                    changeLangContactLockedDetail(lang);
                 }else{
                     shadowRoot.getElementById('app_container').innerHTML = leadUnlocked;
+                    changeLangContactDetail(lang);
                 }
+               
                 setTimeout(function(){
                     let count = res.phoneNumbers.length + res.personalEmail.length + res.professionalEmail.length;
                    
@@ -550,6 +554,10 @@ const getProfileDetailsFromAPI = () => {
                             shadowRoot.getElementById('companyBlock').style.display = "none";
                         }
                         shadowRoot.getElementById('unlockbuttoncontainer').innerHTML = '<button class="btn-unlock" id="btnUnlock">Unlock details</button>';
+                        chrome.runtime.sendMessage({call: "changeLang", url: chrome.runtime.getURL("_locales/" + lang + "/messages.json")}, function(response) {
+                            let msg = JSON.parse(response);
+                            shadowRoot.getElementById('unlockbuttoncontainer').innerHTML = `<button class="btn-unlock" id="btnUnlock" `+((lang == 'en')? '' : 'style="background-position-x: 10px;"')+`>${msg.udBtn.message}</button>`;
+                        });
                         shadowRoot.getElementById('btnUnlock').addEventListener('click', ()=> {unlockLead()});
                     }
                 },1000)
@@ -1392,6 +1400,7 @@ function getCredits(){
 // $(document).ready(init());
 
 function init(){
+    // chrome.runtime.sendMessage({call: "setBadge", count: ''});
     chrome.storage.local.get(['loggedin'], function(result) {
         if(result.loggedin){
             var pattern = /linkedin.com\/in/;

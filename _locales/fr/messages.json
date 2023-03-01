@@ -94,5 +94,61 @@
   "cfBtn":{
     "message":"Ajouter à la liste d'attente",
     "description": ""
-  }  
+  }, 
+  "udBtn":{
+    "message":"Déverrouiller les détails",
+    "description": ""
+  },    
+  "alBtn":{
+    "message":"Add lead",
+    "description": ""
+  },    
+  "pn":{
+    "message":"LES NUMÉROS DE TÉLÉPHONE",
+    "description": ""
+  },
+  "proML":{
+    "message":"COURRIERS PROFESSIONNELS",
+    "description": ""
+  },    
+  "perML":{
+    "message":"COURRIER PERSONNEL",
+    "description": ""
+  },
+  "osm":{
+    "message":"Autres réseaux sociaux",
+    "description": ""
+  },
+  "sm":{
+    "message":"Réseaux sociaux",
+    "description": ""
+  },
+  "conSrh":{
+    "message":"Recherche de contacts",
+    "description": ""
+  },              
+  "lblHistory":{
+    "message":"Histoire",
+    "description": ""
+  },  
+  "lblIndustry":{
+    "message":"Industrie",
+    "description": ""
+  },             
+  "lblEmployees":{
+    "message":"Employés",
+    "description": ""
+  },        
+  "lblHq":{
+    "message":"Siège social",
+    "description": ""
+  },
+  "lblCom":{
+    "message":"Entreprise",
+    "description": ""
+  },
+  "companyWebsite":{
+    "message":"Aller sur un site Internet",
+    "description": ""
+  }                  
 }

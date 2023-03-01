@@ -94,5 +94,61 @@
   "cfBtn":{
     "message":"Add to waiting list",
     "description": ""
-  }  
+  },
+  "udBtn":{
+    "message":"Unlock details",
+    "description": ""
+  },    
+  "alBtn":{
+    "message":"Add lead",
+    "description": ""
+  },    
+  "pn":{
+    "message":"PHONE NUMBERS",
+    "description": ""
+  },    
+  "proML":{
+    "message":"PROFESSIONAL MAILS",
+    "description": ""
+  },    
+  "perML":{
+    "message":"PERSONAL MAIL",
+    "description": ""
+  },   
+  "osm":{
+    "message":"Other social media",
+    "description": ""
+  },        
+  "sm":{
+    "message":"Social medias",
+    "description": ""
+  },        
+  "conSrh":{
+    "message":"Contact Search",
+    "description": ""
+  },
+  "lblHistory":{
+    "message":"History",
+    "description": ""
+  },  
+  "lblIndustry":{
+    "message":"Industry",
+    "description": ""
+  },             
+  "lblEmployees":{
+    "message":"Employees",
+    "description": ""
+  },        
+  "lblHq":{
+    "message":"Headquarter",
+    "description": ""
+  },        
+  "lblCom":{
+    "message":"Company",
+    "description": ""
+  },        
+  "companyWebsite":{
+    "message":"Go to website",
+    "description": ""
+  }        
 }
