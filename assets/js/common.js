@@ -1,4 +1,4 @@
-let lang = "fr";
+let lang = "en";
 let profile_image;
 let profile_name;
 let loading_flag = true;
@@ -250,8 +250,7 @@ function changeLangDropdown(lang){
       $(shadowRoot.getElementById('asSub')).text(msg.autosvSub.message);
       $(shadowRoot.getElementById('atm')).text(msg.atm.message);
       $(shadowRoot.getElementById('anl')).text(msg.atm.message);
-      $(shadowRoot.getElementById('itgrn')).text(msg.atm.message);
-      $(shadowRoot.getElementById('inv')).text(msg.inv.message);
+      $(shadowRoot.getElementById('itgrn')).text(msg.integration.message);
       $(shadowRoot.getElementById('inv')).text(msg.inv.message);
       $(shadowRoot.getElementById('hc')).text(msg.help.message);
       $(shadowRoot.getElementById('fc')).text(msg.fc.message);
