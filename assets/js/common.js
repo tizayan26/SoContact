@@ -1,4 +1,4 @@
-let lang = "fr";
+let lang = "en";
 let profile_image;
 let profile_name;
 let loading_flag = true;

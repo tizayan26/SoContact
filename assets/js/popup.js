@@ -372,10 +372,10 @@ let leadEditHTML = `
                 <label class="label-sm">Name</label>
                 <input type="text" class="form-control form-control-sm" id="name" placeholder="Enter name">
             </div>
-            <div class="form-group">
+            <!--div class="form-group">
                 <label class="label-sm">Last Name</label>
                 <input type="text" class="form-control form-control-sm" id="lastName" placeholder="Last Name">
-            </div>
+            </div-->
             <div class="form-group">
                 <label class="label-sm">Job</label>
                 <input type="text" class="form-control form-control-sm" id="job" placeholder="Enter Job">
