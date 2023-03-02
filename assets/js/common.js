@@ -196,36 +196,36 @@ function getBase64Image(img) {
         // do something more
         console.log('Cleared!');
         shadowRoot.getElementById('popup').innerHTML = login_html;
-        getRememberData();
+        // getRememberData();
         shadowRoot.getElementById('signin').addEventListener('click',()=>{signedIn()});
     });
 }
 
-function lsRememberMe() {
-  var emailInput = shadowRoot.getElementById('email').value;
-  var passInput = shadowRoot.getElementById('password').value;
-  var rmCheck = shadowRoot.getElementById("keepme");
-  if (rmCheck.checked && emailInput.value !== "") {
-    localStorage.setItem('username',emailInput.value);
-    localStorage.setItem('password',passInput.value);
-    localStorage.setItem('check',rmCheck.value);
-  } else {
-    localStorage.setItem('username',"");
-    localStorage.setItem('assword',"");
-    localStorage.setItem('check',false);
-  }
-}
+// function lsRememberMe() {
+//   var emailInput = shadowRoot.getElementById('email').value;
+//   var passInput = shadowRoot.getElementById('password').value;
+//   var rmCheck = shadowRoot.getElementById("keepme");
+//   if (rmCheck.checked && emailInput.value !== "") {
+//     localStorage.setItem('username',emailInput.value);
+//     localStorage.setItem('password',passInput.value);
+//     localStorage.setItem('check',rmCheck.value);
+//   } else {
+//     localStorage.setItem('username',"");
+//     localStorage.setItem('assword',"");
+//     localStorage.setItem('check',false);
+//   }
+// }
 
-function getRememberData(){
-  var emailInput = shadowRoot.getElementById('email').value;
-  var passInput = shadowRoot.getElementById('password').value;
-  var rmCheck = shadowRoot.getElementById("keepme");
-  if(localStorage.getItem('check')){
-    emailInput.value = localStorage.getItem('username');
-    passInput.value = localStorage.getItem('password');
-    rmCheck.checked = localStorage.getItem('check');
-  }
-}
+// function getRememberData(){
+//   var emailInput = shadowRoot.getElementById('email').value;
+//   var passInput = shadowRoot.getElementById('password').value;
+//   var rmCheck = shadowRoot.getElementById("keepme");
+//   if(localStorage.getItem('check')){
+//     emailInput.value = localStorage.getItem('username');
+//     passInput.value = localStorage.getItem('password');
+//     rmCheck.checked = localStorage.getItem('check');
+//   }
+// }
 
 function changeLangNoProfile(lang){
   chrome.runtime.sendMessage({call: "changeLang", url: chrome.runtime.getURL("_locales/" + lang + "/messages.json")}, function(response) {

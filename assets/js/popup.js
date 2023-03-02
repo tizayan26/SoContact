@@ -34,7 +34,7 @@ let login_html = `
             <input class="form-control form-password" type="password" placeholder="Password" id="password">
         </div>
     </div>
-    <div class="row pt-3 pb-2">
+    <!--div class="row pt-3 pb-2">
         <div class="col-sm-12">
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="" id="keepme">
@@ -43,7 +43,7 @@ let login_html = `
                 </label>
             </div>
         </div>
-    </div>
+    </div-->
     <div class="row pt-3 pb-2">
         <div class="col-sm-12">
         <button class="btn btn-primary" id="signin">Sign In</button>
