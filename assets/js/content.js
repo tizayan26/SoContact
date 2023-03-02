@@ -582,6 +582,7 @@ const getProfileDetailsFromAPI = () => {
                         chrome.runtime.sendMessage({call: "changeLang", url: chrome.runtime.getURL("_locales/" + lang + "/messages.json")}, function(response) {
                             let msg = JSON.parse(response);
                             shadowRoot.getElementById('unlockbuttoncontainer').innerHTML = `<button class="btn-unlock" id="btnUnlock" `+((lang == 'en')? '' : 'style="background-position-x: 10px;"')+`>${msg.udBtn.message}</button>`;
+                            $(shadowRoot.getElementById('noCreditAlert')).text(msg.noCreditAlert.message);
                             $(shadowRoot.getElementById('btnUnlock')).off('click').on('click', ()=> {unlockLead()});
                         });
                     }

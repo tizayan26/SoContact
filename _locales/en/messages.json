@@ -198,5 +198,9 @@
   "locationPH":{
     "message":"Enter Location",
     "description": ""
+  },     
+  "noCreditAlert":{
+    "message":"You don't have enough credit to unlock details",
+    "description": ""
   }     
 }

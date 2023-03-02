@@ -198,5 +198,9 @@
   "locationPH":{
     "message":"Entrez l'emplacement",
     "description": ""
-  }                                        
+  },
+  "noCreditAlert":{
+    "message":"Vous n'avez pas assez de crédit pour déverrouiller les détails",
+    "description": ""
+  }                                           
 }
