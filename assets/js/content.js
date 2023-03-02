@@ -177,6 +177,7 @@ function onUrlChange() {
     }
     shadowRoot.getElementById('icon').src = chrome.runtime.getURL("assets/img/logo.gif");
     getUserInfoFromAPI();
+    getCredits();
     var pattern = /linkedin.com\/in/;
     if(location.href.match(pattern)!= null){
         getProfileDetailsFromAPI();
@@ -187,7 +188,6 @@ function onUrlChange() {
         changeLangNoProfile(lang);
         shadowRoot.getElementById('icon').src = chrome.runtime.getURL("assets/icons/icon48.png");
     }
-    getCredits();
 }
 function clickedLeadAdd(res){
     var linkedin_url = location.origin+location.pathname;
@@ -588,8 +588,7 @@ const getProfileDetailsFromAPI = () => {
                     }
                 },1000)
                 
-            }
-            else if(res.dynamowebs_msg=="token_expired"){
+            }else if(res.dynamowebs_msg=="token_expired"){
                 if(res.token!==undefined && res.token == "expired"){
                     chrome.storage.local.get(['session'], function(result) {
                         var session = JSON.parse(result.session);
@@ -641,7 +640,6 @@ const getProfileDetailsFromAPI = () => {
           <div class="line"></div>
           <div class="line"></div>
         </div>`;
-       
         var myInterval = setInterval(function () {
             if(getLinkedInProfile()){
                 console.log("Got DOM")
@@ -942,8 +940,8 @@ function editLead(res){
                 description: shadowRoot.getElementById('description').value
             }, function(response) {
             var res = JSON.parse(response);
-            console.log(res);
-            alert('test');
+            // console.log(res);
+            // alert('test');
             if(res.dynamowebs_status == "success"){
                 $(shadowRoot.getElementById('editStatusMsg')).fadeIn();
                 setTimeout(() => {
@@ -1018,6 +1016,7 @@ function signedIn(){
 }
 
 function getUserInfoFromAPI(){
+    getCredits();
     chrome.runtime.sendMessage({call: "getUser",}, function(response) {
         userObj = JSON.parse(response);
         if(userObj.dynamowebs_msg=="token_expired"){
@@ -1298,7 +1297,7 @@ function unlockLead(){
                                     });
                                 });  
                             },1000);
-                            
+                            getLinkedInProfile();
                             // var myInterval = setInterval(function () {
                             //     if(getLinkedInProfile()){
                             //         console.log("Got DOM")
