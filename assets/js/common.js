@@ -310,5 +310,9 @@ function changeLangEditLead(lang){
     $(shadowRoot.getElementById('sm')).text(msg.sm.message);
     $(shadowRoot.getElementById('lblCom')).text(msg.lblCom.message);
     $(shadowRoot.getElementById('companyWebsite')).text(msg.companyWebsite.message);
+    $(shadowRoot.getElementById('saveLead')).text(msg.saveLead.message);
+    $(shadowRoot.getElementById('name')).attr("placeholder", msg.namePH.message);
+    $(shadowRoot.getElementById('job')).attr("placeholder", msg.jobPH.message);
+    $(shadowRoot.getElementById('location')).attr("placeholder", msg.locationPH.message);
   });
 }

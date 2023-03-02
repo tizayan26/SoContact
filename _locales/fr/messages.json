@@ -182,5 +182,21 @@
   "lblDesc":{
     "message":"Descriptions",
     "description": ""
-  }                                
+  },
+  "saveLead":{
+    "message":"Enregistrer les modifications",
+    "description": ""
+  },
+  "namePH":{
+    "message":"Entrez le nom",
+    "description": ""
+  },     
+  "jobPH":{
+    "message":"Entrez le travail",
+    "description": ""
+  },     
+  "locationPH":{
+    "message":"Entrez l'emplacement",
+    "description": ""
+  }                                        
 }
