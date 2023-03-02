@@ -577,11 +577,13 @@ const getProfileDetailsFromAPI = () => {
                             shadowRoot.getElementById('companyBlock').style.display = "none";
                         }
                         shadowRoot.getElementById('unlockbuttoncontainer').innerHTML = '<button class="btn-unlock" id="btnUnlock">Unlock details</button>';
+                        // shadowRoot.getElementById('btnUnlock').addEventListener('click', ()=> {unlockLead()});
+                        $(shadowRoot.getElementById('btnUnlock')).off('click').on('click', ()=> {unlockLead()});
                         chrome.runtime.sendMessage({call: "changeLang", url: chrome.runtime.getURL("_locales/" + lang + "/messages.json")}, function(response) {
                             let msg = JSON.parse(response);
                             shadowRoot.getElementById('unlockbuttoncontainer').innerHTML = `<button class="btn-unlock" id="btnUnlock" `+((lang == 'en')? '' : 'style="background-position-x: 10px;"')+`>${msg.udBtn.message}</button>`;
+                            $(shadowRoot.getElementById('btnUnlock')).off('click').on('click', ()=> {unlockLead()});
                         });
-                        shadowRoot.getElementById('btnUnlock').addEventListener('click', ()=> {unlockLead()});
                     }
                 },1000)
                 
