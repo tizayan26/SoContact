@@ -125,10 +125,17 @@ let contact_detail_api = `
             </div>
         </div>
     </div>
+    <div class="d-flex justify-content-center" id="advanceSearchBlock">
+        <!--button class="btn btn-secondary p-4" id="advSearch">Advanced Search</button-->
+    </div>
     <div id="companyBlock" class="col-sm-12">
         <div class="d-flex pt-4 pb-4 justify-content-between">
             <div class="p-2"><div class="company-logo-circle"></div></div>
-            <div class="p-2"><div class="company-title" id="companyName" style="overflow:hidden;max-width:196px;">Company name</div></div>
+            <div class="p-2"><div class="company-title" id="companyName" style="overflow:hidden;max-width:196px;"><div class="load-2">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+          </div><!--Company name--></div></div>
             <div class="pt-2 pb-2"><a class="go-to-website" id="companyWebsite" target="_blank">Go to website</a></div>
         </div>
     </div>
@@ -195,7 +202,11 @@ let contactSearchHTML = `
 let noProfileHTML = `
     <div class="col-sm-12 pt-4 pb-2 text-center">
     <div class="intro-container">
-        <h2><span id="gheading">Hello</span> <span id="userName">[user name]<span></h2>
+        <h2><span id="gheading">Hello</span> <span id="userName">
+            <span class="load-2"> 
+                <span class="line"></span>
+            </span>
+        <span></h2>
         <span id="gsub">Welcome back, we’re happy to see you again ;)</span>
     </div>
     </div>
@@ -389,6 +400,9 @@ let leadEditHTML = `
                 <textarea class="form-control form-control-sm" id="description" rows="6"></textarea>
             </div>
         </div>
+        <div class="d-flex justify-content-center" id="advanceSearchBlock">
+            <!--button class="btn btn-secondary p-4" id="advSearch">Advanced Search</button-->
+        </div>
         <div id="companyBlock">
             <div class="col-sm-12">
                 <label class="other-social-media" id="lblCom">Compagny</label>
@@ -396,7 +410,11 @@ let leadEditHTML = `
             <div class="col-sm-12">
                 <div class="row pt-2 pb-4">
                     <div class="col-sm-2"><div class="company-logo-circle"></div></div>
-                    <div class="col-sm-5"><div class="company-title" id="companyName">Company name</div></div>
+                    <div class="col-sm-5"><div class="company-title" id="companyName"><div class="load-2">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                  </div><!--Company name--></div></div>
                     <div class="col-sm-5"><a class="go-to-website" id="companyWebsite" target="_blank">Go to website</a></div>
                 </div>
             </div>
@@ -586,6 +604,9 @@ let leadUnlocked = `
                 </ul>
             </div>
         </div>
+        <div class="d-flex justify-content-center" id="advanceSearchBlock">
+            <!--button class="btn btn-secondary p-4" id="advSearch">Advanced Search</button-->
+        </div>
         <div id="companyBlock">
             <div class="col-sm-12">
                 <label class="other-social-media" id="lblCom">Compagny</label>
@@ -593,7 +614,11 @@ let leadUnlocked = `
             <div class="col-sm-12">
                 <div class="d-flex pt-2 pb-4">
                     <div class="p-2"><div class="company-logo-circle"></div></div>
-                    <div class="p-2"><div class="company-title" id="companyName">Company name</div></div>
+                    <div class="p-2"><div class="company-title" id="companyName"><div class="load-2">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                  </div><!--Company name--></div></div>
                     <div class="pt-2 pb-2"><a class="go-to-website" id="companyWebsite" target="_blank">Go to website</a></div>
                 </div>
             </div>
