@@ -315,8 +315,8 @@ let dropdownContentHTML =`
 <div class="row pt-3 pb-2">
 <div class="col-sm-6 account-bottom-text">
     <span id="inv">Invite and earn Credit</span><br>
-    <span id="hc">Help center</span><br>
-    <p class="highlight" id="fc">Free credits</p>
+    <!--span id="hc">Help center</span><br>
+    <p class="highlight" id="fc">Free credits</p-->
 </div>
 </div>
 <div class="row pt-3 pb-2 text-center">

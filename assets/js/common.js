@@ -252,8 +252,8 @@ function changeLangDropdown(lang){
       $(shadowRoot.getElementById('anl')).text(msg.atm.message);
       $(shadowRoot.getElementById('itgrn')).text(msg.integration.message);
       $(shadowRoot.getElementById('inv')).text(msg.inv.message);
-      $(shadowRoot.getElementById('hc')).text(msg.help.message);
-      $(shadowRoot.getElementById('fc')).text(msg.fc.message);
+      // $(shadowRoot.getElementById('hc')).text(msg.help.message);
+      // $(shadowRoot.getElementById('fc')).text(msg.fc.message);
       $(shadowRoot.getElementById('logout')).text(msg.lo.message);
   });
 }
