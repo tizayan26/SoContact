@@ -232,7 +232,9 @@ function scrapeLinkedInProfile(type){
                     var year = educations[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText.trim().split(' - ');
                     obj.length_of_study = educations[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText;
                     obj.start_time = year[0].trim();
-                    obj.end_time = year[1].trim();
+                    if(year[1]!==undefined){
+                        obj.end_time = year[1].trim();
+                    }
                 }
                 linkedInObj.education.push(obj);
             }
