@@ -125,7 +125,7 @@ let contact_detail_api = `
             </div>
         </div>
     </div>
-    <div class="d-flex justify-content-center" id="advanceSearchBlock">
+    <div id="advanceSearchBlock">
         <!--button class="btn btn-secondary p-4" id="advSearch">Advanced Search</button-->
     </div>
     <div id="companyBlock" class="col-sm-12">
@@ -183,6 +183,15 @@ let contact_detail_linkedIn = `
     <div class="col-sm-12 pt-4 text-center">
         <button class="btn btn-secondary add-to-waiting-list" id="addToWaiting">Add to waiting list</button>
     </div>
+    <!--div id="advanceSearchBlock">
+        <div class="d-flex justify-content-center p-2">
+            <button class="btn btn-secondary p-4" id="advSearch">Advanced Search</button>
+        </div>
+        <div class="d-flex justify-content-center other-social-media p-2">
+            <span class="info" style="background: rgb(204, 204, 204);"><svg width="4" height="10" viewBox="0 0 4 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.16992 1.3H2.29492" stroke="#fff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"></path><path d="M2.2998 8.8V4.8H1.2998" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+            <span class="pt-1">2 credits will be debited instead if 1 in case we find some info.</span>
+        </div>
+    </div-->
 </div>`;
 
 let contactSearchHTML = `
@@ -323,13 +332,13 @@ let dropdownContentHTML =`
     </ul>
 </div>
 </div>
-<div class="row pt-3 pb-2">
-<div class="col-sm-6 account-bottom-text">
-    <span id="inv">Invite and earn Credit</span><br>
-    <!--span id="hc">Help center</span><br>
-    <p class="highlight" id="fc">Free credits</p-->
-</div>
-</div>
+<!--div class="row pt-3 pb-2">
+    <div class="col-sm-6 account-bottom-text">
+        <span id="inv">Invite and earn Credit</span><br>
+        <span id="hc">Help center</span><br>
+        <p class="highlight" id="fc">Free credits</p>
+    </div>
+</div-->
 <div class="row pt-3 pb-2 text-center">
 <div class="col-sm-12"><button class="btn-logout" id="logout">Log out</div>
 </div>
@@ -400,7 +409,7 @@ let leadEditHTML = `
                 <textarea class="form-control form-control-sm" id="description" rows="6"></textarea>
             </div>
         </div>
-        <div class="d-flex justify-content-center" id="advanceSearchBlock">
+        <div id="advanceSearchBlock">
             <!--button class="btn btn-secondary p-4" id="advSearch">Advanced Search</button-->
         </div>
         <div id="companyBlock">
@@ -604,7 +613,7 @@ let leadUnlocked = `
                 </ul>
             </div>
         </div>
-        <div class="d-flex justify-content-center" id="advanceSearchBlock">
+        <div id="advanceSearchBlock">
             <!--button class="btn btn-secondary p-4" id="advSearch">Advanced Search</button-->
         </div>
         <div id="companyBlock">
@@ -1512,6 +1521,16 @@ function loadPopup() {
         width: 99%;
         text-align: center;
         display:none;
+    }
+
+    .other-social-media .info {
+        text-align: center;
+        display: inline-block;
+        line-height: 1;
+        margin-right: 6px;
+        background: rgba(236, 59, 176, 0.2);
+        border-radius: 50%;
+        padding: 6px 9px 5px;
     }
     
     /* line loading */

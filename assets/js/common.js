@@ -265,6 +265,7 @@ function changeLangContactFound(lang){
     $(shadowRoot.getElementById('head')).text(msg.cfHeading.message);
     $(shadowRoot.getElementById('sub')).html(msg.cfSub.message);
     $(shadowRoot.getElementById('addToWaiting')).text(msg.cfBtn.message);
+    // $(shadowRoot.getElementById('advSearch')).text(msg.advSearch.message);
   });
 }
 

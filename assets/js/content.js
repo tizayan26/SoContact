@@ -499,13 +499,21 @@ const getProfileDetailsFromAPI = () => {
                     }else{
                         shadowRoot.getElementById('perEmailsBlock').style.display = "none";
                     }
-                    if(res.phoneNumbers.length===0 || res.professionalEmail.length===0 || res.personalEmail.length===0){
-                        shadowRoot.getElementById('advanceSearchBlock').innerHTML = ` <button class="btn btn-secondary p-4" id="advSearch">Advanced Search</button>`;
+                    /*if(res.phoneNumbers.length===0 || res.professionalEmail.length===0 || res.personalEmail.length===0){
+                        shadowRoot.getElementById('advanceSearchBlock').innerHTML = ` 
+                        <div class="d-flex justify-content-center p-2">
+                            <button class="btn btn-secondary p-4" id="advSearch">Advanced Search</button>
+                        </div>
+                        <div class="d-flex justify-content-center other-social-media p-2">
+                            <span class="info" style="background: rgb(204, 204, 204);"><svg width="4" height="10" viewBox="0 0 4 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.16992 1.3H2.29492" stroke="#fff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"></path><path d="M2.2998 8.8V4.8H1.2998" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+                            <span class="pt-1">2 credits will be debited instead if 1 in case we find some info.</span>
+                        </div>`;
+
                         chrome.runtime.sendMessage({call: "changeLang", url: chrome.runtime.getURL("_locales/" + lang + "/messages.json")}, function(response) {
                             let msg = JSON.parse(response);
                             $(shadowRoot.getElementById('advSearch')).text(msg.advSearch.message);
                         });
-                    }
+                    }*/
                     if(res.companyInformation.length > 0 || (res.companyInformation[0].mainIndustry.toString() !== "" && res.companyInformation[0].employees.toString() !== "" && res.companyInformation[0].headQuarters.toString() !== "" && res.companyInformation[0].founded.toString() !== "")){
                         shadowRoot.getElementById('companyBlock').style.display = "block";
                         shadowRoot.getElementById('companyName').innerText = res.companyInformation[0].name;
