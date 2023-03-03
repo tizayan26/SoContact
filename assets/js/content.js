@@ -37,136 +37,263 @@ function scrapeLinkedInProfile(type){
     //     profile_image = chrome.runtime.getURL('assets/icons/logo.png');
     // }
     if(profile_image !==''){
-        toDataURL(profile_image).then(dataUrl => {
-            // console.log(dataUrl);
-            base64Img = dataUrl;  
-            var linkedInObj = {
-                linkedinURL: location.href,
-                profile_image: dataUrl,
-                name: profile_name,
-                address_details: {},
-                experience: [],
-                education: [],
-                certification:[],
-                languages: [],
-                about: ''
-            }
-            if(document.querySelectorAll('div[class*="text-body-medium break-words"]').length > 0){
-                linkedInObj['profile_heading'] = document.querySelectorAll('div[class*="text-body-medium break-words"]')[0].innerText;
-            }
-            if(document.getElementById('main')!==null){
-                if(document.getElementById('main').children[0].children[1].children[1].children[2]!== undefined){
-                    linkedInObj['location'] = document.getElementById('main').children[0].children[1].children[1].children[2].children[0].innerText;
-                    linkedInObj.address_details = ParseAddressEsri(document.getElementById('main').children[0].children[1].children[1].children[2].children[0].innerText);
-                }
-            }
-            if(document.getElementById('about')!==null){
-                linkedInObj.about =  document.getElementById('about').nextElementSibling.nextElementSibling.children[0].children[0].children[0].children[0].innerText;
-            }
-            if(document.getElementById('experience') !== null){
-                var experiences = document.getElementById('experience').nextElementSibling.nextElementSibling.children[0].children;
-                for(var i=0; i<experiences.length;i++){
-                    if(experiences[i].children[0].children[1].children[0].children[0].children[2]!==undefined){
-                        var time_length = experiences[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText;
-                        var dates = time_length.split('·');
-                        var dates_array = dates[0].trim().split('-');
-                        var start_date = new Date(dates_array[0].trim());
-                        var end_date = (dates_array[1]!==undefined) ? (dates_array[1].trim() == "Present" ? new Date() : new Date(dates_array[1].trim())) : '';
-                    }else{
-                        var start_date = new Date();
-                        var end_date = new Date() ;
-                    }
-                    var obj = { 
-                        job_title : experiences[i].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText,
-                        organization_name: experiences[i].children[0].children[1].children[0].children[0].children[1].children[0].innerText,
-                        time_length: experiences[i].children[0].children[1].children[0].children[0].children[2]===undefined ? null : experiences[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText,
-                        start_time: moment(start_date).format('YYYY-MM-DD'),
-                        end_time: moment(end_date).format('YYYY-MM-DD'),
-                        url: experiences[i].children[0].children[0].children[0].href
-                    }
-                    if(experiences[i].children[0].children[1].children[0].children[0].children[3]!==undefined)
-                    obj['job_location'] = experiences[i].children[0].children[1].children[0].children[0].children[3].children[0].innerText
-                    linkedInObj.experience .push(obj);
-                }
-            }
-            if(document.getElementById('education') !== null){
-                var educations = document.getElementById('education').nextElementSibling.nextElementSibling.children[0].children;
-                for(var i=0; i<educations.length;i++){
-                    //var dates_array
-                    var obj = {
-                        institution_name: educations[i].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText,
-                        field_of_study: educations[i].children[0].children[1].children[0].children[0].children[1].innerText,
-                        length_of_study: '',
-                        start_time: '',
-                        end_time: '',
-                        url: educations[i].children[0].children[0].children[0].href
-                    }
-                    if(educations[i].children[0].children[1].children[0].children[0].children[2] !== undefined){
-                        var year = educations[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText.trim().split(' - ');
-                        obj.length_of_study = educations[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText;
-                        obj.start_time = year[0].trim();
-                        obj.end_time = year[1].trim();
-                    }
-                    linkedInObj.education.push(obj);
-                }
-            }
-            if(document.getElementById('licenses_and_certifications') !== null){
-                var certification = document.getElementById('licenses_and_certifications').nextElementSibling.nextElementSibling.children[0].children;
-                for(var i=0; i<certification.length;i++){
-                    var obj = {
-                        certification_name: certification[i].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText,
-                        issuing_organization: '',
-                        validity: '',
-                        issue_date: '',
-                        expiration_date: '',
-                        url: certification[i].children[0].children[0].children[0].href
-                    }
-                    if(certification[i].children[0].children[1].children[0].children[0].children[1] !== undefined){
-                        obj.issuing_organization = certification[i].children[0].children[1].children[0].children[0].children[1].children[0].innerText;
-                    }
-                    if(certification[i].children[0].children[1].children[0].children[0].children[2] !== undefined){
-                        obj.validity = certification[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText;
-                        var dates_array = certification[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText.trim().split('·');
-                        var start_date = new Date(dates_array[0].trim());
-                        var end_date = (dates_array[1]!==undefined) ? dates_array[1].trim() == "No Expiration Date" ? new Date() : new Date(dates_array[1].trim()) : '';
-                        obj.issue_date = moment(start_date).format('YYYY-MM-DD');
-                        obj.expiration_date =  moment(end_date).format('YYYY-MM-DD');
-                    }
-                    if(certification[i].children[0].children[1].children[0].children[0].children[3] !== undefined){
-                        obj["credential_ID"] = certification[i].children[0].children[1].children[0].children[0].children[3].children[0].innerText;
-                    }
-                    if(certification[i].children[0].children[1].children[1]!== undefined){
-                        obj['credential_URL'] = certification[i].children[0].children[1].children[1].querySelector('a').href
-                    }
-                    linkedInObj.certification.push(obj);
-                }
-            }
-            if(document.getElementById('languages') !== null){
-                var languages = document.getElementById('languages').nextElementSibling.nextElementSibling.children[0].children;
-                for(var i=0; i<languages.length;i++){
-                    var obj ={
-                        language: languages[i].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText,
-                        proficiency: (languages[i].children[0].children[1].children[0].children[0].children[1] !== undefined) ? languages[i].children[0].children[1].children[0].children[0].children[1].children[0].innerText : ''
-                    }
-                    linkedInObj.languages.push(obj);
-                }
-            }
-            if(type === 1){
-                chrome.runtime.sendMessage({call: "sendScrapedProfile", body: JSON.stringify(linkedInObj)}, function(response) {
-                    // console.log(response);
-                })
-            }else if(type === 0){
-                shadowRoot.getElementById('addToWaiting').innerHTML = 'Adding to waiting list' + '<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>'
+        // toDataURL(profile_image).then(dataUrl => {
+        //     base64Img = dataUrl;  
+        //     var linkedInObj = {
+        //         linkedinURL: location.href,
+        //         profile_image: dataUrl,
+        //         name: profile_name,
+        //         address_details: {},
+        //         experience: [],
+        //         education: [],
+        //         certification:[],
+        //         languages: [],
+        //         about: ''
+        //     }
+        //     if(document.querySelectorAll('div[class*="text-body-medium break-words"]').length > 0){
+        //         linkedInObj['profile_heading'] = document.querySelectorAll('div[class*="text-body-medium break-words"]')[0].innerText;
+        //     }
+        //     if(document.getElementById('main')!==null){
+        //         if(document.getElementById('main').children[0].children[1].children[1].children[2]!== undefined){
+        //             linkedInObj['location'] = document.getElementById('main').children[0].children[1].children[1].children[2].children[0].innerText;
+        //             linkedInObj.address_details = ParseAddressEsri(document.getElementById('main').children[0].children[1].children[1].children[2].children[0].innerText);
+        //         }
+        //     }
+        //     if(document.getElementById('about')!==null){
+        //         linkedInObj.about =  document.getElementById('about').nextElementSibling.nextElementSibling.children[0].children[0].children[0].children[0].innerText;
+        //     }
+        //     if(document.getElementById('experience') !== null){
+        //         var experiences = document.getElementById('experience').nextElementSibling.nextElementSibling.children[0].children;
+        //         for(var i=0; i<experiences.length;i++){
+        //             if(experiences[i].children[0].children[1].children[0].children[0].children[2]!==undefined){
+        //                 var time_length = experiences[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText;
+        //                 var dates = time_length.split('·');
+        //                 var dates_array = dates[0].trim().split('-');
+        //                 var start_date = new Date(dates_array[0].trim());
+        //                 var end_date = (dates_array[1]!==undefined) ? (dates_array[1].trim() == "Present" ? new Date() : new Date(dates_array[1].trim())) : '';
+        //             }else{
+        //                 var start_date = new Date();
+        //                 var end_date = new Date() ;
+        //             }
+        //             var obj = { 
+        //                 job_title : experiences[i].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText,
+        //                 organization_name: experiences[i].children[0].children[1].children[0].children[0].children[1].children[0].innerText,
+        //                 time_length: experiences[i].children[0].children[1].children[0].children[0].children[2]===undefined ? null : experiences[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText,
+        //                 start_time: moment(start_date).format('YYYY-MM-DD'),
+        //                 end_time: moment(end_date).format('YYYY-MM-DD'),
+        //                 url: experiences[i].children[0].children[0].children[0].href
+        //             }
+        //             if(experiences[i].children[0].children[1].children[0].children[0].children[3]!==undefined)
+        //             obj['job_location'] = experiences[i].children[0].children[1].children[0].children[0].children[3].children[0].innerText
+        //             linkedInObj.experience .push(obj);
+        //         }
+        //     }
+        //     if(document.getElementById('education') !== null){
+        //         var educations = document.getElementById('education').nextElementSibling.nextElementSibling.children[0].children;
+        //         for(var i=0; i<educations.length;i++){
+        //             //var dates_array
+        //             var obj = {
+        //                 institution_name: educations[i].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText,
+        //                 field_of_study: educations[i].children[0].children[1].children[0].children[0].children[1].innerText,
+        //                 length_of_study: '',
+        //                 start_time: '',
+        //                 end_time: '',
+        //                 url: educations[i].children[0].children[0].children[0].href
+        //             }
+        //             if(educations[i].children[0].children[1].children[0].children[0].children[2] !== undefined){
+        //                 var year = educations[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText.trim().split(' - ');
+        //                 obj.length_of_study = educations[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText;
+        //                 obj.start_time = year[0].trim();
+        //                 obj.end_time = year[1].trim();
+        //             }
+        //             linkedInObj.education.push(obj);
+        //         }
+        //     }
+        //     if(document.getElementById('licenses_and_certifications') !== null){
+        //         var certification = document.getElementById('licenses_and_certifications').nextElementSibling.nextElementSibling.children[0].children;
+        //         for(var i=0; i<certification.length;i++){
+        //             var obj = {
+        //                 certification_name: certification[i].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText,
+        //                 issuing_organization: '',
+        //                 validity: '',
+        //                 issue_date: '',
+        //                 expiration_date: '',
+        //                 url: certification[i].children[0].children[0].children[0].href
+        //             }
+        //             if(certification[i].children[0].children[1].children[0].children[0].children[1] !== undefined){
+        //                 obj.issuing_organization = certification[i].children[0].children[1].children[0].children[0].children[1].children[0].innerText;
+        //             }
+        //             if(certification[i].children[0].children[1].children[0].children[0].children[2] !== undefined){
+        //                 obj.validity = certification[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText;
+        //                 var dates_array = certification[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText.trim().split('·');
+        //                 var start_date = new Date(dates_array[0].trim());
+        //                 var end_date = (dates_array[1]!==undefined) ? dates_array[1].trim() == "No Expiration Date" ? new Date() : new Date(dates_array[1].trim()) : '';
+        //                 obj.issue_date = moment(start_date).format('YYYY-MM-DD');
+        //                 obj.expiration_date =  moment(end_date).format('YYYY-MM-DD');
+        //             }
+        //             if(certification[i].children[0].children[1].children[0].children[0].children[3] !== undefined){
+        //                 obj["credential_ID"] = certification[i].children[0].children[1].children[0].children[0].children[3].children[0].innerText;
+        //             }
+        //             if(certification[i].children[0].children[1].children[1]!== undefined){
+        //                 obj['credential_URL'] = certification[i].children[0].children[1].children[1].querySelector('a').href
+        //             }
+        //             linkedInObj.certification.push(obj);
+        //         }
+        //     }
+        //     if(document.getElementById('languages') !== null){
+        //         var languages = document.getElementById('languages').nextElementSibling.nextElementSibling.children[0].children;
+        //         for(var i=0; i<languages.length;i++){
+        //             var obj ={
+        //                 language: languages[i].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText,
+        //                 proficiency: (languages[i].children[0].children[1].children[0].children[0].children[1] !== undefined) ? languages[i].children[0].children[1].children[0].children[0].children[1].children[0].innerText : ''
+        //             }
+        //             linkedInObj.languages.push(obj);
+        //         }
+        //     }
+        //     if(type === 1){
+        //         chrome.runtime.sendMessage({call: "sendScrapedProfile", body: JSON.stringify(linkedInObj)}, function(response) {
+        //             // console.log(response);
+        //         })
+        //     }else if(type === 0){
+        //         shadowRoot.getElementById('addToWaiting').innerHTML = 'Adding to waiting list' + '<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>'
                 
-                chrome.runtime.sendMessage({call: "addProfile", body: JSON.stringify(linkedInObj)}, function(response) {
-                    // console.log(response);
-                    var res = JSON.parse(response);
-                    if(res.dynamowebs_status === "success"){
-                        shadowRoot.getElementById('addToWaiting').innerHTML = "Added to waiting list";
-                    }
-                })
+        //         chrome.runtime.sendMessage({call: "addProfile", body: JSON.stringify(linkedInObj)}, function(response) {
+        //             // console.log(response);
+        //             var res = JSON.parse(response);
+        //             if(res.dynamowebs_status === "success"){
+        //                 shadowRoot.getElementById('addToWaiting').innerHTML = "Added to waiting list";
+        //             }
+        //         })
+        //     }
+        // });
+       
+        var linkedInObj = {
+            linkedinURL: location.href,
+            profile_image: profile_image,
+            name: profile_name,
+            address_details: {},
+            experience: [],
+            education: [],
+            certification:[],
+            languages: [],
+            about: ''
+        }
+        if(document.querySelectorAll('div[class*="text-body-medium break-words"]').length > 0){
+            linkedInObj['profile_heading'] = document.querySelectorAll('div[class*="text-body-medium break-words"]')[0].innerText;
+        }
+        if(document.getElementById('main')!==null){
+            if(document.getElementById('main').children[0].children[1].children[1].children[2]!== undefined){
+                linkedInObj['location'] = document.getElementById('main').children[0].children[1].children[1].children[2].children[0].innerText;
+                linkedInObj.address_details = ParseAddressEsri(document.getElementById('main').children[0].children[1].children[1].children[2].children[0].innerText);
             }
-        })
+        }
+        if(document.getElementById('about')!==null){
+            linkedInObj.about =  document.getElementById('about').nextElementSibling.nextElementSibling.children[0].children[0].children[0].children[0].innerText;
+        }
+        if(document.getElementById('experience') !== null){
+            var experiences = document.getElementById('experience').nextElementSibling.nextElementSibling.children[0].children;
+            for(var i=0; i<experiences.length;i++){
+                if(experiences[i].children[0].children[1].children[0].children[0].children[2]!==undefined){
+                    var time_length = experiences[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText;
+                    var dates = time_length.split('·');
+                    var dates_array = dates[0].trim().split('-');
+                    var start_date = new Date(dates_array[0].trim());
+                    var end_date = (dates_array[1]!==undefined) ? (dates_array[1].trim() == "Present" ? new Date() : new Date(dates_array[1].trim())) : '';
+                }else{
+                    var start_date = new Date();
+                    var end_date = new Date() ;
+                }
+                var obj = { 
+                    job_title : experiences[i].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText,
+                    organization_name: experiences[i].children[0].children[1].children[0].children[0].children[1].children[0].innerText,
+                    time_length: experiences[i].children[0].children[1].children[0].children[0].children[2]===undefined ? null : experiences[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText,
+                    start_time: moment(start_date).format('YYYY-MM-DD'),
+                    end_time: moment(end_date).format('YYYY-MM-DD'),
+                    url: experiences[i].children[0].children[0].children[0].href
+                }
+                if(experiences[i].children[0].children[1].children[0].children[0].children[3]!==undefined)
+                obj['job_location'] = experiences[i].children[0].children[1].children[0].children[0].children[3].children[0].innerText
+                linkedInObj.experience .push(obj);
+            }
+        }
+        if(document.getElementById('education') !== null){
+            var educations = document.getElementById('education').nextElementSibling.nextElementSibling.children[0].children;
+            for(var i=0; i<educations.length;i++){
+                //var dates_array
+                var obj = {
+                    institution_name: educations[i].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText,
+                    field_of_study: educations[i].children[0].children[1].children[0].children[0].children[1].innerText,
+                    length_of_study: '',
+                    start_time: '',
+                    end_time: '',
+                    url: educations[i].children[0].children[0].children[0].href
+                }
+                if(educations[i].children[0].children[1].children[0].children[0].children[2] !== undefined){
+                    var year = educations[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText.trim().split(' - ');
+                    obj.length_of_study = educations[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText;
+                    obj.start_time = year[0].trim();
+                    obj.end_time = year[1].trim();
+                }
+                linkedInObj.education.push(obj);
+            }
+        }
+        if(document.getElementById('licenses_and_certifications') !== null){
+            var certification = document.getElementById('licenses_and_certifications').nextElementSibling.nextElementSibling.children[0].children;
+            for(var i=0; i<certification.length;i++){
+                var obj = {
+                    certification_name: certification[i].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText,
+                    issuing_organization: '',
+                    validity: '',
+                    issue_date: '',
+                    expiration_date: '',
+                    url: certification[i].children[0].children[0].children[0].href
+                }
+                if(certification[i].children[0].children[1].children[0].children[0].children[1] !== undefined){
+                    obj.issuing_organization = certification[i].children[0].children[1].children[0].children[0].children[1].children[0].innerText;
+                }
+                if(certification[i].children[0].children[1].children[0].children[0].children[2] !== undefined){
+                    obj.validity = certification[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText;
+                    var dates_array = certification[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText.trim().split('·');
+                    var start_date = new Date(dates_array[0].trim());
+                    var end_date = (dates_array[1]!==undefined) ? dates_array[1].trim() == "No Expiration Date" ? new Date() : new Date(dates_array[1].trim()) : '';
+                    obj.issue_date = moment(start_date).format('YYYY-MM-DD');
+                    obj.expiration_date =  moment(end_date).format('YYYY-MM-DD');
+                }
+                if(certification[i].children[0].children[1].children[0].children[0].children[3] !== undefined){
+                    obj["credential_ID"] = certification[i].children[0].children[1].children[0].children[0].children[3].children[0].innerText;
+                }
+                if(certification[i].children[0].children[1].children[1]!== undefined){
+                    obj['credential_URL'] = certification[i].children[0].children[1].children[1].querySelector('a').href
+                }
+                linkedInObj.certification.push(obj);
+            }
+        }
+        if(document.getElementById('languages') !== null){
+            var languages = document.getElementById('languages').nextElementSibling.nextElementSibling.children[0].children;
+            for(var i=0; i<languages.length;i++){
+                var obj ={
+                    language: languages[i].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText,
+                    proficiency: (languages[i].children[0].children[1].children[0].children[0].children[1] !== undefined) ? languages[i].children[0].children[1].children[0].children[0].children[1].children[0].innerText : ''
+                }
+                linkedInObj.languages.push(obj);
+            }
+        }
+        if(type === 1){
+            chrome.runtime.sendMessage({call: "sendScrapedProfile", body: JSON.stringify(linkedInObj)}, function(response) {
+                // console.log(response);
+            })
+        }else if(type === 0){
+            shadowRoot.getElementById('addToWaiting').innerHTML = 'Adding to waiting list' + '<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>'
+            
+            chrome.runtime.sendMessage({call: "addProfile", body: JSON.stringify(linkedInObj)}, function(response) {
+                // console.log(response);
+                var res = JSON.parse(response);
+                if(res.dynamowebs_status === "success"){
+                    shadowRoot.getElementById('addToWaiting').innerHTML = "Added to waiting list";
+                }
+            })
+        }
+        
     }
 }
 
