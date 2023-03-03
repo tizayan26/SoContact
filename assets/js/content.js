@@ -222,7 +222,7 @@ function scrapeLinkedInProfile(type){
                 //var dates_array
                 var obj = {
                     institution_name: educations[i].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText,
-                    field_of_study: educations[i].children[0].children[1].children[0].children[0].children[1].innerText,
+                    field_of_study: educations[i].children[0].children[1].children[0].children[0].children[1] !== undefined ? educations[i].children[0].children[1].children[0].children[0].children[1].innerText : '',
                     length_of_study: '',
                     start_time: '',
                     end_time: '',
