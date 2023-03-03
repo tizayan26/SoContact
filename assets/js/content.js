@@ -516,7 +516,7 @@ const getProfileDetailsFromAPI = () => {
                             $(shadowRoot.getElementById('advSearch')).text(msg.advSearch.message);
                         });
                     }*/
-                    if(res.companyInformation.length > 0 || (res.companyInformation[0].mainIndustry.toString() !== "" && res.companyInformation[0].employees.toString() !== "" && res.companyInformation[0].headQuarters.toString() !== "" && res.companyInformation[0].founded.toString() !== "")){
+                    if(res.companyInformation.length > 0){  //|| (res.companyInformation[0].mainIndustry.toString() !== "" && res.companyInformation[0].employees.toString() !== "" && res.companyInformation[0].headQuarters.toString() !== "" && res.companyInformation[0].founded.toString() !== "")){
                         shadowRoot.getElementById('companyBlock').style.display = "block";
                         shadowRoot.getElementById('companyName').innerText = res.companyInformation[0].name;
                         if(res.companyInformation[0].website === null || res.companyInformation[0].website == ''){
@@ -558,7 +558,7 @@ const getProfileDetailsFromAPI = () => {
                         }else{
                             shadowRoot.getElementById('socialMediaBlock').style.display = "none"
                         }
-                        if(res.companyInformation.length > 0 || (res.companyInformation[0].mainIndustry !== "" && res.companyInformation[0].employees !== "" && res.companyInformation[0].headQuarters !== "" && res.companyInformation[0].founded !== "")){
+                        if(res.companyInformation.length > 0){ //|| (res.companyInformation[0].mainIndustry !== "" && res.companyInformation[0].employees !== "" && res.companyInformation[0].headQuarters !== "" && res.companyInformation[0].founded !== "")){
                             shadowRoot.getElementById('companyName').innerText = res.companyInformation[0].name;
                             
                             if(res.companyInformation[0].website === null || res.companyInformation[0].website == ''){
@@ -853,7 +853,7 @@ function backDetails(res){
     }else{
         shadowRoot.getElementById('perEmailsBlock').style.display = "none";
     }
-    if(res.companyInformation.length > 0 || (res.companyInformation[0].mainIndustry !== "" && res.companyInformation[0].employees !== "" && res.companyInformation[0].headQuarters !== "" && res.companyInformation[0].founded !== "")){
+    if(res.companyInformation.length > 0){ //|| (res.companyInformation[0].mainIndustry !== "" && res.companyInformation[0].employees !== "" && res.companyInformation[0].headQuarters !== "" && res.companyInformation[0].founded !== "")){
         shadowRoot.getElementById('companyName').innerText = res.companyInformation[0].name;
         if(res.companyInformation[0].website === null || res.companyInformation[0].website == ''){
             shadowRoot.getElementById('companyWebsite').parentElement.style.display = "none";
@@ -1331,7 +1331,7 @@ function unlockLead(){
                                 }else{
                                     shadowRoot.getElementById('perEmailsBlock').style.display = "none";
                                 }
-                                if(res.companyInformation.length > 0 || (res.companyInformation[0].mainIndustry !== "" && res.companyInformation[0].employees !== "" && res.companyInformation[0].headQuarters !== "" && res.companyInformation[0].founded !== "")){
+                                if(res.companyInformation.length > 0){ //|| (res.companyInformation[0].mainIndustry !== "" && res.companyInformation[0].employees !== "" && res.companyInformation[0].headQuarters !== "" && res.companyInformation[0].founded !== "")){
                                     shadowRoot.getElementById('companyName').innerText = res.companyInformation[0].name;
                                     if(res.companyInformation[0].website === null || res.companyInformation[0].website == ''){
                                         shadowRoot.getElementById('companyWebsite').parentElement.style.display = "none";
@@ -1726,7 +1726,7 @@ function refresh(){
                     }else{
                         shadowRoot.getElementById('perEmailsBlock').style.display = "none";
                     }
-                    if(res.companyInformation.length > 0 || (res.companyInformation[0].mainIndustry !== "" && res.companyInformation[0].employees !== "" && res.companyInformation[0].headQuarters !== "" && res.companyInformation[0].founded !== "")){
+                    if(res.companyInformation.length > 0){ //|| (res.companyInformation[0].mainIndustry !== "" && res.companyInformation[0].employees !== "" && res.companyInformation[0].headQuarters !== "" && res.companyInformation[0].founded !== "")){
                         shadowRoot.getElementById('companyName').innerText = res.companyInformation[0].name;
                         if(res.companyInformation[0].website === null || res.companyInformation[0].website == ''){
                             shadowRoot.getElementById('companyWebsite').parentElement.style.display = "none";
