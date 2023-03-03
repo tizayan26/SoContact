@@ -610,17 +610,18 @@ const getProfileDetailsFromAPI = () => {
                                         shadowRoot.getElementById('companyDetailsToggle').innerText = msg.scd.message;
                                     }
                                 });
-                            })
+                            });
+                            // if (res.companyInformation[0].mainIndustry.toString() == "" && res.companyInformation[0].employees.toString() == "" && res.companyInformation[0].headQuarters.toString() == "" && res.companyInformation[0].founded.toString() == ""){
+                            if ((res.companyInformation[0].mainIndustry == null || res.companyInformation[0].mainIndustry.toString() == "" ) && (res.companyInformation[0].employees == null || res.companyInformation[0].employees.toString() == "") && (res.companyInformation[0].headQuarters == null || res.companyInformation[0].headQuarters.toString() == "")&& (res.companyInformation[0].founded == null || res.companyInformation[0].founded.toString() == "")){
+                                shadowRoot.getElementById('companyDetails').style.display = "none";
+                                shadowRoot.getElementById('companyToggleBtnBlock').style.display = "none";
+                            }
                         }else{
                             shadowRoot.getElementById('companyBlock').style.display = "none"
                             shadowRoot.getElementById('companyDetails').style.display = "none";
                             shadowRoot.getElementById('companyToggleBtnBlock').style.display = "none";
                         }
-                        // if (res.companyInformation[0].mainIndustry.toString() == "" && res.companyInformation[0].employees.toString() == "" && res.companyInformation[0].headQuarters.toString() == "" && res.companyInformation[0].founded.toString() == ""){
-                        if ((res.companyInformation[0].mainIndustry == null || res.companyInformation[0].mainIndustry.toString() == "" )&& (res.companyInformation[0].employees == null || res.companyInformation[0].employees.toString() == "") && (res.companyInformation[0].headQuarters == null || res.companyInformation[0].headQuarters.toString() == "")&& (res.companyInformation[0].founded == null || res.companyInformation[0].founded.toString() == "")){
-                            shadowRoot.getElementById('companyDetails').style.display = "none";
-                            shadowRoot.getElementById('companyToggleBtnBlock').style.display = "none";
-                        }
+                      
                         var linkedin_url = location.origin+location.pathname;
                         chrome.runtime.sendMessage({call: "isOnList", link: linkedin_url}, function(response) {
                             let isOnlist = JSON.parse(response)
@@ -904,13 +905,14 @@ function backDetails(res){
                     shadowRoot.getElementById('companyDetailsToggle').innerText = msg.scd.message;
                 }
             });
-        })
+        });
+        // if (res.companyInformation[0].mainIndustry.toString() == "" && res.companyInformation[0].employees.toString() == "" && res.companyInformation[0].headQuarters.toString() == "" && res.companyInformation[0].founded.toString() == ""){
+        if ((res.companyInformation[0].mainIndustry == null || res.companyInformation[0].mainIndustry.toString() == "" ) && (res.companyInformation[0].employees == null || res.companyInformation[0].employees.toString() == "") && (res.companyInformation[0].headQuarters == null || res.companyInformation[0].headQuarters.toString() == "")&& (res.companyInformation[0].founded == null || res.companyInformation[0].founded.toString() == "")){
+            shadowRoot.getElementById('companyDetails').style.display = "none";
+            shadowRoot.getElementById('companyToggleBtnBlock').style.display = "none";
+        }
     }else{
         shadowRoot.getElementById('companyBlock').style.display = "none"
-        shadowRoot.getElementById('companyDetails').style.display = "none";
-        shadowRoot.getElementById('companyToggleBtnBlock').style.display = "none";
-    }
-    if (res.companyInformation[0].mainIndustry.toString() == "" && res.companyInformation[0].employees.toString() == "" && res.companyInformation[0].headQuarters.toString() == "" && res.companyInformation[0].founded.toString() == ""){
         shadowRoot.getElementById('companyDetails').style.display = "none";
         shadowRoot.getElementById('companyToggleBtnBlock').style.display = "none";
     }
@@ -1383,16 +1385,18 @@ function unlockLead(){
                                                 shadowRoot.getElementById('companyDetailsToggle').innerText = msg.scd.message;
                                             }
                                         });
-                                    })
+                                    });
+                                    // if (res.companyInformation[0].mainIndustry.toString() == "" && res.companyInformation[0].employees.toString() == "" && res.companyInformation[0].headQuarters.toString() == "" && res.companyInformation[0].founded.toString() == ""){
+                                    if ((res.companyInformation[0].mainIndustry == null || res.companyInformation[0].mainIndustry.toString() == "" ) && (res.companyInformation[0].employees == null || res.companyInformation[0].employees.toString() == "") && (res.companyInformation[0].headQuarters == null || res.companyInformation[0].headQuarters.toString() == "")&& (res.companyInformation[0].founded == null || res.companyInformation[0].founded.toString() == "")){
+                                        shadowRoot.getElementById('companyDetails').style.display = "none";
+                                        shadowRoot.getElementById('companyToggleBtnBlock').style.display = "none";
+                                    }
                                 }else{
                                     shadowRoot.getElementById('companyBlock').style.display = "none"
                                     shadowRoot.getElementById('companyDetails').style.display = "none";
                                     shadowRoot.getElementById('companyToggleBtnBlock').style.display = "none";
                                 }
-                                if (res.companyInformation[0].mainIndustry.toString() == "" && res.companyInformation[0].employees.toString() == "" && res.companyInformation[0].headQuarters.toString() == "" && res.companyInformation[0].founded.toString() == ""){
-                                    shadowRoot.getElementById('companyDetails').style.display = "none";
-                                    shadowRoot.getElementById('companyToggleBtnBlock').style.display = "none";
-                                }
+                              
                                 // if(typeof res.otherSocialMedia === "object" && res.otherSocialMedia.length > 0){
                                 if(res.otherSocialMedia.facebook !== undefined || res.otherSocialMedia.linkedin !== undefined || res.otherSocialMedia.instagram !== undefined || res.otherSocialMedia.twitter !== undefined){
                                     let ul_socialMedia = shadowRoot.getElementById('social_media');
@@ -1778,16 +1782,18 @@ function refresh(){
                                     shadowRoot.getElementById('companyDetailsToggle').innerText = msg.scd.message;
                                 }
                             });
-                        })
+                        });
+                        // if (res.companyInformation[0].mainIndustry.toString() == "" && res.companyInformation[0].employees.toString() == "" && res.companyInformation[0].headQuarters.toString() == "" && res.companyInformation[0].founded.toString() == ""){
+                        if ((res.companyInformation[0].mainIndustry == null || res.companyInformation[0].mainIndustry.toString() == "" ) && (res.companyInformation[0].employees == null || res.companyInformation[0].employees.toString() == "") && (res.companyInformation[0].headQuarters == null || res.companyInformation[0].headQuarters.toString() == "")&& (res.companyInformation[0].founded == null || res.companyInformation[0].founded.toString() == "")){
+                            shadowRoot.getElementById('companyDetails').style.display = "none";
+                            shadowRoot.getElementById('companyToggleBtnBlock').style.display = "none";
+                        }
                     }else{
                         shadowRoot.getElementById('companyBlock').style.display = "none"
                         shadowRoot.getElementById('companyDetails').style.display = "none";
                         shadowRoot.getElementById('companyToggleBtnBlock').style.display = "none";
                     }
-                    if (res.companyInformation[0].mainIndustry.toString() == "" && res.companyInformation[0].employees.toString() == "" && res.companyInformation[0].headQuarters.toString() == "" && res.companyInformation[0].founded.toString() == ""){
-                        shadowRoot.getElementById('companyDetails').style.display = "none";
-                        shadowRoot.getElementById('companyToggleBtnBlock').style.display = "none";
-                    }
+                  
                     // if(typeof res.otherSocialMedia === "object" && res.otherSocialMedia.length > 0){
                     if(res.otherSocialMedia.facebook !== null || res.otherSocialMedia.linkedin !== null || res.otherSocialMedia.instagram !== null || res.otherSocialMedia.twitter !== null){
                         let ul_socialMedia = shadowRoot.getElementById('social_media');
