@@ -616,7 +616,8 @@ const getProfileDetailsFromAPI = () => {
                             shadowRoot.getElementById('companyDetails').style.display = "none";
                             shadowRoot.getElementById('companyToggleBtnBlock').style.display = "none";
                         }
-                        if (res.companyInformation[0].mainIndustry.toString() == "" && res.companyInformation[0].employees.toString() == "" && res.companyInformation[0].headQuarters.toString() == "" && res.companyInformation[0].founded.toString() == ""){
+                        // if (res.companyInformation[0].mainIndustry.toString() == "" && res.companyInformation[0].employees.toString() == "" && res.companyInformation[0].headQuarters.toString() == "" && res.companyInformation[0].founded.toString() == ""){
+                        if ((res.companyInformation[0].mainIndustry == null || res.companyInformation[0].mainIndustry.toString() == "" )&& (res.companyInformation[0].employees == null || res.companyInformation[0].employees.toString() == "") && (res.companyInformation[0].headQuarters == null || res.companyInformation[0].headQuarters.toString() == "")&& (res.companyInformation[0].founded == null || res.companyInformation[0].founded.toString() == "")){
                             shadowRoot.getElementById('companyDetails').style.display = "none";
                             shadowRoot.getElementById('companyToggleBtnBlock').style.display = "none";
                         }
