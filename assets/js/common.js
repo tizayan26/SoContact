@@ -229,6 +229,7 @@ function getBase64Image(img) {
 
 function changeLangNoProfile(lang){
   chrome.runtime.sendMessage({call: "changeLang", url: chrome.runtime.getURL("_locales/" + lang + "/messages.json")}, function(response) {
+    if(response){
       let msg = JSON.parse(response);
       $(shadowRoot.getElementById('gheading')).text(msg.greetingHeading.message);
       $(shadowRoot.getElementById('gsub')).text(msg.greetingSub.message);
@@ -237,10 +238,12 @@ function changeLangNoProfile(lang){
       $(shadowRoot.getElementById('instsub')).text(msg.instructionSub.message);
       $(shadowRoot.getElementById('cr')).text(msg.cr.message);
       // $(shadowRoot.getElementById('acc')).text(msg.acc.message);
+    }
   });
 }
 function changeLangDropdown(lang){
   chrome.runtime.sendMessage({call: "changeLang", url: chrome.runtime.getURL("_locales/" + lang + "/messages.json")}, function(response) {
+    if(response){
       let msg = JSON.parse(response);
       $(shadowRoot.getElementById('acc')).text(msg.ac.message);
       $(shadowRoot.getElementById('email')).text(msg.email.message);
@@ -255,6 +258,7 @@ function changeLangDropdown(lang){
       // $(shadowRoot.getElementById('hc')).text(msg.help.message);
       // $(shadowRoot.getElementById('fc')).text(msg.fc.message);
       $(shadowRoot.getElementById('logout')).text(msg.lo.message);
+    }
   });
 }
 
@@ -271,49 +275,55 @@ function changeLangContactFound(lang){
 
 function changeLangContactLockedDetail(lang){
   chrome.runtime.sendMessage({call: "changeLang", url: chrome.runtime.getURL("_locales/" + lang + "/messages.json")}, function(response) {
-    let msg = JSON.parse(response);
-    $(shadowRoot.getElementById('conSrh')).text(msg.conSrh.message);
-    // $(shadowRoot.getElementById('btnUnlock')).text(msg.udBtn.message);
-    $(shadowRoot.getElementById('cf')).text(msg.cf.message);
-    $(shadowRoot.getElementById('pn')).text(msg.pn.message);
-    $(shadowRoot.getElementById('proML')).text(msg.proML.message);
-    $(shadowRoot.getElementById('perML')).text(msg.perML.message);
-    $(shadowRoot.getElementById('osm')).text(msg.osm.message);
-    $(shadowRoot.getElementById('companyWebsite')).text(msg.companyWebsite.message);
+    if(response){
+      let msg = JSON.parse(response);
+      $(shadowRoot.getElementById('conSrh')).text(msg.conSrh.message);
+      // $(shadowRoot.getElementById('btnUnlock')).text(msg.udBtn.message);
+      $(shadowRoot.getElementById('cf')).text(msg.cf.message);
+      $(shadowRoot.getElementById('pn')).text(msg.pn.message);
+      $(shadowRoot.getElementById('proML')).text(msg.proML.message);
+      $(shadowRoot.getElementById('perML')).text(msg.perML.message);
+      $(shadowRoot.getElementById('osm')).text(msg.osm.message);
+      $(shadowRoot.getElementById('companyWebsite')).text(msg.companyWebsite.message);
+    }
   });
 }
 
 function changeLangContactDetail(lang){
   chrome.runtime.sendMessage({call: "changeLang", url: chrome.runtime.getURL("_locales/" + lang + "/messages.json")}, function(response) {
-    let msg = JSON.parse(response);
-    $(shadowRoot.getElementById('pn')).text(msg.pn.message);
-    $(shadowRoot.getElementById('proML')).text(msg.proML.message);
-    $(shadowRoot.getElementById('perML')).text(msg.perML.message);
-    $(shadowRoot.getElementById('sm')).text(msg.sm.message);
-    $(shadowRoot.getElementById('lblHistory')).text(msg.lblHistory.message);
-    $(shadowRoot.getElementById('lblIndustry')).text(msg.lblIndustry.message);
-    $(shadowRoot.getElementById('lblEmployees')).text(msg.lblEmployees.message);
-    $(shadowRoot.getElementById('lblHq')).text(msg.lblHq.message);
-    $(shadowRoot.getElementById('lblCom')).text(msg.lblCom.message);
-    $(shadowRoot.getElementById('companyWebsite')).text(msg.companyWebsite.message);
-    $(shadowRoot.getElementById('companyDetailsToggle')).text(msg.scd.message);
+    if(response){
+      let msg = JSON.parse(response);
+      $(shadowRoot.getElementById('pn')).text(msg.pn.message);
+      $(shadowRoot.getElementById('proML')).text(msg.proML.message);
+      $(shadowRoot.getElementById('perML')).text(msg.perML.message);
+      $(shadowRoot.getElementById('sm')).text(msg.sm.message);
+      $(shadowRoot.getElementById('lblHistory')).text(msg.lblHistory.message);
+      $(shadowRoot.getElementById('lblIndustry')).text(msg.lblIndustry.message);
+      $(shadowRoot.getElementById('lblEmployees')).text(msg.lblEmployees.message);
+      $(shadowRoot.getElementById('lblHq')).text(msg.lblHq.message);
+      $(shadowRoot.getElementById('lblCom')).text(msg.lblCom.message);
+      $(shadowRoot.getElementById('companyWebsite')).text(msg.companyWebsite.message);
+      $(shadowRoot.getElementById('companyDetailsToggle')).text(msg.scd.message);
+    }
   });
 }
 
 function changeLangEditLead(lang){
   chrome.runtime.sendMessage({call: "changeLang", url: chrome.runtime.getURL("_locales/" + lang + "/messages.json")}, function(response) {
-    let msg = JSON.parse(response);
-    $(shadowRoot.getElementById('editTitle')).text(msg.editTitle.message);
-    $(shadowRoot.getElementById('lblName')).text(msg.lblName.message);
-    $(shadowRoot.getElementById('lblJob')).text(msg.lblJob.message);
-    $(shadowRoot.getElementById('lblLoc')).text(msg.lblLoc.message);
-    $(shadowRoot.getElementById('lblDesc')).text(msg.lblDesc.message);
-    $(shadowRoot.getElementById('sm')).text(msg.sm.message);
-    $(shadowRoot.getElementById('lblCom')).text(msg.lblCom.message);
-    $(shadowRoot.getElementById('companyWebsite')).text(msg.companyWebsite.message);
-    $(shadowRoot.getElementById('saveLead')).text(msg.saveLead.message);
-    $(shadowRoot.getElementById('name')).attr("placeholder", msg.namePH.message);
-    $(shadowRoot.getElementById('job')).attr("placeholder", msg.jobPH.message);
-    $(shadowRoot.getElementById('location')).attr("placeholder", msg.locationPH.message);
+    if(response){
+      let msg = JSON.parse(response);
+      $(shadowRoot.getElementById('editTitle')).text(msg.editTitle.message);
+      $(shadowRoot.getElementById('lblName')).text(msg.lblName.message);
+      $(shadowRoot.getElementById('lblJob')).text(msg.lblJob.message);
+      $(shadowRoot.getElementById('lblLoc')).text(msg.lblLoc.message);
+      $(shadowRoot.getElementById('lblDesc')).text(msg.lblDesc.message);
+      $(shadowRoot.getElementById('sm')).text(msg.sm.message);
+      $(shadowRoot.getElementById('lblCom')).text(msg.lblCom.message);
+      $(shadowRoot.getElementById('companyWebsite')).text(msg.companyWebsite.message);
+      $(shadowRoot.getElementById('saveLead')).text(msg.saveLead.message);
+      $(shadowRoot.getElementById('name')).attr("placeholder", msg.namePH.message);
+      $(shadowRoot.getElementById('job')).attr("placeholder", msg.jobPH.message);
+      $(shadowRoot.getElementById('location')).attr("placeholder", msg.locationPH.message);
+    }
   });
 }

@@ -314,7 +314,10 @@ function onUrlChange() {
        
     }else{
         shadowRoot.getElementById('app_container').innerHTML = noProfileHTML;
-        changeLangNoProfile(lang);
+        chrome.runtime.sendMessage({call: "currentLang"}, function(data) {
+            lang = data.iso;
+            changeLangNoProfile(lang);
+        });
         shadowRoot.getElementById('icon').src = chrome.runtime.getURL("assets/icons/icon48.png");
     }
 }
@@ -391,10 +394,16 @@ const getProfileDetailsFromAPI = () => {
                 })
                 if(res.masked){
                     shadowRoot.getElementById('contact_found_detail').innerHTML = contact_detail_api;
-                    changeLangContactLockedDetail(lang);
+                    chrome.runtime.sendMessage({call: "currentLang"}, function(data) {
+                        lang = data.iso;
+                        changeLangContactLockedDetail(lang);
+                    });
                 }else{
                     shadowRoot.getElementById('app_container').innerHTML = leadUnlocked;
-                    changeLangContactDetail(lang);
+                    chrome.runtime.sendMessage({call: "currentLang"}, function(data) {
+                        lang = data.iso;
+                        changeLangContactDetail(lang);
+                    });
                 }
                
                 setTimeout(function(){
@@ -768,7 +777,10 @@ const getProfileDetailsFromAPI = () => {
             }else{
                 shadowRoot.getElementById('unlockbuttoncontainer').innerHTML = null;
                 shadowRoot.getElementById('contact_found_detail').innerHTML = contact_detail_linkedIn;
-                changeLangContactFound(lang);
+                chrome.runtime.sendMessage({call: "currentLang"}, function(data) {
+                    lang = data.iso;
+                    changeLangContactFound(lang);
+                });
                 shadowRoot.getElementById('addToWaiting').addEventListener('click', () => {
                     scrapeLinkedInProfile(0);
                 })
@@ -1014,7 +1026,10 @@ function backDetails(res){
 
 function editLead(res){
     shadowRoot.getElementById('app_container').innerHTML = leadEditHTML;
-    changeLangEditLead(lang);
+    chrome.runtime.sendMessage({call: "currentLang"}, function(data) {
+        lang = data.iso;
+        changeLangEditLead(lang);
+    });
     var linkedin_url = location.origin+location.pathname;
     chrome.runtime.sendMessage({call: "getProfileData", link: linkedin_url}, function(response) {
         var res = JSON.parse(response);
@@ -1071,7 +1086,10 @@ function editLead(res){
     // shadowRoot.getElementById('btnBack').addEventListener('click', (event) => {
     $(shadowRoot.getElementById('btnBack')).off('click').on('click', (event) => {
         backDetails(res);
-        changeLangContactDetail(lang);
+        chrome.runtime.sendMessage({call: "currentLang"}, function(data) {
+            lang = data.iso;
+            changeLangContactDetail(lang);
+        });
         event.target.style.display = "none";
     })
     // shadowRoot.getElementById('saveLead').addEventListener('click', () => {
@@ -1213,7 +1231,10 @@ chrome.storage.local.get(['loggedin'], function(result) {
     if(result.loggedin){
         getUserInfoFromAPI();
         shadowRoot.getElementById('popup').innerHTML = account_html;
-        changeLangNoProfile(lang);
+        chrome.runtime.sendMessage({call: "currentLang"}, function(data) {
+            lang = data.iso;
+            changeLangNoProfile(lang);
+        });
         accountDropdown();
         shadowRoot.getElementById('logout').addEventListener('click',() => {
           logout();
@@ -1470,7 +1491,10 @@ function unlockLead(){
                         }else{
                             shadowRoot.getElementById('unlockbuttoncontainer').innerHTML = null;
                             shadowRoot.getElementById('contact_found_detail').innerHTML = contact_detail_linkedIn;
-                            changeLangContactFound(lang);
+                            chrome.runtime.sendMessage({call: "currentLang"}, function(data) {
+                                lang = data.iso;
+                                changeLangContactFound(lang);
+                            });
                         }
                     }
                 })
@@ -1486,7 +1510,10 @@ function unlockLead(){
 }
 
 function accountDropdown(){
-    changeLangDropdown(lang);
+    chrome.runtime.sendMessage({call: "currentLang"}, function(data) {
+        lang = data.iso;
+        changeLangDropdown(lang);
+    });
     shadowRoot.getElementById('account_dropdown').addEventListener('click', () => {
         $(shadowRoot.getElementById('drop_down')).slideToggle(800);
         // $(shadowRoot.getElementById('app_container')).fadeToggle(200);
@@ -1866,7 +1893,10 @@ function refresh(){
             }else{
                 shadowRoot.getElementById('unlockbuttoncontainer').innerHTML = null;
                 shadowRoot.getElementById('contact_found_detail').innerHTML = contact_detail_linkedIn;
-                changeLangContactFound(lang);
+                chrome.runtime.sendMessage({call: "currentLang"}, function(data) {
+                    lang = data.iso;
+                    changeLangContactFound(lang);
+                });
             }
         }
     });

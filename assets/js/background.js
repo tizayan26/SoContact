@@ -277,6 +277,20 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             return fetch(request.url).then(response => response.text())
                 .then(text =>sendResponse(text))
                 .catch(error => console.log(error)),!0;
+        case "currentLang":
+            return chrome.storage.local.get(['session'], function(result) {
+                var session = JSON.parse(result.session); 
+                fetch(API_URL + "current-language",
+                {
+                    method: "POST",
+                    headers: {
+                        'Authorization': 'Bearer ' + session.token,
+                        },
+                }
+                ).then(response => response.json())
+                .then(data => sendResponse(data))
+                .catch(error => console.log(error))
+            }), !0;
     }
 });
 chrome.tabs.onUpdated.addListener(function (tabId , info, tab) {
