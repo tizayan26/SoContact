@@ -99,6 +99,10 @@
     "message":"Unlock details",
     "description": ""
   },    
+  "udBtnlbl":{
+    "message":"Show Details 1 Credits",
+    "description": ""
+  },    
   "alBtn":{
     "message":"Add lead",
     "description": ""

@@ -732,12 +732,14 @@ const getProfileDetailsFromAPI = () => {
                         }else{
                             shadowRoot.getElementById('companyBlock').style.display = "none";
                         }
-                        shadowRoot.getElementById('unlockbuttoncontainer').innerHTML = '<button class="btn-unlock" id="btnUnlock">Unlock details</button>';
+                        // shadowRoot.getElementById('unlockbuttoncontainer').innerHTML = '<button class="btn-unlock" id="btnUnlock">Unlock details</button>';
+                        shadowRoot.getElementById('unlockbuttoncontainer').innerHTML = '<button class="btn-unlock" id="btnUnlock"><span>Unlock details</span><span>Show Details 1 Credits</span></button>';
                         // shadowRoot.getElementById('btnUnlock').addEventListener('click', ()=> {unlockLead()});
                         $(shadowRoot.getElementById('btnUnlock')).off('click').on('click', ()=> {unlockLead()});
                         chrome.runtime.sendMessage({call: "changeLang", url: chrome.runtime.getURL("_locales/" + lang + "/messages.json")}, function(response) {
                             let msg = JSON.parse(response);
-                            shadowRoot.getElementById('unlockbuttoncontainer').innerHTML = `<button class="btn-unlock" id="btnUnlock" `+((lang == 'en')? '' : 'style="background-position-x: 10px;"')+`>${msg.udBtn.message}</button>`;
+                            // shadowRoot.getElementById('unlockbuttoncontainer').innerHTML = `<button class="btn-unlock" id="btnUnlock" `+((lang == 'en')? '' : 'style="background-position-x: 10px;"')+`>${msg.udBtn.message}</button>`;
+                            shadowRoot.getElementById('unlockbuttoncontainer').innerHTML = `<button class="btn-unlock" id="btnUnlock"><span>${msg.udBtn.message}</span><span>${msg.udBtnlbl.message}</span></button>`;
                             $(shadowRoot.getElementById('noCreditAlert')).text(msg.noCreditAlert.message);
                             $(shadowRoot.getElementById('btnUnlock')).off('click').on('click', ()=> {unlockLead()});
                         });

@@ -997,7 +997,7 @@ function loadPopup() {
         width:14.4114px;
         height:14.4114px;
     }
-    .btn-unlock{
+    /*.btn-unlock{
         width: 172.4px;
         height: 35.22px;
         font: normal normal 600 11.5px/11.26px Muli;
@@ -1014,6 +1014,26 @@ function loadPopup() {
         background-color: #F4FAFF;
         text-align: center;
         padding-left: 12px;
+    }*/
+    .btn-unlock {
+        width: 100%;
+        height: 35.22px;
+        font: normal normal 600 11.5px/30px Muli;
+        background-position-x: 10px;
+        background-size: 10px;
+        background-position-y: 9px;
+        border: 1px solid #0058FF;
+        border-radius: 2px;
+        letter-spacing: 0px;
+        color: #0058FF;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath fill='%230058FF' d='M144 144v48H304V144c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192V144C80 64.5 144.5 0 224 0s144 64.5 144 144v48h16c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V256c0-35.3 28.7-64 64-64H80z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-clip: padding-box;
+        background-color: #F4FAFF;
+        text-align: center;
+        padding-left: 26px;
+        display: flex;
+        justify-content: space-between;
     }
 
     .btn-show-company-detail{

@@ -98,7 +98,11 @@
   "udBtn":{
     "message":"Déverrouiller les détails",
     "description": ""
-  },    
+  },
+  "udBtnlbl":{
+    "message":"Afficher les détails 1 Crédits",
+    "description": ""
+  },     
   "alBtn":{
     "message":"Ajouter un prospect",
     "description": ""
