@@ -755,6 +755,13 @@ function loadPopup() {
     *{
         font-family: 'poppins', sans-serif!important;
     }
+
+    html{
+        position: fixed;
+        top: 0;
+        right: 0;
+        z-index: 9999999999!important;
+    }
     
     body{
         font-size: 16px;
