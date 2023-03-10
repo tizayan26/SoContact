@@ -82,6 +82,7 @@ function getBase64Image(img) {
 
   function ParseAddressEsri(singleLineaddressString) {
     var address = {
+      location_id: -1,
       street_address: "",
       city: "",
       country: "",

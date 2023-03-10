@@ -179,6 +179,7 @@ function scrapeLinkedInProfile(type){
             about: ''
         }*/
         var linkedInObj = {
+            profile_id: -1,
             name: profile_name,
             linkedin_url: location.href,
             location: {},
@@ -224,6 +225,7 @@ function scrapeLinkedInProfile(type){
                     url: experiences[i].children[0].children[0].children[0].href
                 }*/
                 var obj = { 
+                    work_experience_id: -1,
                     company: {
                         name: experiences[i].children[0].children[1].children[0].children[0].children[1].children[0].innerText,
                         linkedin_url: experiences[i].children[0].children[0].children[0].href
@@ -255,6 +257,7 @@ function scrapeLinkedInProfile(type){
                 //     url: educations[i].children[0].children[0].children[0].href
                 // }
                 var obj = {
+                    education_id: -1,
                     institute: {
                         name: educations[i].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText,
                         linkedin_url: educations[i].children[0].children[0].children[0].href
@@ -309,6 +312,7 @@ function scrapeLinkedInProfile(type){
                 //     obj['credential_URL'] = certification[i].children[0].children[1].children[1].querySelector('a').href
                 // }
                 var obj = {
+                    certification_id: -1,
                     name: certification[i].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText,
                     organization: '',
                     certification_period: {
