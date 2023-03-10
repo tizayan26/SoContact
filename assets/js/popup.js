@@ -1120,6 +1120,7 @@ function loadPopup() {
         letter-spacing: 0.72px;
         color: #121C31;
         opacity: 1;
+        text-transform: capitalize;
     }
     .account h7{
     

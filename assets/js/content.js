@@ -36,7 +36,7 @@ function scrapeLinkedInProfile(type){
     // else{
     //     profile_image = chrome.runtime.getURL('assets/icons/logo.png');
     // }
-    if(profile_image !==''){
+    // if(profile_image !==''){
         // toDataURL(profile_image).then(dataUrl => {
         //     base64Img = dataUrl;  
         //     var linkedInObj = {
@@ -167,7 +167,7 @@ function scrapeLinkedInProfile(type){
         //     }
         // });
        
-        var linkedInObj = {
+        /*var linkedInObj = {
             linkedinURL: location.href,
             profile_image: profile_image,
             name: profile_name,
@@ -177,14 +177,26 @@ function scrapeLinkedInProfile(type){
             certification:[],
             languages: [],
             about: ''
+        }*/
+        var linkedInObj = {
+            name: profile_name,
+            linkedin_url: location.href,
+            location: {},
+            work_experience: [],
+            education: [],
+            certification:[],
+            languages: [],
+            profile_image: profile_image,
+            about: ''
         }
         if(document.querySelectorAll('div[class*="text-body-medium break-words"]').length > 0){
             linkedInObj['profile_heading'] = document.querySelectorAll('div[class*="text-body-medium break-words"]')[0].innerText;
         }
         if(document.getElementById('main')!==null){
             if(document.getElementById('main').children[0].children[1].children[1].children[2]!== undefined){
-                linkedInObj['location'] = document.getElementById('main').children[0].children[1].children[1].children[2].children[0].innerText;
-                linkedInObj.address_details = ParseAddressEsri(document.getElementById('main').children[0].children[1].children[1].children[2].children[0].innerText);
+                /*linkedInObj['location'] = document.getElementById('main').children[0].children[1].children[1].children[2].children[0].innerText;
+                linkedInObj.address_details = ParseAddressEsri(document.getElementById('main').children[0].children[1].children[1].children[2].children[0].innerText);*/
+                linkedInObj.location = ParseAddressEsri(document.getElementById('main').children[0].children[1].children[1].children[2].children[0].innerText);
             }
         }
         if(document.getElementById('about')!==null){
@@ -203,37 +215,66 @@ function scrapeLinkedInProfile(type){
                     var start_date = new Date();
                     var end_date = new Date() ;
                 }
-                var obj = { 
+                /*var obj = { 
                     job_title : experiences[i].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText,
                     organization_name: experiences[i].children[0].children[1].children[0].children[0].children[1].children[0].innerText,
                     time_length: experiences[i].children[0].children[1].children[0].children[0].children[2]===undefined ? null : experiences[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText,
                     start_time: moment(start_date).format('YYYY-MM-DD'),
                     end_time: moment(end_date).format('YYYY-MM-DD'),
                     url: experiences[i].children[0].children[0].children[0].href
+                }*/
+                var obj = { 
+                    company: {
+                        name: experiences[i].children[0].children[1].children[0].children[0].children[1].children[0].innerText,
+                        linkedin_url: experiences[i].children[0].children[0].children[0].href
+                    },
+                    work_period: {
+                        frm: moment(start_date).format('YYYY-MM-DD'),
+                        to: moment(end_date).format('YYYY-MM-DD'),
+                    },
+                    job_title : experiences[i].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText
                 }
-                if(experiences[i].children[0].children[1].children[0].children[0].children[3]!==undefined)
-                obj['job_location'] = experiences[i].children[0].children[1].children[0].children[0].children[3].children[0].innerText
-                linkedInObj.experience .push(obj);
+                if(experiences[i].children[0].children[1].children[0].children[0].children[3]!==undefined){
+                    // obj['job_location'] = experiences[i].children[0].children[1].children[0].children[0].children[3].children[0].innerText
+                    obj.company['location'] =  ParseAddressEsri(experiences[i].children[0].children[1].children[0].children[0].children[3].children[0].innerText)
+                }
+                // linkedInObj.experience .push(obj);
+                linkedInObj.work_experience .push(obj);
             }
         }
         if(document.getElementById('education') !== null){
             var educations = document.getElementById('education').nextElementSibling.nextElementSibling.children[0].children;
             for(var i=0; i<educations.length;i++){
                 //var dates_array
+                // var obj = {
+                //     institution_name: educations[i].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText,
+                //     field_of_study: educations[i].children[0].children[1].children[0].children[0].children[1] !== undefined ? educations[i].children[0].children[1].children[0].children[0].children[1].innerText : '',
+                //     length_of_study: '',
+                //     start_time: '',
+                //     end_time: '',
+                //     url: educations[i].children[0].children[0].children[0].href
+                // }
                 var obj = {
-                    institution_name: educations[i].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText,
-                    field_of_study: educations[i].children[0].children[1].children[0].children[0].children[1] !== undefined ? educations[i].children[0].children[1].children[0].children[0].children[1].innerText : '',
-                    length_of_study: '',
-                    start_time: '',
-                    end_time: '',
-                    url: educations[i].children[0].children[0].children[0].href
+                    institute: {
+                        name: educations[i].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText,
+                        linkedin_url: educations[i].children[0].children[0].children[0].href
+                    },
+                    study_period: {
+                        frm: '',
+                        to: ''
+                    },
+                    summery: educations[i].children[0].children[1].children[0].children[0].children[1] !== undefined ? educations[i].children[0].children[1].children[0].children[0].children[1].innerText : '',
                 }
                 if(educations[i].children[0].children[1].children[0].children[0].children[2] !== undefined){
                     var year = educations[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText.trim().split(' - ');
-                    obj.length_of_study = educations[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText;
-                    obj.start_time = year[0].trim();
+                    // obj.length_of_study = educations[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText;
+                    // obj.start_time = year[0].trim();
+                    // if(year[1]!==undefined){
+                    //     obj.end_time = year[1].trim();
+                    // }
+                    obj.study_period.frm = year[0].trim();
                     if(year[1]!==undefined){
-                        obj.end_time = year[1].trim();
+                        obj.study_period.to = year[1].trim();
                     }
                 }
                 linkedInObj.education.push(obj);
@@ -242,30 +283,55 @@ function scrapeLinkedInProfile(type){
         if(document.getElementById('licenses_and_certifications') !== null){
             var certification = document.getElementById('licenses_and_certifications').nextElementSibling.nextElementSibling.children[0].children;
             for(var i=0; i<certification.length;i++){
+                // var obj = {
+                //     certification_name: certification[i].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText,
+                //     issuing_organization: '',
+                //     validity: '',
+                //     issue_date: '',
+                //     expiration_date: '',
+                //     url: certification[i].children[0].children[0].children[0].href
+                // }
+                // if(certification[i].children[0].children[1].children[0].children[0].children[1] !== undefined){
+                //     obj.issuing_organization = certification[i].children[0].children[1].children[0].children[0].children[1].children[0].innerText;
+                // }
+                // if(certification[i].children[0].children[1].children[0].children[0].children[2] !== undefined){
+                //     obj.validity = certification[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText;
+                //     var dates_array = certification[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText.trim().split('·');
+                //     var start_date = new Date(dates_array[0].trim());
+                //     var end_date = (dates_array[1]!==undefined) ? dates_array[1].trim() == "No Expiration Date" ? new Date() : new Date(dates_array[1].trim()) : '';
+                //     obj.issue_date = moment(start_date).format('YYYY-MM-DD');
+                //     obj.expiration_date =  moment(end_date).format('YYYY-MM-DD');
+                // }
+                // if(certification[i].children[0].children[1].children[0].children[0].children[3] !== undefined){
+                //     obj["credential_ID"] = certification[i].children[0].children[1].children[0].children[0].children[3].children[0].innerText;
+                // }
+                // if(certification[i].children[0].children[1].children[1]!== undefined){
+                //     obj['credential_URL'] = certification[i].children[0].children[1].children[1].querySelector('a').href
+                // }
                 var obj = {
-                    certification_name: certification[i].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText,
-                    issuing_organization: '',
-                    validity: '',
-                    issue_date: '',
-                    expiration_date: '',
+                    name: certification[i].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText,
+                    organization: '',
+                    certification_period: {
+                        frm: '',
+                        to: ''
+                    },
                     url: certification[i].children[0].children[0].children[0].href
                 }
                 if(certification[i].children[0].children[1].children[0].children[0].children[1] !== undefined){
-                    obj.issuing_organization = certification[i].children[0].children[1].children[0].children[0].children[1].children[0].innerText;
+                    obj.organization = certification[i].children[0].children[1].children[0].children[0].children[1].children[0].innerText;
                 }
                 if(certification[i].children[0].children[1].children[0].children[0].children[2] !== undefined){
-                    obj.validity = certification[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText;
                     var dates_array = certification[i].children[0].children[1].children[0].children[0].children[2].children[0].innerText.trim().split('·');
                     var start_date = new Date(dates_array[0].trim());
                     var end_date = (dates_array[1]!==undefined) ? dates_array[1].trim() == "No Expiration Date" ? new Date() : new Date(dates_array[1].trim()) : '';
-                    obj.issue_date = moment(start_date).format('YYYY-MM-DD');
-                    obj.expiration_date =  moment(end_date).format('YYYY-MM-DD');
+                    obj.certification_period.frm = moment(start_date).format('YYYY-MM-DD');
+                    obj.certification_period.to =  moment(end_date).format('YYYY-MM-DD');
                 }
                 if(certification[i].children[0].children[1].children[0].children[0].children[3] !== undefined){
-                    obj["credential_ID"] = certification[i].children[0].children[1].children[0].children[0].children[3].children[0].innerText;
+                    obj["credential_id"] = certification[i].children[0].children[1].children[0].children[0].children[3].children[0].innerText;
                 }
                 if(certification[i].children[0].children[1].children[1]!== undefined){
-                    obj['credential_URL'] = certification[i].children[0].children[1].children[1].querySelector('a').href
+                    obj['credential_url'] = certification[i].children[0].children[1].children[1].querySelector('a').href
                 }
                 linkedInObj.certification.push(obj);
             }
@@ -275,7 +341,7 @@ function scrapeLinkedInProfile(type){
             for(var i=0; i<languages.length;i++){
                 var obj ={
                     language: languages[i].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText,
-                    proficiency: (languages[i].children[0].children[1].children[0].children[0].children[1] !== undefined) ? languages[i].children[0].children[1].children[0].children[0].children[1].children[0].innerText : ''
+                    proficiency: (languages[i].children[0].children[1].children[0].children[0].children[1] !== undefined) ? convertLanguageProficiency(languages[i].children[0].children[1].children[0].children[0].children[1].children[0].innerText) : ''
                 }
                 linkedInObj.languages.push(obj);
             }
@@ -296,7 +362,7 @@ function scrapeLinkedInProfile(type){
             })
         }
         
-    }
+    // }
 }
 
 function onUrlChange() {
@@ -382,6 +448,13 @@ const getProfileDetailsFromAPI = () => {
     shadowRoot.getElementById('icon').src = chrome.runtime.getURL("assets/img/logo.gif");
     shadowRoot.getElementById('app_container').innerHTML = contactSearchHTML;
     var linkedin_url = location.origin+location.pathname;
+    shadowRoot.getElementById('linkedInProfileImg').src = chrome.runtime.getURL('assets/icons/spinner.gif');
+    shadowRoot.getElementById('linkedInProfileName').innerHTML = `
+    <div class="load-2">
+      <div class="line"></div>
+      <div class="line"></div>
+      <div class="line"></div>
+    </div>`;
     chrome.runtime.sendMessage({call: "getProfile", link: linkedin_url}, function(response) {
         if(response!== null || response!= '' || response!== 'null' ){
             var  res = JSON.parse(response);
@@ -443,11 +516,29 @@ const getProfileDetailsFromAPI = () => {
                         var jobTitle = '';
                     }
                     if(res.name === undefined || res.name === '' || res.name === null){
-                        res['name'] = profile_name;
+                        if(document.querySelectorAll('h1[class*="text-heading-xlarge"]').length > 0){
+                            profile_name = document.querySelectorAll('h1[class*="text-heading-xlarge"]')[0].innerText;
+                        }else{
+                            profile_name = document.querySelector('dt[class="member-name extra-extra-large-semibold"]').querySelectorAll('span')[0].innerText
+                        }
+                    }else{
+                        profile_name = res['name']; 
                     }
                     // res['image'] = pic.src;
-                    if(res.image === undefined || res.image === '' || res.image === null){
-                        res['image'] = profile_image;
+                    if(res.image_link === undefined || res.image_link === '' || res.image_link === null){
+                        if(document.querySelectorAll('img[class="pv-top-card-profile-picture__image pv-top-card-profile-picture__image--show ember-view"]').length > 0){
+                            profile_image = document.querySelectorAll('img[class="pv-top-card-profile-picture__image pv-top-card-profile-picture__image--show ember-view"]')[0].src;
+                         }else if(document.querySelectorAll('img[class="ember-view profile-photo-edit__preview"]').length > 0){
+                             profile_image = document.querySelectorAll('img[class="ember-view profile-photo-edit__preview"]')[0].src;
+                         }else if(document.querySelector('[class="member-profile-photo"]')!==null){
+                             if(document.querySelector('[class="member-profile-photo"]').querySelector('img[role="button"]')!==null){
+                                 profile_image = document.querySelector('[class="member-profile-photo"]').querySelector('img[role="button"]').src
+                             }else{
+                                 profile_image = chrome.runtime.getURL('assets/img/no_profile.png');
+                             }
+                         }
+                    }else{
+                        profile_image = res['image_link'];
                     }
                     // profile_detail_res['image'] = pic.src;
                     if(profile_detail_res.image === undefined || profile_detail_res.image === '' || profile_detail_res.image === null){
@@ -535,6 +626,8 @@ const getProfileDetailsFromAPI = () => {
                             shadowRoot.getElementById('companyWebsite').href = res.companyInformation[0].website;
                         }
                     }
+                    shadowRoot.getElementById('linkedInProfileName').innerText = profile_name;
+                    shadowRoot.getElementById('linkedInProfileImg').src = profile_image;
                     if(!res.masked){
                         shadowRoot.getElementById('jobTitle').innerText = jobTitle;
                         console.log(res.otherSocialMedia.length);
@@ -744,7 +837,7 @@ const getProfileDetailsFromAPI = () => {
                             $(shadowRoot.getElementById('btnUnlock')).off('click').on('click', ()=> {unlockLead()});
                         });
                     }
-                },1000)
+                },1000);
                 
             }else if(res.dynamowebs_msg=="token_expired"){
                 if(res.token!==undefined && res.token == "expired"){
@@ -792,23 +885,24 @@ const getProfileDetailsFromAPI = () => {
                     }
                 })
             }
-            shadowRoot.getElementById('icon').src = chrome.runtime.getURL("assets/icons/icon48.png")
+            shadowRoot.getElementById('icon').src = chrome.runtime.getURL("assets/icons/icon48.png");
+            getLinkedInProfile();
         }
-        shadowRoot.getElementById('linkedInProfileImg').src = chrome.runtime.getURL('assets/icons/spinner.gif');
-        shadowRoot.getElementById('linkedInProfileName').innerHTML = `
-        <div class="load-2">
-          <div class="line"></div>
-          <div class="line"></div>
-          <div class="line"></div>
-        </div>`;
-        var myInterval = setInterval(function () {
-            if(getLinkedInProfile()){
-                console.log("Got DOM")
-                clearInterval(myInterval);
-            }else{
-                console.log("Not found!")
-            }
-        }, 1000);
+        // shadowRoot.getElementById('linkedInProfileImg').src = chrome.runtime.getURL('assets/icons/spinner.gif');
+        // shadowRoot.getElementById('linkedInProfileName').innerHTML = `
+        // <div class="load-2">
+        //   <div class="line"></div>
+        //   <div class="line"></div>
+        //   <div class="line"></div>
+        // </div>`;
+        // var myInterval = setInterval(function () {
+        //     if(getLinkedInProfile()){
+        //         console.log("Got DOM")
+        //         clearInterval(myInterval);
+        //     }else{
+        //         console.log("Not found!")
+        //     }
+        // }, 1000);
     });
 }
 

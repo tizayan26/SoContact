@@ -120,7 +120,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             return chrome.storage.local.get(['session'], function(result) {
                 var session = JSON.parse(result.session); 
                 var formData = new FormData();
-                formData.append("profile",request.link);
+                // formData.append("profile",request.link);
+                formData.append("link",request.link);
                 fetch(API_URL + "profile-mark-up",
                 {
                     body: formData,
@@ -138,7 +139,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             return chrome.storage.local.get(['session'], function(result) {
                 var session = JSON.parse(result.session); 
                 var formData = new FormData();
-                formData.append("profile",request.link);
+                // formData.append("profile",request.link);
+                formData.append("link",request.link);
                 fetch(API_URL + "profile-mark-down",
                 {
                     body: formData,
