@@ -259,6 +259,7 @@ function scrapeLinkedInProfile(type){
                 var obj = {
                     education_id: -1,
                     institute: {
+                        educational_institute_id: -1,
                         name: educations[i].children[0].children[1].children[0].children[0].children[0].children[0].children[0].innerText,
                         linkedin_url: educations[i].children[0].children[0].children[0].href
                     },
