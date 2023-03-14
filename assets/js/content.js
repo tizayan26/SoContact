@@ -1263,8 +1263,15 @@ const getLinkedInProfile = () => {
 function signedIn(){
     let login_email = shadowRoot.getElementById('email').value;
     let login_pass = shadowRoot.getElementById('password').value;
+    let isLoggedIn = false;
+    chrome.runtime.sendMessage({call: "isUserLoggedin", email: login_email}, function(data) {
+       isLoggedIn =  data.is_logged_in;
+    })
     if(!login_email || !login_pass){
         shadowRoot.getElementById('loginMsg').innerText = "Email and Password is required!"
+        $(shadowRoot.getElementById('loginMsg')).fadeIn();
+    }if(isLoggedIn){
+        shadowRoot.getElementById('loginMsg').innerText = "User already logged in to other device";
         $(shadowRoot.getElementById('loginMsg')).fadeIn();
     }else{
         chrome.runtime.sendMessage({call: "validateUser", email: login_email, password: login_pass}, function(response) {

@@ -293,6 +293,28 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 .then(data => sendResponse(data))
                 .catch(error => console.log(error))
             }), !0;
+        case "isUserLoggedin":
+            var formData = new FormData();
+            formData.append("email",request.email);
+            return fetch(API_URL + "auth/isUserLoggedin",
+                {
+                    body: formData,
+                    method: "POST"
+                }
+                ).then(response => response.json())
+                .then(data => sendResponse(data))
+                .catch(error => console.log(error)), !0;
+        case "userLoggedOut":
+            var formData = new FormData();
+            formData.append("email",request.email);
+            return fetch(API_URL + "auth/userLoggedOut",
+                {
+                    body: formData,
+                    method: "POST"
+                }
+                ).then(response => response.json())
+                .then(data => sendResponse(data))
+                .catch(error => console.log(error)), !0;
     }
 });
 chrome.tabs.onUpdated.addListener(function (tabId , info, tab) {

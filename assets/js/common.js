@@ -295,6 +295,12 @@ function getBase64Image(img) {
   // }  
 
   function logout(){
+    chrome.storage.local.get(['session'], function(result) {
+      var session = JSON.parse(result.session); 
+      chrome.runtime.sendMessage({call: "userLoggedOut", email: session.email}, function(data) {
+        console.log(data.is_logged_out);
+      });
+    });
     chrome.storage.local.clear(function(){
         var error = chrome.runtime.lastError;
         if (error) {
