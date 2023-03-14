@@ -1263,7 +1263,7 @@ const getLinkedInProfile = () => {
 function signedIn(){
     let login_email = shadowRoot.getElementById('email').value;
     let login_pass = shadowRoot.getElementById('password').value;
-    chrome.runtime.sendMessage({call: "isUserLoggedin", email: login_email}, function(data) {
+    chrome.runtime.sendMessage({call: "isUserLoggedin", email: login_email, password: login_pass}, function(data) {
         console.log(data);
         let isLoggedIn =  data.is_logged_in;
         if(!login_email || !login_pass){
@@ -1278,6 +1278,7 @@ function signedIn(){
                     var session = JSON.parse(result.session); 
                     chrome.runtime.sendMessage({call: "userLoggedOut", email: session.email}, function(data) {
                       console.log(data.is_logged_out);
+                      $(shadowRoot.getElementById('loginMsg')).fadeOut();
                     });
                   });
             });

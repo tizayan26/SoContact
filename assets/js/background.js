@@ -296,6 +296,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         case "isUserLoggedin":
             var formData = new FormData();
             formData.append("email",request.email);
+            formData.append("password",request.password);
             return fetch(API_URL + "auth/isUserLoggedin",
                 {
                     body: formData,
