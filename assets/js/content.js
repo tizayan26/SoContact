@@ -1206,13 +1206,12 @@ function editLead(res){
     })
     // shadowRoot.getElementById('saveLead').addEventListener('click', () => {
     $(shadowRoot.getElementById('saveLead')).off('click').on('click', () => {
-    
+    //      // last_name: shadowRoot.getElementById('lastName').value,
         chrome.runtime.sendMessage(
             {
                 call: "updateProfileData",
                 link: linkedin_url,
                 full_name: shadowRoot.getElementById('name').value,
-                // last_name: shadowRoot.getElementById('lastName').value,
                 title: shadowRoot.getElementById('job').value,
                 address: shadowRoot.getElementById('location').value,
                 description: shadowRoot.getElementById('description').value
@@ -1640,12 +1639,16 @@ function accountDropdown(){
             var res = JSON.parse(response);
             if(res.dynamowebs_status == "success"){
                 shadowRoot.getElementById('notifications').innerHTML = '';
-                res.data.forEach((data) => {
-                    console.log(data.description)
-                    var li = document.createElement('li');
-                    li.innerHTML = data.description;
-                    shadowRoot.getElementById('notifications').appendChild(li);
-                })
+                if(res.data.length > 0){
+                    res.data.forEach((data) => {
+                        console.log(data.description)
+                        var li = document.createElement('li');
+                        li.innerHTML = data.description;
+                        shadowRoot.getElementById('notifications').appendChild(li);
+                    });
+                }else{
+                    shadowRoot.getElementById('notifications').innerHTML = 'No notification yet';
+                }
             }
         })
     });

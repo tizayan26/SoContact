@@ -1483,18 +1483,18 @@ function loadPopup() {
         display: none;
         position: absolute;
         top: 30px;
-        min-width: 260px;
+        min-width: 280px;
         background-color: #fff;
         box-shadow: 0px 1px 24px #b4c5d346;
         border-radius: 2px;
         text-align: left;
-        font: normal normal normal 9.46px/6.88px Poppins;
+        font: normal normal normal 14px/12px Poppins;
         letter-spacing: 0.12px;
         right: 40px;
         padding:0;
     }
     .notification-content{
-        padding: 10px 0;
+        padding: 10px;
         overflow: auto;
         max-height: 45vh;
     }
