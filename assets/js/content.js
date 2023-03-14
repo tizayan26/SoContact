@@ -841,6 +841,12 @@ const getProfileDetailsFromAPI = () => {
                             $(shadowRoot.getElementById('noCreditAlert')).text(msg.noCreditAlert.message);
                             $(shadowRoot.getElementById('btnUnlock')).off('click').on('click', ()=> {unlockLead()});
                         });
+                        chrome.storage.local.get('autoSave', function(result){
+                            if(result.autoSave){
+                                // shadowRoot.getElementById('addToWaiting').dispatchEvent(new Event("click"));
+                                unlockLead();
+                            }
+                        })
                     }
                 },1000);
                 
@@ -884,11 +890,11 @@ const getProfileDetailsFromAPI = () => {
                 shadowRoot.getElementById('addToWaiting').addEventListener('click', () => {
                     scrapeLinkedInProfile(0);
                 })
-                chrome.storage.local.get('autoSave', function(result){
-                    if(result.autoSave){
-                        shadowRoot.getElementById('addToWaiting').dispatchEvent(new Event("click"));
-                    }
-                })
+                // chrome.storage.local.get('autoSave', function(result){
+                //     if(result.autoSave){
+                //         shadowRoot.getElementById('addToWaiting').dispatchEvent(new Event("click"));
+                //     }
+                // })
             }
             shadowRoot.getElementById('icon').src = chrome.runtime.getURL("assets/icons/icon48.png");
             getLinkedInProfile();
