@@ -78,7 +78,7 @@ function getBase64Image(img) {
     reader.onloadend = () => resolve(reader.result)
     reader.onerror = reject
     reader.readAsDataURL(blob)
-  }))
+  }));
 
   function ParseAddressEsri(singleLineaddressString) {
     var address = {

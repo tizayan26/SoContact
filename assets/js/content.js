@@ -1138,9 +1138,20 @@ function editLead(res){
         if(res.dynamowebs_status == "success"){
             shadowRoot.getElementById('name').value = res.data.name; //res.data.full_name;
             // shadowRoot.getElementById('lastName').value = res.data.last_name;
-            shadowRoot.getElementById('job').value = res.data.title;
-            shadowRoot.getElementById('location').value = res.data.address;
-            shadowRoot.getElementById('description').value = res.data.description;
+            // var location = '';
+            // if(res.profile_heading.address_line_2!==null){
+            //     location += res.profile_heading.address_line_2;
+            // }
+            // if(res.profile_heading.continent!==null){
+            //     location += res.profile_heading.continent;
+            // }
+            // if(res.profile_heading.country!==null){
+            //     location += res.profile_heading.country;
+            // }
+
+            shadowRoot.getElementById('job').value =  (res.data.profile_heading !== null)? res.data.profile_heading : '';
+            shadowRoot.getElementById('location').value = (res.data.location.name !== null)? res.data.location.name : '';
+            shadowRoot.getElementById('description').value = (res.data.location.about !== null) ? res.data.about : '';
         }
     })
     if(res.companyInformation.length > 0){
