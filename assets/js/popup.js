@@ -350,7 +350,7 @@ let account_html = `
         <img class="logo-small" src="${chrome.runtime.getURL('assets/icons/logo.png')}" /> 
     </div>
     <div class="p-1">
-        <div class="coin-container">
+        <div class="coin-container" id="BtnCredits">
             <img src="${chrome.runtime.getURL('assets/icons/coin.png')}" /> <span id="cAmount">
             <div class="spinner-grow spinner-grow-sm" role="status">
                 <span class="visually-hidden">Loading...</span>

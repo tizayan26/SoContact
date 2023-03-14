@@ -1669,6 +1669,14 @@ function accountDropdown(){
             }
         })
     });
+    shadowRoot.getElementById('BtnCredits').addEventListener('click', () => {
+        chrome.storage.local.get(['session'], function(result) {
+            var session = JSON.parse(result.session);
+            console.log(`https://app.socontact.com/api/login-extension?token=${session.token}&redirect_url=https://app.socontact.com/user/billing`);
+            let URL = `https://app.socontact.com/api/login-extension?token=${session.token}&redirect_url=https://app.socontact.com/user/billing`
+            window.open(URL, '_blank');
+        })
+    });
     shadowRoot.getElementById('appSettings').addEventListener('click', () => {
         chrome.storage.local.get(['session'], function(result) {
             var session = JSON.parse(result.session);
