@@ -506,7 +506,9 @@ const getProfileDetailsFromAPI = () => {
                             shadowRoot.getElementById('badge').remove();
                         }
                     }
-                    scrapeLinkedInProfile(1);
+                    setTimeout(function(){
+                        scrapeLinkedInProfile(1);
+                    },5000);
                     // if(document.querySelectorAll('img[class="pv-top-card-profile-picture__image pv-top-card-profile-picture__image--show ember-view"]').length > 0){
                     //     var pic = document.querySelectorAll('img[class="pv-top-card-profile-picture__image pv-top-card-profile-picture__image--show ember-view"]')[0];
                     // }else if(document.querySelectorAll('img[class="ember-view profile-photo-edit__preview"]').length > 0){
@@ -545,6 +547,7 @@ const getProfileDetailsFromAPI = () => {
                     }else{
                         profile_image = res['image_link'];
                     }
+                  
                     // profile_detail_res['image'] = pic.src;
                     if(profile_detail_res.image === undefined || profile_detail_res.image === '' || profile_detail_res.image === null){
                         profile_detail_res['image'] = profile_image;
@@ -622,6 +625,9 @@ const getProfileDetailsFromAPI = () => {
                         });
                     }*/
                     if(res.companyInformation.length > 0){  //|| (res.companyInformation[0].mainIndustry.toString() !== "" && res.companyInformation[0].employees.toString() !== "" && res.companyInformation[0].headQuarters.toString() !== "" && res.companyInformation[0].founded.toString() !== "")){
+                        setTimeout(function(){
+                            shadowRoot.getElementById('companyLogo').src = (document.getElementById('experience').nextElementSibling.nextElementSibling.children[0].children[0].children[0].children[0].children[0].children[0].children[0].querySelector('[class="EntityPhoto-square-3-ghost-company ivm-view-attr__ghost-entity "]')===null) ? document.getElementById('experience').nextElementSibling.nextElementSibling.children[0].children[0].children[0].children[0].children[0].children[0].children[0].children[0].src : chrome.runtime.getURL('assets/img/ghost_company.png');
+                        },3000);
                         shadowRoot.getElementById('companyBlock').style.display = "block";
                         shadowRoot.getElementById('companyName').innerText = res.companyInformation[0].name;
                         if(res.companyInformation[0].website === null || res.companyInformation[0].website == ''){
@@ -922,7 +928,8 @@ function backDetails(res){
     shadowRoot.getElementById('linkedInProfileName').innerText = res.name;
     shadowRoot.getElementById('linkedInProfileImg').src = res.image;
     shadowRoot.getElementById('jobTitle').innerText = res.jobtitle;
-
+    
+    
     if(res.phoneNumbers.length>0){
         shadowRoot.getElementById('phoneNumbers').style.display = "block";
         let ul_phones = shadowRoot.getElementById('phoneNumbers');
@@ -976,6 +983,7 @@ function backDetails(res){
         shadowRoot.getElementById('perEmailsBlock').style.display = "none";
     }
     if(res.companyInformation.length > 0){ //|| (res.companyInformation[0].mainIndustry !== "" && res.companyInformation[0].employees !== "" && res.companyInformation[0].headQuarters !== "" && res.companyInformation[0].founded !== "")){
+        shadowRoot.getElementById('companyLogo').src = (document.getElementById('experience').nextElementSibling.nextElementSibling.children[0].children[0].children[0].children[0].children[0].children[0].children[0].querySelector('[class="EntityPhoto-square-3-ghost-company ivm-view-attr__ghost-entity "]')===null) ? document.getElementById('experience').nextElementSibling.nextElementSibling.children[0].children[0].children[0].children[0].children[0].children[0].children[0].children[0].src : chrome.runtime.getURL('assets/img/ghost_company.png');
         shadowRoot.getElementById('companyName').innerText = res.companyInformation[0].name;
         if(res.companyInformation[0].website === null || res.companyInformation[0].website == ''){
             shadowRoot.getElementById('companyWebsite').parentElement.style.display = "none";
@@ -1137,6 +1145,7 @@ function editLead(res){
         lang = data.iso;
         changeLangEditLead(lang);
     });
+    shadowRoot.getElementById('companyLogo').src = (document.getElementById('experience').nextElementSibling.nextElementSibling.children[0].children[0].children[0].children[0].children[0].children[0].children[0].querySelector('[class="EntityPhoto-square-3-ghost-company ivm-view-attr__ghost-entity "]')===null) ? document.getElementById('experience').nextElementSibling.nextElementSibling.children[0].children[0].children[0].children[0].children[0].children[0].children[0].children[0].src : chrome.runtime.getURL('assets/img/ghost_company.png');
     var linkedin_url = location.origin+location.pathname;
     chrome.runtime.sendMessage({call: "getProfileData", link: linkedin_url}, function(response) {
         var res = JSON.parse(response);
@@ -1473,6 +1482,7 @@ function unlockLead(){
                                     shadowRoot.getElementById('perEmailsBlock').style.display = "none";
                                 }
                                 if(res.companyInformation.length > 0){ //|| (res.companyInformation[0].mainIndustry !== "" && res.companyInformation[0].employees !== "" && res.companyInformation[0].headQuarters !== "" && res.companyInformation[0].founded !== "")){
+                                    shadowRoot.getElementById('companyLogo').src = (document.getElementById('experience').nextElementSibling.nextElementSibling.children[0].children[0].children[0].children[0].children[0].children[0].children[0].querySelector('[class="EntityPhoto-square-3-ghost-company ivm-view-attr__ghost-entity "]')===null) ? document.getElementById('experience').nextElementSibling.nextElementSibling.children[0].children[0].children[0].children[0].children[0].children[0].children[0].children[0].src : chrome.runtime.getURL('assets/img/ghost_company.png');
                                     shadowRoot.getElementById('companyName').innerText = res.companyInformation[0].name;
                                     if(res.companyInformation[0].website === null || res.companyInformation[0].website == ''){
                                         shadowRoot.getElementById('companyWebsite').parentElement.style.display = "none";

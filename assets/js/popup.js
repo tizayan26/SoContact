@@ -130,7 +130,7 @@ let contact_detail_api = `
     </div>
     <div id="companyBlock" class="col-sm-12">
         <div class="d-flex pt-4 pb-4 justify-content-between">
-            <div class="p-2"><div class="company-logo-circle"></div></div>
+            <div class="p-2"><img class="company-logo-circle" id="companyLogo" src="${chrome.runtime.getURL('assets/icons/spinner.gif')}"></img></div>
             <div class="p-2"><div class="company-title" id="companyName" style="overflow:hidden;max-width:196px;"><div class="load-2">
             <div class="line"></div>
             <div class="line"></div>
@@ -418,7 +418,10 @@ let leadEditHTML = `
             </div>
             <div class="col-sm-12">
                 <div class="row pt-2 pb-4">
-                    <div class="col-sm-2"><div class="company-logo-circle"></div></div>
+                    <div class="col-sm-2">
+                    <!--div class="company-logo-circle"></div-->
+                    <img class="company-logo-circle" id="companyLogo" src="${chrome.runtime.getURL('assets/icons/spinner.gif')}"></img>
+                    </div>
                     <div class="col-sm-5"><div class="company-title" id="companyName"><div class="load-2">
                     <div class="line"></div>
                     <div class="line"></div>
@@ -622,7 +625,10 @@ let leadUnlocked = `
             </div>
             <div class="col-sm-12">
                 <div class="d-flex pt-2 pb-4">
-                    <div class="p-2"><div class="company-logo-circle"></div></div>
+                    <div class="p-2">
+                    <!--div class="company-logo-circle"></div-->
+                    <img class="company-logo-circle" id="companyLogo" src="${chrome.runtime.getURL('assets/icons/spinner.gif')}"></img>
+                    </div>
                     <div class="p-2"><div class="company-title" id="companyName"><div class="load-2">
                     <div class="line"></div>
                     <div class="line"></div>
