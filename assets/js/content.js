@@ -1278,7 +1278,8 @@ function signedIn(){
                     var session = JSON.parse(result.session); 
                     chrome.runtime.sendMessage({call: "userLoggedOut", email: session.email}, function(data) {
                       console.log(data.is_logged_out);
-                      $(shadowRoot.getElementById('loginMsg')).fadeOut();
+                    //   $(shadowRoot.getElementById('loginMsg')).fadeOut();
+                        shadowRoot.getElementById('loginMsg').innerText = "Try to login now!"
                     });
                   });
             });
