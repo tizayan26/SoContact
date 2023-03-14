@@ -1273,7 +1273,14 @@ function signedIn(){
             shadowRoot.getElementById('loginMsg').innerHTML = `<p>User already logged in to other device</p>
             <button class="btn btn-primary" id="signOutOD">Sign out from other device</button>`;
             $(shadowRoot.getElementById('loginMsg')).fadeIn();
-            shadowRoot.getElementById("signOutOD")
+            $(shadowRoot.getElementById("signOutOD")).off('click').on('click',() => {
+                chrome.storage.local.get(['session'], function(result) {
+                    var session = JSON.parse(result.session); 
+                    chrome.runtime.sendMessage({call: "userLoggedOut", email: session.email}, function(data) {
+                      console.log(data.is_logged_out);
+                    });
+                  });
+            });
         }else{
             chrome.runtime.sendMessage({call: "validateUser", email: login_email, password: login_pass}, function(response) {
                 let res = JSON.parse(response);
