@@ -1263,40 +1263,40 @@ const getLinkedInProfile = () => {
 function signedIn(){
     let login_email = shadowRoot.getElementById('email').value;
     let login_pass = shadowRoot.getElementById('password').value;
-    let isLoggedIn = false;
     chrome.runtime.sendMessage({call: "isUserLoggedin", email: login_email}, function(data) {
-       isLoggedIn =  data.is_logged_in;
-    })
-    if(!login_email || !login_pass){
-        shadowRoot.getElementById('loginMsg').innerText = "Email and Password is required!"
-        $(shadowRoot.getElementById('loginMsg')).fadeIn();
-    }if(!isLoggedIn){
-        shadowRoot.getElementById('loginMsg').innerText = "User already logged in to other device";
-        $(shadowRoot.getElementById('loginMsg')).fadeIn();
-    }else{
-        chrome.runtime.sendMessage({call: "validateUser", email: login_email, password: login_pass}, function(response) {
-            let res = JSON.parse(response);
-            if(res.dynamowebs_status == "success"){
-                var session_obj = {
-                    token: res.token,
-                    id: res.id,
-                    email: login_email,
-                    pass: login_pass
+        console.log(data);
+        let isLoggedIn =  data.is_logged_in;
+        if(!login_email || !login_pass){
+            shadowRoot.getElementById('loginMsg').innerText = "Email and Password is required!"
+            $(shadowRoot.getElementById('loginMsg')).fadeIn();
+        }if(isLoggedIn){
+            shadowRoot.getElementById('loginMsg').innerText = "User already logged in to other device";
+            $(shadowRoot.getElementById('loginMsg')).fadeIn();
+        }else{
+            chrome.runtime.sendMessage({call: "validateUser", email: login_email, password: login_pass}, function(response) {
+                let res = JSON.parse(response);
+                if(res.dynamowebs_status == "success"){
+                    var session_obj = {
+                        token: res.token,
+                        id: res.id,
+                        email: login_email,
+                        pass: login_pass
+                    }
+                    chrome.storage.local.set({loggedin: true,session:JSON.stringify(session_obj)}, function() {
+                        // console.log('Session is set to ' + JSON.stringify(session_obj));
+                    });
+                    shadowRoot.getElementById('popup').innerHTML = account_html;
+                    accountDropdown();
+                    getUserInfoFromAPI();
+                    getCredits();
+                    shadowRoot.getElementById('logout').addEventListener('click',() => {
+                    logout();
+                    });
                 }
-                chrome.storage.local.set({loggedin: true,session:JSON.stringify(session_obj)}, function() {
-                    // console.log('Session is set to ' + JSON.stringify(session_obj));
-                });
-                shadowRoot.getElementById('popup').innerHTML = account_html;
-                accountDropdown();
-                getUserInfoFromAPI();
-                getCredits();
-                shadowRoot.getElementById('logout').addEventListener('click',() => {
-                   logout();
-                });
-            }
-            shadowRoot.getElementById('loginMsg').innerText = res.dynamowebs_msg;
-        });
-    }
+                shadowRoot.getElementById('loginMsg').innerText = res.dynamowebs_msg;
+            });
+        }
+    });
 }
 
 function getUserInfoFromAPI(){
