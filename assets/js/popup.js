@@ -1399,6 +1399,7 @@ function loadPopup() {
         padding: 16px 0 0 10px;
     }
     .company-title{
+        text-transform: capitalize;
         font: normal normal 600 12px/36.54px Poppins;
         text-align: left;
         letter-spacing: 0.16px;
