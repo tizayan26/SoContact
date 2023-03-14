@@ -1270,7 +1270,7 @@ function signedIn(){
     if(!login_email || !login_pass){
         shadowRoot.getElementById('loginMsg').innerText = "Email and Password is required!"
         $(shadowRoot.getElementById('loginMsg')).fadeIn();
-    }if(isLoggedIn){
+    }if(!isLoggedIn){
         shadowRoot.getElementById('loginMsg').innerText = "User already logged in to other device";
         $(shadowRoot.getElementById('loginMsg')).fadeIn();
     }else{
